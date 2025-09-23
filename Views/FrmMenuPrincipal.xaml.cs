@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AppTaller
+namespace AppTaller.Views
 {
     /// <summary>
-    /// Lógica de interacción para MainWindow.xaml
+    /// Lógica de interacción para FrmMenuPrincipal.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class FrmMenuPrincipal : Window
     {
-        public MainWindow()
+        public FrmMenuPrincipal()
         {
             InitializeComponent();
         }
