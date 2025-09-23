@@ -107,8 +107,19 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Images\" />
     <Folder Include="Model\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\cruz.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\usuario %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\bloquear %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\bomba.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
