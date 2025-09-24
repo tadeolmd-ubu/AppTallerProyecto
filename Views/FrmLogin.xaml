@@ -16,7 +16,7 @@
     <Border
         CornerRadius="20"
         BorderBrush="DarkSlateGray"
-        BorderThickness="5">
+        BorderThickness="2">
 
         <Border.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1"> 

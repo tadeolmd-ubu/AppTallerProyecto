@@ -41,7 +41,10 @@ namespace AppTaller.Views
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
+            FrmMenuPrincipal menu = new FrmMenuPrincipal();
+            menu.Show();
 
+            this.Hide();
         }
     }
 }

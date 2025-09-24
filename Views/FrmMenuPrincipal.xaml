@@ -5,9 +5,61 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AppTaller.Views"
         mc:Ignorable="d"
-        Title="FrmMenuPrincipal" Height="450" Width="800"
+        Title="FrmMenuPrincipal" Height="700" Width="1300"
         WindowStyle="None"
         Background="Transparent"
         AllowsTransparency="True"
-        >
+        WindowStartupLocation="CenterScreen"
+        MouseDown="Window_MouseDown">
+
+    <Border
+           CornerRadius="10"
+           BorderBrush="DarkSlateGray"
+           BorderThickness="1">
+
+
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#060531" Offset="0"/>
+                <GradientStop Color="#1B1428" Offset="0.75"/>
+            </LinearGradientBrush>
+        </Border.Background>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <!--menu-->
+                <ColumnDefinition Width="170"/>
+                <!--contenidos-->
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--Menu de navegacion-->
+            <Border CornerRadius="10,0,0,10"
+                    Grid.Column="0">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1, 0.7">
+                        <GradientStop Color="{StaticResource secondaryBackColor1}" Offset="0" />
+                        <GradientStop Color="{StaticResource secondaryBackColor2}" Offset="1" />
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+            
+            <!--Donde van a ir los forms-->
+            <Border CornerRadius="0,10,10,0"
+        Grid.Column="1" MouseDown="Border_MouseDown">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="1,1" EndPoint="0,0">
+                        <GradientStop Color="{StaticResource primaryBackColor1}" Offset="0" />
+                        <GradientStop Color="{StaticResource primaryBackColor1}" Offset="1" />
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+
+        </Grid>
+
+
+
+    </Border>
+
+
 </Window>
