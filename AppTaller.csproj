@@ -209,6 +209,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Images\icon_password.png" />
+    <Resource Include="Images\TRACTOR_V2.png" />
+    <Resource Include="Images\icon_mostrar.png" />
+    <Resource Include="Images\icon_ocultar.png" />
+    <Resource Include="Images\icon_user.png" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

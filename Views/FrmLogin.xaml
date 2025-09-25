@@ -16,15 +16,15 @@
     <Border
         CornerRadius="20"
         BorderBrush="DarkSlateGray"
-        BorderThickness="2">
+        BorderThickness="5">
 
         <Border.Background>
-            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1"> 
-                <GradientStop Color="#060531" Offset="0"/>
-                <GradientStop Color="#1B1428" Offset="0.75"/>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#121212" Offset="0"/>
+                <GradientStop Color="#1E3A5F" Offset="0.6"/>
             </LinearGradientBrush>
         </Border.Background>
-        
+
         <Grid Cursor="Hand">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
@@ -78,7 +78,7 @@
                             </Border>
                         </ControlTemplate>
                     </Button.Template>
-                    
+
                 </Button>
                 <Button x:Name="btnCerrar" 
                         BorderThickness="0"
@@ -119,31 +119,38 @@
                         Orientation="Vertical"
                         Margin="0,35,0,0">
 
-                <Image Source="/Images/bomba.png"
-                       Width="100"
-                       Height="100">
 
-                </Image>
 
-                <TextBlock Text="Laboratorio Diesel de Guasave"
+                <Image Source ="/Images/TRACTOR_V2.png" Stretch="Fill" Height="100" Width="106"/>
+
+
+
+                <TextBlock Text="Laboratorio"
+                    Foreground="White"
+                    FontSize="23"
+                    FontWeight="Medium"
+                    TextWrapping="Wrap"
+                    FontFamily="Montserrat"
+                    TextAlignment="Center"
+                           />
+
+                <TextBlock Text="Diesel de Guasave"
                            Foreground="White"
                            FontSize="18"
                            FontWeight="Medium"
                            TextWrapping="Wrap"
                            FontFamily="Montserrat"
-                           Margin="0,10,0,0"
-                           HorizontalAlignment="Left">
-                </TextBlock>
+                           Margin="0,5,0,0"
+                           TextAlignment="Center"/>
 
                 <TextBlock Text="Usuario"
-                           Foreground="DarkGray"
-                           FontSize="15"
+                           Foreground="White"
+                           FontSize="19"
                            FontWeight="Medium"
                            TextWrapping="Wrap"
                            FontFamily="Montserrat"
-                           Margin="0,50,0,0"
-                           >
-                </TextBlock>
+                           Margin="0,30,0,0"
+                           />
 
                 <TextBox x:Name="txtUsuario"
                          FontSize="13"
@@ -159,21 +166,20 @@
                          Padding="20,0,0,0">
 
                     <TextBox.Background>
-                        <ImageBrush ImageSource="/Images/usuario (1).png "
+                        <ImageBrush ImageSource="/Images/icon_user.png"
                                     Stretch="None"
                                     AlignmentX="Left"/>
                     </TextBox.Background>
                 </TextBox>
-                
+
                 <TextBlock Text="Contraseña"
-                           Foreground="DarkGray"
-                           FontSize="15"
+                           Foreground="White"
+                           FontSize="19"
                            FontWeight="Medium"
                            TextWrapping="Wrap"
                            FontFamily="Montserrat"
-                           Margin="0,40,0,0"
-                           >
-                </TextBlock>
+                           Margin="0,20,0,0"
+                           />
                 <PasswordBox x:Name="txtContrasena"
                          FontSize="13"
                          FontWeight="Medium"
@@ -188,12 +194,13 @@
                          Padding="20,0,0,0">
 
                     <PasswordBox.Background>
-                        <ImageBrush ImageSource="/Images/bloquear (1).png "
+                        <ImageBrush ImageSource="/Images/icon_password.png"
                                     Stretch="None"
                                     AlignmentX="Left"/>
                     </PasswordBox.Background>
 
                 </PasswordBox>
+                <Label Content="Aun no tienes una cuenta? Registrate!" Foreground="#81969c"/>
 
                 <Button x:Name="btnLogin"         
                         BorderThickness="0"
@@ -207,7 +214,7 @@
                         Click="btnLogin_Click">
 
                     <Button.Style>
-                        <Style TargetType="Button">
+                        <Style TargetType="{x:Type Button}">
                             <Setter Property="Background" Value="#462AD8"/>
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
@@ -218,7 +225,7 @@
                     </Button.Style>
 
                     <Button.Template>
-                        <ControlTemplate TargetType="Button">
+                        <ControlTemplate TargetType="{x:Type Button}">
                             <Border Height="40" Width="150"
                                     CornerRadius="20"
                                     Background="{TemplateBinding Background}">
@@ -230,10 +237,13 @@
 
                 </Button>
 
+
             </StackPanel>
+            <Image Margin="525,328,249,166" Grid.Row="1" Source="/Images/icon_mostrar.png" Stretch="Fill" RenderTransformOrigin="-11.344,3.531"/>
+            <Image Margin="546,328,228,166" Grid.Row="1" Source="/Images/icon_ocultar.png" Stretch="Fill" RenderTransformOrigin="0.406,2.031"/>
 
 
-           
+
         </Grid>
     </Border>
 
