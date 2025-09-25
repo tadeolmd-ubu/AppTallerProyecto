@@ -4,6 +4,11 @@
              xmlns:local="clr-namespace:AppTaller"
              StartupUri="/Views/FrmLogin.xaml">
     <Application.Resources>
-        <ResourceDictionary Source="/Styles/Colores.xaml"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/Colores.xaml"/>
+                <ResourceDictionary Source="/Styles/BotonesStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

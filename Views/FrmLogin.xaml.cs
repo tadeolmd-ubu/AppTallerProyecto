@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AppTaller.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -38,10 +39,50 @@ namespace AppTaller.Views
         {
             this.Close();
         }
-
+        int x = 3;
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
 
+           
+
+            //lo que va a ingresar el usuario
+            int.TryParse(txtUsuario.Text, out int id);
+
+            string password = txtContrasena.Password;
+          
+
+                //se crea una instania de login para poder usar el metodo de validar el usuario
+                Login login = new Login();
+                //se valida si existe
+                if (login.ValidarUsuario(id, password))
+                {
+                 
+                    //en caso de existi, muestra el menu y oculta el login
+                    FrmMenuPrincipal mp = new FrmMenuPrincipal();
+                    mp.Show();
+
+                    this.Hide();
+                }
+                else
+                {
+                    //sino pos dice que es incorrecto algo y se le resta uno al limite de intentos
+                    x--;
+                    MessageBox.Show($"Usuario o contraseña incorrectos, le quedan {x} intentos.");
+                    
+                }
+           
+
+            if (x == 0) { 
+                txtContrasena.IsEnabled = false;
+                txtUsuario.IsEnabled = false;
+                btnLogin.IsEnabled = false;
+                MessageBox.Show("Limite de intentos alcanzados.");
+            }
+
+            //FrmMenuPrincipal menu = new FrmMenuPrincipal();
+            //menu.Show();
+
+            //this.Hide();
         }
     }
 }
