@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AppTaller.Views"
+        xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         mc:Ignorable="d"
         Title="FrmMenuPrincipal" Height="700" Width="1300"
         WindowStyle="None"
@@ -43,6 +44,31 @@
                     </LinearGradientBrush>
                 </Border.Background>
             </Border>
+            <StackPanel>
+
+                <StackPanel Orientation="Horizontal"
+                            Height="35"
+                            Margin="15,25,0,40">
+
+                    <Image Source="/Images/bomba.png"/>
+                    <TextBlock Text="Laboratorio Diesel"
+                               FontSize="14"
+                               FontFamily="montserrat"
+                               Foreground="White"
+                               FontWeight="Medium"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+            </StackPanel>
+            
+            <!--botones de la barra de la izqiuerda-->
+            <RadioButton Style="{StaticResource menuBoton}"
+                         Tag="{StaticResource color1}">
+                <StackPanel Orientation="Horizontal">
+                    
+                </StackPanel>
+                
+            </RadioButton>
+            
             
             <!--Donde van a ir los forms-->
             <Border CornerRadius="0,10,10,0"
