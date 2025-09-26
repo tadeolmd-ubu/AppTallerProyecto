@@ -58,8 +58,12 @@ namespace AppTaller.Views
                 {
                  
                     //en caso de existi, muestra el menu y oculta el login
-                    FrmMenuPrincipal mp = new FrmMenuPrincipal();
-                    mp.Show();
+                    //FrmMenuPrincipal mp = new FrmMenuPrincipal();
+                    //mp.Show();
+
+
+                FrmUsuario fu= new FrmUsuario();
+                fu.Show();
 
                     this.Hide();
                 }
@@ -83,6 +87,11 @@ namespace AppTaller.Views
             //menu.Show();
 
             //this.Hide();
+        }
+
+        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+
         }
     }
 }

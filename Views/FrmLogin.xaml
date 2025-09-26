@@ -25,7 +25,7 @@
             </LinearGradientBrush>
         </Border.Background>
 
-        <Grid Cursor="Hand">
+        <Grid Cursor="Hand" MouseDown="Grid_MouseDown">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition/>
