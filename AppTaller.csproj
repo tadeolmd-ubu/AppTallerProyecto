@@ -233,6 +233,9 @@
     <Compile Include="Model\Usuario.cs" />
     <Compile Include="Services\RolService.cs" />
     <Compile Include="Services\UsuarioService.cs" />
+    <Compile Include="Views\FrmBusqueda.xaml.cs">
+      <DependentUpon>FrmBusqueda.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\FrmLogin.xaml.cs">
       <DependentUpon>FrmLogin.xaml</DependentUpon>
     </Compile>
@@ -257,6 +260,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Images\borrar.png" />
+    <Resource Include="Images\buscar.png" />
     <Resource Include="Images\icon_search.png" />
     <Resource Include="Images\icon_logout.png" />
     <Resource Include="Images\icon_password.png" />
@@ -288,6 +293,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\Colores.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FrmBusqueda.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

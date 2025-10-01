@@ -10,8 +10,6 @@ namespace AppTaller.Services
 {
     internal class UsuarioService
     {
-
-
         // CREATE
         public void CrearUsuario(Usuario usuario)
         {
@@ -21,6 +19,37 @@ namespace AppTaller.Services
                 context.SaveChanges();
             }
         }
+
+        public void ActualizarUsuario(Usuario usuario)
+        {
+            using (var context = new efAppDbContext())
+            {
+                context.Usuario.Update(usuario);
+                context.SaveChanges();
+            }
+        }
+
+
+        public void CrearOActualizarUsuario(Usuario usuario) {
+
+            using (var context = new efAppDbContext()) {
+
+                var existe = context.Usuario.FirstOrDefault(u => u.id == usuario.id);
+
+                if (existe == null)
+                {
+                    CrearUsuario(usuario);
+                }
+                else {
+                    ActualizarUsuario(usuario);
+                }
+                context.SaveChanges();
+            }
+
+
+        }
+
+
 
         // READ (todos)
         public List<Usuario> ObtenerUsuarios()
@@ -41,14 +70,7 @@ namespace AppTaller.Services
         }
 
         // UPDATE
-        public void ActualizarUsuario(Usuario usuario)
-        {
-            using (var context = new efAppDbContext())
-            {
-                context.Usuario.Update(usuario);
-                context.SaveChanges();
-            }
-        }
+     
 
         // DELETE
         public void EliminarUsuario(int id)
