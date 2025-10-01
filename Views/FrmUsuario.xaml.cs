@@ -15,13 +15,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+
+
 namespace AppTaller.Views
 {
     /// <summary>
     /// Lógica de interacción para FrmUsuario.xaml
     /// </summary>
     public partial class FrmUsuario : Window
-    {
+    { 
+        
+        bool existe;
         public FrmUsuario()
         {
             InitializeComponent();
@@ -35,9 +39,9 @@ namespace AppTaller.Views
             try
             {
                 // Crear objeto usuario con los datos del formulario
-                var usuario = new Usuario
+                Usuario usuario = new Usuario
                 {
-                    id = 1004,
+                    id = 1006,
                     nombre = txtNombre.Text,
                     correo = txtCorreo.Text,
                     contrasena = txtContrasena.Password,
@@ -46,13 +50,14 @@ namespace AppTaller.Views
                     idRol = int.Parse(idRol.Text)
                 };
 
-                using (var context = new efAppDbContext())
-                {
-                    context.Usuario.Add(usuario);
-                    context.SaveChanges();
-                }
+                var service = new Services.UsuarioService();
+                service.CrearOActualizarUsuario(usuario);
 
-                MessageBox.Show("Usuario guardado con éxito");
+                LimpiarCampos();
+
+                MessageBox.Show("Operacion exitosa");
+               
+
             }
             catch (Exception ex)
             {
@@ -85,5 +90,58 @@ namespace AppTaller.Views
         {
             this.Close();
         }
+
+        private void btnBuscar_Click(object sender, RoutedEventArgs e)
+        {
+            var service = new Services.UsuarioService();
+            var usuarios = service.ObtenerUsuarios(); // List<Usuario>
+
+            // Los nombres deben coincidir EXACTAMENTE con las propiedades de Usuario
+            string[] columnas = { "id", "nombre", "correo", "telefono", "estatus", "idRol" };
+
+            var ventana = new FrmBusqueda("Búsqueda de Usuarios", usuarios, columnas);
+
+            if (ventana.ShowDialog() == true)
+            {
+                var usuarioSeleccionado = ventana.seleccionado as Usuario;
+                if (usuarioSeleccionado != null)
+                {
+                    txtId.Text = usuarioSeleccionado.id.ToString();
+                    txtNombre.Text = usuarioSeleccionado.nombre;
+                    txtCorreo.Text = usuarioSeleccionado.correo;
+                    txtTelefono.Text = usuarioSeleccionado.telefono;
+                    
+                }
+            }
+        }
+
+        private void btnBorrar_Click(object sender, RoutedEventArgs e)
+        {
+            try {
+
+                Services.UsuarioService usuarioService = new Services.UsuarioService();
+                usuarioService.EliminarUsuario(int.Parse(txtId.Text));
+
+                MessageBox.Show("Usuario borrado exitosamente");
+                LimpiarCampos();
+            }
+            catch (Exception ex){
+
+                MessageBox.Show("Error al borrar: " + ex.Message);
+            }
+        }
+
+        // Método de instancia
+        private void LimpiarCampos()
+        {
+            txtId.Text = "";
+            txtNombre.Text = "";
+            txtCorreo.Text = "";
+            txtTelefono.Text = "";
+            txtContrasena.Password = "";
+            estatus.IsChecked = false;
+            idRol.SelectedIndex = -1;
+        }
+
     }
 }

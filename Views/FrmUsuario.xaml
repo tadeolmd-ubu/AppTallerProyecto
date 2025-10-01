@@ -91,8 +91,8 @@ VerticalContentAlignment="Center" Background="{x:Null}"
             VerticalContentAlignment="Center" Background="{x:Null}"
 
                      />
-            <Button x:Name="btnGuardar" Content="GUARDAR" HorizontalAlignment="Left" Margin="418,347,0,0" VerticalAlignment="Top" Background="#FFD6A04A" Foreground="GhostWhite" FontWeight="ExtraBold" Width="96" Height="31" Click="Button_Click"/>
-            <Button Content="CANCELAR" HorizontalAlignment="Left" Margin="531,347,0,0" VerticalAlignment="Top" Background="#FFD6504A" Foreground="GhostWhite" FontWeight="ExtraBold" Width="96" Height="31" Click="Button_Click_1"/>
+            <Button x:Name="btnGuardar" Content="GUARDAR" HorizontalAlignment="Left" Margin="466,347,0,0" VerticalAlignment="Top" Background="#FFD6A04A" Foreground="GhostWhite" FontWeight="ExtraBold" Width="96" Height="31" Click="Button_Click"/>
+            <Button Content="CANCELAR" HorizontalAlignment="Left" Margin="621,347,0,0" VerticalAlignment="Top" Background="#FFD6504A" Foreground="GhostWhite" FontWeight="ExtraBold" Width="96" Height="31" Click="Button_Click_1"/>
             <TextBox x:Name="txtTelefono" HorizontalAlignment="Left" Margin="466,133,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="252"
                 
             FontSize="13"
@@ -116,6 +116,40 @@ VerticalContentAlignment="Center" Background="{x:Null}"
                       Margin="487,253,163,167"/>
             <Label Content="Id del rol" HorizontalAlignment="Left" Margin="500,222,0,0" VerticalAlignment="Top" Foreground="GhostWhite" FontSize="16"
             FontFamily="Montserrat"/>
+            <Button x:Name="btnBuscar"
+                 
+                    HorizontalAlignment="Left"
+                    Margin="661,234,0,0" 
+                    VerticalAlignment="Top"
+                    Background="Transparent"
+                    BorderThickness="0" Height="47" Width="57" Click="btnBuscar_Click"
+                    >
+                <Image Source="/Images/buscar.png" Stretch="Uniform" Height="35" Width="35" />
+            </Button>
+            <Label Content="Numero de usuario" HorizontalAlignment="Left" Margin="461,32,0,0" VerticalAlignment="Top" Foreground="GhostWhite" FontSize="16"/>
+            <TextBox x:Name="txtId" HorizontalAlignment="Left" Margin="466,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="252"
+                
+                FontSize="13"
+                FontWeight="Medium"
+                FontFamily="Montserrat"
+                Foreground="White"
+                CaretBrush="LightGray"
+                BorderBrush="DarkGray"
+                BorderThickness="0,0,0,2"
+                Height="28"
+                VerticalContentAlignment="Center" Background="{x:Null}"
+/>
+            <Button x:Name="btnBorrar"
+                 
+                HorizontalAlignment="Left"
+                Margin="660,287,0,0" 
+                VerticalAlignment="Top"
+                Background="Transparent"
+                BorderThickness="0" Height="47" Width="57" Click="btnBorrar_Click"
+                    >
+                <Image Source="/Images/borrar.png" Stretch="Uniform" Height="35" Width="35" />
+            </Button>
+
 
         </Grid>
     </Border>

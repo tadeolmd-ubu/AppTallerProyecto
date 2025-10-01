@@ -12,7 +12,6 @@ namespace AppTaller.Services
 {
     internal class RolService
     {
-
         public List<catRol> ObtenerRoles()
         {
             using (var context = new efAppDbContext())

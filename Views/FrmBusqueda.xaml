@@ -1,0 +1,146 @@
+﻿<Window x:Class="AppTaller.Views.FrmBusqueda"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AppTaller.Views"
+        mc:Ignorable="d"
+        Title="FrmBusqueda" Height="550" Width="800"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True"
+        >
+    <Border
+     CornerRadius="20"
+     BorderBrush="DarkSlateGray"
+     BorderThickness="5">
+
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#121212" Offset="0"/>
+                <GradientStop Color="#1E3A5F" Offset="0.6"/>
+            </LinearGradientBrush>
+        </Border.Background>
+
+        <Grid Cursor="Hand" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <DataGrid x:Name="dataGridBusqueda"
+                      Grid.Row="1"
+                      AutoGenerateColumns="False"
+                      Background="#1E3A5F"
+                      Foreground="Black"
+                      BorderBrush="Gray"
+                      CanUserAddRows="False"
+                      CanUserDeleteRows="False"
+                      IsReadOnly="True"
+                      RowHeight="30"
+                      FontFamily="Montserrat"
+                      FontSize="12"
+                      Margin="10"
+                      SelectionMode="Single">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="100"/>
+                    <DataGridTextColumn Header="Nombre" Binding="{Binding Nombre}" Width="200"/>
+                    <DataGridTextColumn Header="Correo" Binding="{Binding Correo}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+
+            <Grid>
+
+
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="25"/>
+                    <ColumnDefinition Width="25"/>
+                    <ColumnDefinition Width="5"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Login"
+                        Foreground="DarkGray"
+                        FontSize="10"
+                        FontFamily="Montserrat"
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Margin="10,0,0,0"/>
+
+                <Button x:Name="btnMinimizar"         
+                     BorderThickness="0"
+                     Content="-"
+                     Foreground="White"
+                     FontSize="16"
+                     FontFamily="Montserrat"
+                     Cursor="Hand"
+                     Grid.Column="1"
+                     Click="btnMinimizar_Click"  HorizontalAlignment="Center" Margin="0,6,0,6">
+
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#28AEED"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#278BEF"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Height="18" Width="18"
+                                 CornerRadius="9"
+                                 Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="Center"
+                                               HorizontalAlignment="center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+
+                </Button>
+                <Button x:Name="btnCerrar" 
+                     BorderThickness="0"
+                     
+                     Foreground="White"
+                     FontSize="16" 
+                     FontFamily="Montserrat" 
+                     Cursor="Hand"
+                     Grid.Column="2"
+                     Click="btnCerrar_Click" HorizontalAlignment="Center" Width="25" Content="x" VerticalAlignment="Center" >
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background"
+                                 Value="#28AEED"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver"
+                                      Value="True">
+                                    <Setter Property="Background"
+                                         Value="#278BEF"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Height="18" Width="18" CornerRadius="9"
+                                 Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="Center"
+                                               HorizontalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+
+            </Grid>
+
+
+
+        </Grid>
+    </Border>
+</Window>
