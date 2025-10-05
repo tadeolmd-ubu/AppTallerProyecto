@@ -41,12 +41,12 @@ namespace AppTaller.Views
                 // Crear objeto usuario con los datos del formulario
                 Usuario usuario = new Usuario
                 {
-                    id = 1006,
+                    id = int.Parse(txtId.Text),
                     nombre = txtNombre.Text,
                     correo = txtCorreo.Text,
                     contrasena = txtContrasena.Password,
                     telefono = txtTelefono.Text,
-                    estatus = estatus.IsChecked ?? false,
+                    estatus = estatus.IsChecked ?? false,                                                           
                     idRol = int.Parse(idRol.Text)
                 };
 
@@ -61,7 +61,7 @@ namespace AppTaller.Views
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al guardar: " + ex.Message);
+                MessageBox.Show("Error al guardar o modificar: " + ex.Message);
             }
         }
 
@@ -89,6 +89,7 @@ namespace AppTaller.Views
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             this.Close();
+            Application.Current.Shutdown();
         }
 
         private void btnBuscar_Click(object sender, RoutedEventArgs e)
@@ -141,6 +142,7 @@ namespace AppTaller.Views
             txtContrasena.Password = "";
             estatus.IsChecked = false;
             idRol.SelectedIndex = -1;
+            txtId.Focus();
         }
 
     }

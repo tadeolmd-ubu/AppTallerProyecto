@@ -23,6 +23,7 @@ namespace AppTaller.EF
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Usuario>().ToTable("Usuario"); // tu tabla es singular
+            modelBuilder.Entity<catRol>().ToTable("catRol");
         }
 
     }

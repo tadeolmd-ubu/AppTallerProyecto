@@ -58,18 +58,41 @@
                                FontWeight="Medium"
                                VerticalAlignment="Center"/>
                 </StackPanel>
+
+                <!--botones de la barra de la izqiuerda-->
+                <RadioButton Style="{StaticResource menuBoton}"
+                             Tag="{StaticResource color1}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="Home" Style="{StaticResource menuBotonIcono}"/>
+                        <TextBlock Text="Inicio" Style="{StaticResource menuBotonTexto}"/>
+                    </StackPanel>
+
+                </RadioButton>
+
+                <RadioButton Style="{StaticResource menuBoton}"
+             Tag="{StaticResource color1}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="CircleUser" Style="{StaticResource menuBotonIcono}"/>
+                        <TextBlock Text="Usuarios" Style="{StaticResource menuBotonTexto}"/>
+                    </StackPanel>
+
+                </RadioButton>
+                <RadioButton Style="{StaticResource menuBoton}"
+             Tag="{StaticResource color1}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="Users" Style="{StaticResource menuBotonIcono}"/>
+                        <TextBlock Text="Clientes" Style="{StaticResource menuBotonTexto}"/>
+                    </StackPanel>
+
+                </RadioButton>
+
+
             </StackPanel>
-            
-            <!--botones de la barra de la izqiuerda-->
-            <RadioButton Style="{StaticResource menuBoton}"
-                         Tag="{StaticResource color1}">
-                <StackPanel Orientation="Horizontal">
-                    
-                </StackPanel>
-                
-            </RadioButton>
-            
-            
+
+
+
+
+
             <!--Donde van a ir los forms-->
             <Border CornerRadius="0,10,10,0"
         Grid.Column="1" MouseDown="Border_MouseDown">
@@ -79,13 +102,56 @@
                         <GradientStop Color="{StaticResource primaryBackColor1}" Offset="1" />
                     </LinearGradientBrush>
                 </Border.Background>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <!--conrol bar-->
+                        <RowDefinition Height="25"/>
+                        <!--contenido-->
+                        <RowDefinition Height="35"/>
+                        <!--formmularis-->
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel x:Name="pnDeControl"
+                                Grid.Row="0"
+                                Orientation="Horizontal"
+                                FlowDirection="RightToLeft"
+                                Background="Transparent"
+                                Margin="0,0,10,0"
+                                MouseLeftButtonDown="pnlDeControl_MouseLeftButtonDown"
+                                MouseEnter="pnDeControl_MouseEnter">
+
+                        <Button x:Name="btnCerrar"
+                                Style="{StaticResource controlBoton}" 
+                                Tag="{StaticResource color4}"
+                                Margin="0,0,5,0"
+                                Padding="10"
+                                Click="btnCerrar_Click">
+                            <fa:IconImage Icon="Xmark" Style="{StaticResource controlBotonIcono}"/>
+                        </Button>
+
+                        <Button x:Name="btnMaximizar"
+                                Style="{StaticResource controlBoton}" 
+                                Tag="{StaticResource color6}"
+                                Margin="0,0,5,0"
+                                Padding="10"
+                                Click="btnMaximizar_Click">
+                            <fa:IconImage Icon="Square" Style="{StaticResource controlBotonIcono}"/>
+                        </Button>
+
+                        <Button x:Name="btnMinimizar"
+                                Style="{StaticResource controlBoton}" 
+                                Tag="{StaticResource color6}"
+                                Margin="0,0,5,0"
+                                Padding="10"
+                                Click="btnMinimizar_Click">
+                            <fa:IconImage Icon="WindowMinimize" Style="{StaticResource controlBotonIcono}"/>
+                        </Button>
+                    </StackPanel>
+                    
+                </Grid>
+                
             </Border>
-
         </Grid>
-
-
-
     </Border>
-
-
 </Window>
