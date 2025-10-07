@@ -26,13 +26,11 @@ namespace AppTaller.Views
         {
             InitializeComponent();
 
-            // Cambiar el título
             this.Title = titulo;
 
             // Limpiar columnas existentes
             dataGridBusqueda.Columns.Clear();
 
-            // Crear columnas dinámicas según los nombres de propiedades
             foreach (var col in columnas)
             {
                 dataGridBusqueda.Columns.Add(new DataGridTextColumn

@@ -11,6 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Runtime;
+using System.Runtime.InteropServices;
+using System.Windows.Interop;
 
 namespace AppTaller.Views
 {
@@ -19,10 +22,15 @@ namespace AppTaller.Views
     /// </summary>
     public partial class FrmMenuPrincipal : Window
     {
+        private UcUsuario _ucUsuario;
         public FrmMenuPrincipal()
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
         }
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -34,6 +42,84 @@ namespace AppTaller.Views
         {
             if (e.LeftButton == MouseButtonState.Pressed)
                 DragMove();
+        }
+
+        private void pnlDeControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            WindowInteropHelper helper = new WindowInteropHelper(this);
+            SendMessage(helper.Handle, 161, (IntPtr)2, IntPtr.Zero);
+        }
+
+        private void pnDeControl_MouseEnter(object sender, MouseEventArgs e)
+        {
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
+        }
+
+        private void btnCerrar_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void btnMaximizar_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.WindowState == WindowState.Normal)
+                this.WindowState = WindowState.Maximized;
+            else this.WindowState = WindowState.Normal;
+        }
+
+        private void btnMinimizar_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+
+
+
+
+
+        //metodo para mostrar los forms dentro del mismo menu 
+
+        private void MostrarFormularioEnMenu(Window formulario)
+        {
+            formulario.Owner = this;
+            formulario.WindowStartupLocation = WindowStartupLocation.Manual;
+            formulario.WindowStyle = WindowStyle.None;
+            formulario.ResizeMode = ResizeMode.NoResize;
+            formulario.ShowInTaskbar = false;
+
+            // Calcular posición dentro del contenedor (relativa al menú principal)
+            Point posicion = contenedorFormularios.PointToScreen(new Point(0, 0));
+
+            formulario.Left = posicion.X;
+            formulario.Top = posicion.Y;
+            formulario.Width = contenedorFormularios.ActualWidth;
+            formulario.Height = contenedorFormularios.ActualHeight;
+
+            formulario.Show();
+
+        }
+
+        private void inicio_Checked(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void Usuario_Checked(object sender, RoutedEventArgs e)
+        {
+            // 1. Instanciar el UserControl (o reutilizar si ya existe)
+            if (_ucUsuario == null)
+            {
+                _ucUsuario = new UcUsuario();
+            }
+
+            // 2. Asignar la instancia al ContentControl en el XAML
+            // Esto hace que el UserControl se muestre dentro de tu FrmMenuPrincipal
+            contenedorFormularios.Content = _ucUsuario;
+
+        }
+
+        private void Clientes_Checked(object sender, RoutedEventArgs e)
+        {
+            //ContenidoPrincipal.Content = new FrmCliente();
         }
     }
 }

@@ -58,18 +58,47 @@
                                FontWeight="Medium"
                                VerticalAlignment="Center"/>
                 </StackPanel>
+
+                <!--botones de la barra de la izqiuerda-->
+                <RadioButton x:Name="chkInicio"
+                             Style="{StaticResource menuBoton}"
+                             Tag="{StaticResource color1}"
+                             Checked="inicio_Checked">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="Home" Style="{StaticResource menuBotonIcono}"/>
+                        <TextBlock Text="Inicio" Style="{StaticResource menuBotonTexto}"/>
+                    </StackPanel>
+
+                </RadioButton>
+
+                <RadioButton x:Name="chkUsuarios"
+                             Style="{StaticResource menuBoton}"
+                             Tag="{StaticResource color1}"
+                             Checked="Usuario_Checked">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="CircleUser" Style="{StaticResource menuBotonIcono}"/>
+                        <TextBlock Text="Usuarios" Style="{StaticResource menuBotonTexto}"/>
+                    </StackPanel>
+
+                </RadioButton>
+                <RadioButton x:Name="chkClientes" 
+                             Style="{StaticResource menuBoton}"
+                             Tag="{StaticResource color1}"
+                             Checked="Clientes_Checked">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="Users" Style="{StaticResource menuBotonIcono}"/>
+                        <TextBlock Text="Clientes" Style="{StaticResource menuBotonTexto}"/>
+                    </StackPanel>
+
+                </RadioButton>
+
+
             </StackPanel>
-            
-            <!--botones de la barra de la izqiuerda-->
-            <RadioButton Style="{StaticResource menuBoton}"
-                         Tag="{StaticResource color1}">
-                <StackPanel Orientation="Horizontal">
-                    
-                </StackPanel>
-                
-            </RadioButton>
-            
-            
+
+
+
+
+
             <!--Donde van a ir los forms-->
             <Border CornerRadius="0,10,10,0"
         Grid.Column="1" MouseDown="Border_MouseDown">
@@ -79,13 +108,144 @@
                         <GradientStop Color="{StaticResource primaryBackColor1}" Offset="1" />
                     </LinearGradientBrush>
                 </Border.Background>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <!--conrol bar-->
+                        <RowDefinition Height="25"/>
+                        <!--contenido-->
+                        <RowDefinition Height="35"/>
+                        <!--formmularis-->
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <!--Barra de control-->
+                    <StackPanel x:Name="pnDeControl"
+                                Grid.Row="0"
+                                Orientation="Horizontal"
+                                FlowDirection="RightToLeft"
+                                Background="Transparent"
+                                Margin="0,0,10,0"
+                                MouseLeftButtonDown="pnlDeControl_MouseLeftButtonDown"
+                                MouseEnter="pnDeControl_MouseEnter">
+
+                        <Button x:Name="btnCerrar"
+                                Style="{StaticResource controlBoton}" 
+                                Tag="{StaticResource color4}"
+                                Margin="0,0,5,0"
+                                Padding="10"
+                                Click="btnCerrar_Click">
+                            <fa:IconImage Icon="Xmark" Style="{StaticResource controlBotonIcono}"/>
+                        </Button>
+
+                        <Button x:Name="btnMaximizar"
+                                Style="{StaticResource controlBoton}" 
+                                Tag="{StaticResource color6}"
+                                Margin="0,0,5,0"
+                                Padding="10"
+                                Click="btnMaximizar_Click">
+                            <fa:IconImage Icon="Square" Style="{StaticResource controlBotonIcono}"/>
+                        </Button>
+
+                        <Button x:Name="btnMinimizar"
+                                Style="{StaticResource controlBoton}" 
+                                Tag="{StaticResource color6}"
+                                Margin="0,0,5,0"
+                                Padding="10"
+                                Click="btnMinimizar_Click">
+                            <fa:IconImage Icon="WindowMinimize" Style="{StaticResource controlBotonIcono}"/>
+                        </Button>
+                    </StackPanel>
+
+                    <!--Captions-->
+                    <Grid Grid.Row="1">
+                        
+                        <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0"
+                                    Orientation="Horizontal"
+                                    VerticalAlignment="Center">
+                            <fa:IconImage Icon="House"
+                                          Height="20"
+                                          Width="20"
+                                          Foreground="{StaticResource titleColor1}"
+                                          Margin="35,0,10,0"/>
+                            <TextBlock Text="Inicio"
+                                       Foreground="{StaticResource titleColor2}"
+                                       FontSize="16"
+                                       FontFamily="Montserrat"
+                                       FontWeight="Medium"
+                                       VerticalAlignment="Center"/>
+                        </StackPanel>
+                        
+                        
+                        <!--Opciones del usuario-->
+
+                        <StackPanel Grid.Column="1"
+                                    Orientation="Horizontal"
+                                    FlowDirection="RightToLeft"
+                                    VerticalAlignment="Center"
+                                    Margin="0,0,10,0">
+                            <Button Style="{StaticResource iconBoton}"
+                                    Tag="{StaticResource color1}">
+
+                                <fa:IconImage Icon="AngleDown" Style="{StaticResource iconBotonIcono}"/>
+
+                            </Button>
+
+                            <TextBlock Text="Pruebas"
+                                       Foreground="{StaticResource titleColor3}"
+                                       FontSize="12"
+                                       VerticalAlignment="Center"/>
+
+                            <Ellipse Height="35"
+                                     Width="35"
+                                     Stroke="{StaticResource color2}"
+                                     StrokeThickness="2"
+                                     Margin="10,0,10,0">
+                                <Ellipse.Fill>
+                                    <ImageBrush ImageSource="/Images/TRACTOR_V2.png"/>
+                                </Ellipse.Fill>
+                                
+                            </Ellipse>
+
+                            <Button Style="{StaticResource iconBoton}"
+                                    Tag="{StaticResource color3}">
+
+                                <fa:IconImage Icon="Clock" Style="{StaticResource iconBotonIcono}"/>
+
+                            </Button>
+                            <Button Style="{StaticResource iconBoton}"
+                                    Tag="{StaticResource color4}">
+
+                                <fa:IconImage Icon="Envelope" Style="{StaticResource iconBotonIcono}"/>
+
+                            </Button>
+                            <Button Style="{StaticResource iconBoton}"
+                                    Tag="{StaticResource color5 }">
+
+                                <fa:IconImage Icon="Bell" Style="{StaticResource iconBotonIcono}"/>
+
+                            </Button>
+
+
+                        </StackPanel>
+                        
+                        
+                        
+                    </Grid>
+                        
+                    <!--Los contenedores-->
+                    <ContentControl x:Name="contenedorFormularios"
+                                    Grid.Row="2"
+                                    Margin="0"  HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"/>
+                    
+                </Grid>
+               
             </Border>
-
         </Grid>
-
-
-
     </Border>
-
-
 </Window>
