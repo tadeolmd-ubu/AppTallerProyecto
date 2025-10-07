@@ -60,8 +60,10 @@
                 </StackPanel>
 
                 <!--botones de la barra de la izqiuerda-->
-                <RadioButton Style="{StaticResource menuBoton}"
-                             Tag="{StaticResource color1}">
+                <RadioButton x:Name="chkInicio"
+                             Style="{StaticResource menuBoton}"
+                             Tag="{StaticResource color1}"
+                             Checked="inicio_Checked">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="Home" Style="{StaticResource menuBotonIcono}"/>
                         <TextBlock Text="Inicio" Style="{StaticResource menuBotonTexto}"/>
@@ -69,16 +71,20 @@
 
                 </RadioButton>
 
-                <RadioButton Style="{StaticResource menuBoton}"
-             Tag="{StaticResource color1}">
+                <RadioButton x:Name="chkUsuarios"
+                             Style="{StaticResource menuBoton}"
+                             Tag="{StaticResource color1}"
+                             Checked="Usuario_Checked">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="CircleUser" Style="{StaticResource menuBotonIcono}"/>
                         <TextBlock Text="Usuarios" Style="{StaticResource menuBotonTexto}"/>
                     </StackPanel>
 
                 </RadioButton>
-                <RadioButton Style="{StaticResource menuBoton}"
-             Tag="{StaticResource color1}">
+                <RadioButton x:Name="chkClientes" 
+                             Style="{StaticResource menuBoton}"
+                             Tag="{StaticResource color1}"
+                             Checked="Clientes_Checked">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="Users" Style="{StaticResource menuBotonIcono}"/>
                         <TextBlock Text="Clientes" Style="{StaticResource menuBotonTexto}"/>
@@ -230,13 +236,15 @@
                         
                         
                     </Grid>
-                    
+                        
                     <!--Los contenedores-->
-                    <ContentControl Content=""
+                    <ContentControl x:Name="contenedorFormularios"
                                     Grid.Row="2"
-                                    Margin="20"/>
+                                    Margin="0"  HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"/>
+                    
                 </Grid>
-                
+               
             </Border>
         </Grid>
     </Border>

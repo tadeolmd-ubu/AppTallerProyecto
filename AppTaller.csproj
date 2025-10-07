@@ -245,6 +245,9 @@
     <Compile Include="Views\FrmUsuario.xaml.cs">
       <DependentUpon>FrmUsuario.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UcUsuario.xaml.cs">
+      <DependentUpon>UcUsuario.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -309,6 +312,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FrmUsuario.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UcUsuario.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

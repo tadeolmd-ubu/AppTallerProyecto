@@ -1,5 +1,4 @@
-﻿using AppTaller.EF;
-using AppTaller.Model;
+﻿using AppTaller.Model;
 using AppTaller.Services;
 using System;
 using System.Collections.Generic;
@@ -13,25 +12,23 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace AppTaller.Views
 {
     /// <summary>
-    /// Lógica de interacción para FrmUsuario.xaml
+    /// Lógica de interacción para UcUsuario.xaml
     /// </summary>
-    public partial class FrmUsuario : Window
+    public partial class UcUsuario : UserControl
     {
-        bool existe;
-        public FrmUsuario()
+        public UcUsuario()
         {
             InitializeComponent();
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
             CargarRoles();
         }
+
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -63,17 +60,9 @@ namespace AppTaller.Views
             }
         }
 
-        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-                DragMove();
-        }
+      
 
-        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-                DragMove();
-        }
+    
         private void CargarRoles()
         {
             RolService servicio = new RolService();
@@ -86,8 +75,8 @@ namespace AppTaller.Views
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            this.Close();
-            Application.Current.Shutdown();
+
+            LimpiarCampos();
         }
 
         private void btnBuscar_Click(object sender, RoutedEventArgs e)
@@ -139,11 +128,15 @@ namespace AppTaller.Views
             txtNombre.Text = "";
             txtCorreo.Text = "";
             txtTelefono.Text = "";
-            txtContrasena.Password = "";
+            txtContrasena.Password= "";
             estatus.IsChecked = false;
             idRol.SelectedIndex = -1;
             txtId.Focus();
         }
 
+        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }
