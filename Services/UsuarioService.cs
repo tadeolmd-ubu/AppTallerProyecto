@@ -11,24 +11,19 @@ namespace AppTaller.Services
     internal class UsuarioService
     {
         // CREATE
-        public void CrearUsuario(Usuario usuario)
-        {
-            using (var context = new efAppDbContext())
-            {
+        public void CrearUsuario(Usuario usuario) {
+            using (var context = new efAppDbContext()) {
                 context.Usuario.Add(usuario);
                 context.SaveChanges();
             }
         }
 
-        public void ActualizarUsuario(Usuario usuario)
-        {
-            using (var context = new efAppDbContext())
-            {
+        public void ActualizarUsuario(Usuario usuario) {
+            using (var context = new efAppDbContext()) {
                 context.Usuario.Update(usuario);
                 context.SaveChanges();
             }
         }
-
 
         public void CrearOActualizarUsuario(Usuario usuario) {
 
@@ -36,8 +31,7 @@ namespace AppTaller.Services
 
                 var existe = context.Usuario.FirstOrDefault(u => u.id == usuario.id);
 
-                if (existe == null)
-                {
+                if (existe == null) {
                     CrearUsuario(usuario);
                 }
                 else {
@@ -45,41 +39,27 @@ namespace AppTaller.Services
                 }
                 context.SaveChanges();
             }
-
-
         }
 
-
-
         // READ (todos)
-        public List<Usuario> ObtenerUsuarios()
-        {
-            using (var context = new efAppDbContext())
-            {
+        public List<Usuario> ObtenerUsuarios() {
+            using (var context = new efAppDbContext()) {
                 return context.Usuario.ToList();
             }
         }
 
         // READ (por id)
-        public Usuario ObtenerPorId(int id)
-        {
-            using (var context = new efAppDbContext())
-            {
+        public Usuario ObtenerPorId(int id) {
+            using (var context = new efAppDbContext()) {
                 return context.Usuario.FirstOrDefault(u => u.id == id);
             }
         }
-
-        // UPDATE
-     
-
+    
         // DELETE
-        public void EliminarUsuario(int id)
-        {
-            using (var context = new efAppDbContext())
-            {
+        public void EliminarUsuario(int id) {
+            using (var context = new efAppDbContext()){
                 var usuario = context.Usuario.FirstOrDefault(u => u.id == id);
-                if (usuario != null)
-                {
+                if (usuario != null) {
                     context.Usuario.Remove(usuario);
                     context.SaveChanges();
                 }
