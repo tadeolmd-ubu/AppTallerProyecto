@@ -22,7 +22,9 @@ namespace AppTaller.Views
     /// </summary>
     public partial class FrmMenuPrincipal : Window
     {
+        
         private UcUsuario _ucUsuario;
+        private UcInicio _ucInicio;
         public FrmMenuPrincipal()
         {
             InitializeComponent();
@@ -97,10 +99,17 @@ namespace AppTaller.Views
             formulario.Show();
 
         }
-
+        
         private void inicio_Checked(object sender, RoutedEventArgs e)
         {
-            
+            if (_ucInicio == null)
+            {
+                _ucInicio = new UcInicio();
+            }
+
+            // 2. Asignar la instancia al ContentControl en el XAML
+            // Esto hace que el UserControl se muestre dentro de tu FrmMenuPrincipal
+            contenedorFormularios.Content = _ucInicio;
         }
 
         private void Usuario_Checked(object sender, RoutedEventArgs e)
@@ -116,7 +125,7 @@ namespace AppTaller.Views
             contenedorFormularios.Content = _ucUsuario;
 
         }
-
+         
         private void Clientes_Checked(object sender, RoutedEventArgs e)
         {
             //ContenidoPrincipal.Content = new FrmCliente();

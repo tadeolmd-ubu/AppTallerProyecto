@@ -39,7 +39,7 @@
 
     </UserControl.Resources>
 
-    <Grid MouseDown="Grid_MouseDown" Background="#060531">
+    <Grid MouseDown="Grid_MouseDown" Background="#060531" Height="524" Width="819">
 
         <Grid Margin="30">
             <Grid.RowDefinitions>
@@ -48,7 +48,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0" Margin="0,0,0,20">
+            <Grid Grid.Row="0" Margin="10,0,0,20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
@@ -63,9 +63,9 @@
                     </StackPanel>
                 </StackPanel>
 
-                <StackPanel Orientation="Vertical" Margin="81,0,0,0" Grid.Column="1" HorizontalAlignment="Left" Width="250">
-                    <Label Content="Número de usuario" FontSize="14" Padding="0"/>
-                    <TextBox x:Name="txtId" />
+                <StackPanel Orientation="Vertical" Margin="10,84,281,-84" Grid.Column="1" >
+                    <Label Content="Número de usuario" FontSize="14" Padding="0" Width="122"/>
+                    <TextBox x:Name="txtId" Width="112" />
                 </StackPanel>
 
             </Grid>
@@ -90,7 +90,7 @@
                     <PasswordBox x:Name="txtContrasena2" Margin="0,0,0,0"/>
                 </StackPanel>
 
-                <StackPanel Grid.Column="1" Margin="50,0,0,0">
+                <StackPanel Grid.Column="1" Margin="199,0,-149,0">
                     <Label Content="Teléfono del Usuario" FontSize="14" Padding="0" Margin="0,0,0,5"/>
                     <TextBox x:Name="txtTelefono"/>
 
