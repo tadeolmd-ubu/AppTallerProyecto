@@ -80,26 +80,15 @@ namespace AppTaller.Views
 
         //metodo para mostrar los forms dentro del mismo menu 
 
-        private void MostrarFormularioEnMenu(Window formulario)
-        {
-            formulario.Owner = this;
-            formulario.WindowStartupLocation = WindowStartupLocation.Manual;
-            formulario.WindowStyle = WindowStyle.None;
-            formulario.ResizeMode = ResizeMode.NoResize;
-            formulario.ShowInTaskbar = false;
+        private void MostrarFormularioEnMenu(UserControl control){
+            // Ajusta el tamaño del UserControl al contenedor
+            control.HorizontalAlignment = HorizontalAlignment.Stretch;
+            control.VerticalAlignment = VerticalAlignment.Stretch;
 
-            // Calcular posición dentro del contenedor (relativa al menú principal)
-            Point posicion = contenedorFormularios.PointToScreen(new Point(0, 0));
-
-            formulario.Left = posicion.X;
-            formulario.Top = posicion.Y;
-            formulario.Width = contenedorFormularios.ActualWidth;
-            formulario.Height = contenedorFormularios.ActualHeight;
-
-            formulario.Show();
-
+            // Muestra el control dentro del ContentControl
+            contenedorFormularios.Content = control;
         }
-        
+
         private void inicio_Checked(object sender, RoutedEventArgs e)
         {
             if (_ucInicio == null)

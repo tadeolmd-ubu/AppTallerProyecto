@@ -3,6 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              
+             Width="800"
+             Height="550"
+             
              Background="#060531" >
     <UserControl.Resources>
         <Style TargetType="Label">
@@ -39,7 +42,7 @@
 
     </UserControl.Resources>
 
-    <Grid MouseDown="Grid_MouseDown" Background="#060531" Height="524" Width="819">
+    <Grid MouseDown="Grid_MouseDown" Background="#0A003A" Height="524" Width="819">
 
         <Grid Margin="30">
             <Grid.RowDefinitions>
@@ -106,7 +109,7 @@
 
                         <StackPanel Grid.Column="0">
                             <Label Content="Id del rol" FontSize="14" Padding="0" Margin="0,0,0,5"/>
-                            <ComboBox x:Name="idRol" DisplayMemberPath="Id" SelectedValuePath="Id"/>
+                            <ComboBox x:Name="idRol" DisplayMemberPath="Id" SelectedValuePath="Id" Foreground="Black"/>
                         </StackPanel>
 
                         <Button x:Name="btnBuscar" Grid.Column="1" VerticalAlignment="Bottom" Click="btnBuscar_Click"
@@ -125,10 +128,10 @@
 
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,30,0,0">
                 <Button x:Name="btnGuardar" Content="GUARDAR" Click="Button_Click"
-                        Background="#FFD6A04A" Foreground="GhostWhite" FontWeight="ExtraBold"
+                        Style="{StaticResource controlBoton}"
                         Width="120" Height="35" Margin="0,0,15,0"/>
                 <Button Content="CANCELAR" Click="Button_Click_1"
-                        Background="#FFD6504A" Foreground="GhostWhite" FontWeight="ExtraBold"
+                        Style="{StaticResource controlBoton}"
                         Width="120" Height="35"/>
             </StackPanel>
 

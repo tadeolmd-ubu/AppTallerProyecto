@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="AppTaller.Views.UcClientes"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AppTaller.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="GhostWhite"/>
+            <Setter Property="FontFamily" Value="Montserrat"/>
+        </Style>
+
+        <Style TargetType="{x:Type Control}" x:Key="BaseFormStyle">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="FontFamily" Value="Montserrat"/>
+            <Setter Property="Foreground" Value="White"/>
+
+            <Setter Property="BorderBrush" Value="DarkGray"/>
+            <Setter Property="BorderThickness" Value="0,0,0,2"/>
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="{x:Null}"/>
+            <Setter Property="Width" Value="252"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
+        </Style>
+
+        <Style TargetType="TextBox" BasedOn="{StaticResource BaseFormStyle}"/>
+
+        <Style TargetType="PasswordBox" BasedOn="{StaticResource BaseFormStyle}">
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="ComboBox" BasedOn="{StaticResource BaseFormStyle}">
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="#1B1428"/>
+            <Setter Property="Margin" Value="0"/>
+        </Style>
+
+    </UserControl.Resources>
+
+    <Grid Background="#060531" HorizontalAlignment="Left" Width="800">
+        <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="0,0,531,390">
+            <Image Source="/Images/TRACTOR_V2.png" Stretch="Fill" Height="60" Width="60" Margin="0,0,15,0"/>
+            <StackPanel VerticalAlignment="Center">
+                <Label Content="Clientes" FontSize="28" FontWeight="Bold" Padding="0" Foreground="{StaticResource titleColor1}"/>
+                <Label Content="Completa el formulario para crear el usuario" Foreground="#FF81969C" FontSize="10" Padding="0,2,0,0"/>
+            </StackPanel>
+        </StackPanel>
+        <Label Content="Id del cliente" HorizontalAlignment="Left" Margin="57,89,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtIdCliente" HorizontalAlignment="Left" Margin="57,113,0,0" TextWrapping="Wrap" Text="&#xD;&#xA;" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Nombre del cliente" HorizontalAlignment="Left" Margin="57,149,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtNombreCluiente" HorizontalAlignment="Left" Margin="57,173,0,0" TextWrapping="Wrap" Text="&#xA;" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Telefono" HorizontalAlignment="Left" Margin="57,0,0,0" VerticalAlignment="Center"/>
+        <TextBox x:Name="txtTelefono" HorizontalAlignment="Left" Margin="57,236,0,0" TextWrapping="Wrap" Text="&#xA;" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Direccion" HorizontalAlignment="Left" Margin="500,37,0,0" VerticalAlignment="Top" FontSize="20"/>
+        <TextBox x:Name="txtCiudad" HorizontalAlignment="Left" Margin="501,101,0,0" TextWrapping="Wrap" Text="&#xA;" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Ciudad" HorizontalAlignment="Left" Margin="501,77,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtColonia" HorizontalAlignment="Left" Margin="501,161,0,0" TextWrapping="Wrap" Text="&#xA;" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Colonia" HorizontalAlignment="Left" Margin="501,137,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtCodigoPostal" HorizontalAlignment="Left" Margin="501,225,0,0" TextWrapping="Wrap" Text="&#xA;" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Codigo postal" HorizontalAlignment="Left" Margin="501,201,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtCalle" HorizontalAlignment="Left" Margin="501,291,0,0" TextWrapping="Wrap" Text="&#xA;" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Calle" HorizontalAlignment="Left" Margin="501,267,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtNumeroCasa" HorizontalAlignment="Left" Margin="501,358,0,0" TextWrapping="Wrap" Text="&#xA;" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Numero de Casa" HorizontalAlignment="Left" Margin="501,334,0,0" VerticalAlignment="Top"/>
+
+
+    </Grid>
+</UserControl>
