@@ -16,6 +16,7 @@ namespace AppTaller.EF
         public DbSet<Cliente> Cliente { get; set; }
         public DbSet<catRol> catRol { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
+        public DbSet<Direccion> Direccion { get; set; }
 
         //Cadena de conexion
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -28,6 +29,7 @@ namespace AppTaller.EF
             modelBuilder.Entity<Usuario>().ToTable("Usuario"); 
             modelBuilder.Entity<catRol>().ToTable("catRol");
             modelBuilder.Entity<Cliente>().ToTable("Cliente");
+            modelBuilder.Entity<Direccion>().ToTable("Direccion");
         }
 
     }

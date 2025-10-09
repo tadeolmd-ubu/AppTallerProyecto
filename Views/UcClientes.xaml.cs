@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using AppTaller.Model;
+using AppTaller.Services;
+
 
 namespace AppTaller.Views
 {
@@ -23,6 +26,39 @@ namespace AppTaller.Views
         public UcClientes()
         {
             InitializeComponent();
+        }
+
+        private void btnGuardar_Click(object sender, RoutedEventArgs e)
+        {
+            int.TryParse(txtIdCliente.Text, out int id);
+
+            Cliente cliente = new Cliente() {
+            
+             id = id
+             
+            
+            
+            };
+
+
+
+
+
+
+            try {
+
+                ClienteService service = new ClienteService();
+
+                service.CrearOActualizarCliente(cliente);
+                MessageBox.Show("Operacion exitosa");
+
+            }
+            catch (Exception ex){
+                MessageBox.Show("Error: " + ex.Message);
+            }
+
+
+
         }
     }
 }

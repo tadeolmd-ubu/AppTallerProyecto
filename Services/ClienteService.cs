@@ -44,11 +44,14 @@ namespace AppTaller.Services
         }
 
         //Eliminar
-        public void EliminarCliente(Cliente cliente) {
+        public void EliminarCliente(int id) {
 
             using (var context = new EF.efAppDbContext()) {
-                context.Cliente.Remove(cliente);
-                context.SaveChanges();
+                var cliente = context.Cliente.FirstOrDefault(c => c.id == id);
+                if (cliente != null){
+                    context.Cliente.Remove(cliente);
+                    context.SaveChanges();
+                }
             }
         }
         //Busqueda individual

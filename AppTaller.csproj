@@ -230,9 +230,11 @@
     <Compile Include="Model\catRol.cs" />
     <Compile Include="Model\Cliente.cs" />
     <Compile Include="Model\Conexion.cs" />
+    <Compile Include="Model\Direccion.cs" />
     <Compile Include="Model\Login.cs" />
     <Compile Include="Model\Usuario.cs" />
     <Compile Include="Services\ClienteService.cs" />
+    <Compile Include="Services\DireccionService.cs" />
     <Compile Include="Services\RolService.cs" />
     <Compile Include="Services\UsuarioService.cs" />
     <Compile Include="Views\FrmBusqueda.xaml.cs">
