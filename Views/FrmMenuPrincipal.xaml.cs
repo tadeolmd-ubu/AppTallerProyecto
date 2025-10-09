@@ -25,6 +25,7 @@ namespace AppTaller.Views
         
         private UcUsuario _ucUsuario;
         private UcInicio _ucInicio;
+        private UcClientes _ucClientes;
         public FrmMenuPrincipal()
         {
             InitializeComponent();
@@ -104,8 +105,7 @@ namespace AppTaller.Views
         private void Usuario_Checked(object sender, RoutedEventArgs e)
         {
             // 1. Instanciar el UserControl (o reutilizar si ya existe)
-            if (_ucUsuario == null)
-            {
+            if (_ucUsuario == null) {
                 _ucUsuario = new UcUsuario();
             }
 
@@ -117,7 +117,11 @@ namespace AppTaller.Views
          
         private void Clientes_Checked(object sender, RoutedEventArgs e)
         {
-            //ContenidoPrincipal.Content = new FrmCliente();
+            if (_ucClientes == null) {
+            _ucClientes = new UcClientes();
+            }
+
+            contenedorFormularios.Content = _ucClientes;
         }
     }
 }
