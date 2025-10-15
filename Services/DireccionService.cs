@@ -10,20 +10,21 @@ namespace AppTaller.Services
 {
     internal class DireccionService
     {
+        private readonly EF.efAppDbContext _context;
+
+        public DireccionService() {
+        _context = new EF.efAppDbContext();
+        }
+
         //insertar direcciones
 
         public void GuardarDireccion(Direccion direccion) {
-            using (var context = new EF.efAppDbContext()) {
-                context.Direccion.Add(direccion);
-                context.SaveChanges();
-            }
+            _context.Direccion.Add(direccion);
+            _context.SaveChanges();
         }
         public void ModificarDireccion(Direccion direccion) {
-            using (var context = new EF.efAppDbContext()) {
-                context.Direccion.Update(direccion);
-                context.SaveChanges();
-            }
-
+            _context.Direccion.Update(direccion);
+            _context.SaveChanges();
         }
         public void CrearOActualizarDireccion(Direccion direccion) {
             using (var context = new EF.efAppDbContext()) {
@@ -38,26 +39,22 @@ namespace AppTaller.Services
             }
         }
 
-        public void EliminarDireccion(int id) {
-            using (var context = new EF.efAppDbContext()) {
-                var direccion = context.Direccion.FirstOrDefault(c => c.id == id);
-                if (direccion != null) {
-                    context.Direccion.Remove(direccion);
-                    context.SaveChanges();
-                }
-            }
+        public void EliminarDireccion(int id) {            
+                var direccion = _context.Direccion.Find(id);
+            if (direccion != null)
+                return;
+
+            _context.Direccion.Remove(direccion);
+            _context.SaveChanges(); 
+                
         }
 
         public Direccion BuscarDireccionIndividual(int id) {
-            using (var context = new EF.efAppDbContext()) {
-                return context.Direccion.FirstOrDefault(d => d.id == id);
-            }
+            return _context.Direccion.Find(id);
         }
 
-        public List<Direccion> ObtenerDirecciones(){
-            using (var context = new EF.efAppDbContext()) {
-            return context.Direccion.ToList();
-            }
+        public List<Direccion> ObtenerDirecciones(){            
+            return _context.Direccion.ToList();            
         }
 
     }

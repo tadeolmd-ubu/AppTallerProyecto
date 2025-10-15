@@ -23,9 +23,13 @@ namespace AppTaller.Views
     public partial class FrmUsuario : Window
     {
         bool existe;
+        private readonly UsuarioService _usuarioService;
+        private readonly RolService _rolService;
+        // DI inyecta automáticamente el servicio
         public FrmUsuario()
         {
             InitializeComponent();
+            
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -47,24 +51,19 @@ namespace AppTaller.Views
                     estatus = estatus.IsChecked ?? false,
                     idRol = int.Parse(idRol.Text)
                 };
-
-                var service = new Services.UsuarioService();
-                service.CrearOActualizarUsuario(usuario);
+                _usuarioService.CrearOActualizarUsuario(usuario);
 
                 LimpiarCampos();
 
                 MessageBox.Show("Operacion exitosa");
-
-
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error al guardar o modificar: " + ex.Message);
             }
         }
-
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
-        {
+{
             if (e.LeftButton == MouseButtonState.Pressed)
                 DragMove();
         }
@@ -76,8 +75,8 @@ namespace AppTaller.Views
         }
         private void CargarRoles()
         {
-            RolService servicio = new RolService();
-            var roles = servicio.ObtenerRoles();
+            
+            var roles = _rolService.ObtenerRoles();
 
             idRol.ItemsSource = roles;
             if (roles.Count > 0)
@@ -92,8 +91,8 @@ namespace AppTaller.Views
 
         private void btnBuscar_Click(object sender, RoutedEventArgs e)
         {
-            var service = new Services.UsuarioService();
-            var usuarios = service.ObtenerUsuarios(); // List<Usuario>
+            
+            var usuarios = _usuarioService.ObtenerUsuarios(); // List<Usuario>
 
             // Los nombres deben coincidir EXACTAMENTE con las propiedades de Usuario
             string[] columnas = { "id", "nombre", "correo", "telefono", "estatus", "idRol" };
@@ -118,9 +117,7 @@ namespace AppTaller.Views
         {
             try
             {
-
-                Services.UsuarioService usuarioService = new Services.UsuarioService();
-                usuarioService.EliminarUsuario(int.Parse(txtId.Text));
+                _usuarioService.EliminarUsuario(int.Parse(txtId.Text));
 
                 MessageBox.Show("Usuario borrado exitosamente");
                 LimpiarCampos();

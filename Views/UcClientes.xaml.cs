@@ -30,32 +30,7 @@ namespace AppTaller.Views
 
         private void btnGuardar_Click(object sender, RoutedEventArgs e)
         {
-            int.TryParse(txtIdCliente.Text, out int id);
-
-            Cliente cliente = new Cliente() {
-            
-             id = id
-             
-            
-            
-            };
-
-
-
-
-
-
-            try {
-
-                ClienteService service = new ClienteService();
-
-                service.CrearOActualizarCliente(cliente);
-                MessageBox.Show("Operacion exitosa");
-
-            }
-            catch (Exception ex){
-                MessageBox.Show("Error: " + ex.Message);
-            }
+           
 
 
 
