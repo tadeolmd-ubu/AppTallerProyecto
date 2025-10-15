@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AppTaller.Model;
+using AppTaller.Views;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Microsoft.Extensions.Configuration;
 namespace AppTaller.Services
@@ -12,8 +13,8 @@ namespace AppTaller.Services
     {
         private readonly EF.efAppDbContext _context;
 
-        public DireccionService() {
-        _context = new EF.efAppDbContext();
+        public DireccionService(EF.efAppDbContext context) {
+            _context = context;
         }
 
         //insertar direcciones
@@ -23,27 +24,28 @@ namespace AppTaller.Services
             _context.SaveChanges();
         }
         public void ModificarDireccion(Direccion direccion) {
-            _context.Direccion.Update(direccion);
+            var existente = _context.Direccion.Find(direccion.id);
+            if (existente == null)
+                return;
+
+            _context.Entry(existente).CurrentValues.SetValues(direccion);
             _context.SaveChanges();
         }
-        public void CrearOActualizarDireccion(Direccion direccion) {
-            using (var context = new EF.efAppDbContext()) {
-                var existe = context.Direccion.FirstOrDefault(d => d.id == direccion.id);
+        public void CrearOActualizarDireccion(Direccion direccion) {         
+                var existe = _context.Direccion.Find(direccion.id);
                 if (existe == null) {
                     GuardarDireccion(direccion);
                 }
                 else {
                     ModificarDireccion(direccion);
                 }
-                context.SaveChanges();
-            }
+                _context.SaveChanges();            
         }
 
         public void EliminarDireccion(int id) {            
                 var direccion = _context.Direccion.Find(id);
-            if (direccion != null)
+            if (direccion == null)
                 return;
-
             _context.Direccion.Remove(direccion);
             _context.SaveChanges(); 
                 

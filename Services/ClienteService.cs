@@ -24,7 +24,7 @@ namespace AppTaller.Services
 
         //modificar los usuarios
         public void ModificarCliente(Cliente cliente) {
-            var existente = _context.Usuario.Find(cliente.id);
+            var existente = _context.Direccion.Find(cliente.id);
             if (existente == null)
                 return;
 
