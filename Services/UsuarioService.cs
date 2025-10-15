@@ -30,7 +30,7 @@ namespace AppTaller.Services
         public void CrearOActualizarUsuario(Usuario usuario) {
             var existe = _context.Usuario.Find(usuario.id);
             if (existe == null) {
-                _context.Usuario.Add(usuario);
+                CrearUsuario(usuario);
             }
             else {
                 ActualizarUsuario(usuario);

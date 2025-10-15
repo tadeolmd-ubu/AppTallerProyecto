@@ -1,4 +1,5 @@
 ﻿using AppTaller.Model;
+using AppTaller.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,53 +12,50 @@ namespace AppTaller.Services
     {
         private readonly EF.efAppDbContext _context;
 
-        public ClienteService() {
-            _context = new EF.efAppDbContext();
+        public ClienteService(EF.efAppDbContext context) {
+            _context = context;
         }
 
         //Crear usuarios
         public void CrearCliente(Cliente cliente) {
-
             _context.Cliente.Add(cliente);
             _context.SaveChanges();
         }
 
         //modificar los usuarios
         public void ModificarCliente(Cliente cliente) {
+            var existente = _context.Usuario.Find(cliente.id);
+            if (existente == null)
+                return;
 
-            _context.Cliente.Update(cliente);
+            _context.Entry(existente).CurrentValues.SetValues(cliente);
             _context.SaveChanges();
         }
         //el metodo es pa que un solo boton de guardar haga las dos cosas
         public void CrearOActualizarCliente(Cliente cliente) {
-
-            using (var context = new EF.efAppDbContext()) {
-
-                var existe = context.Cliente.FirstOrDefault(c => c.id == c.id);
-
+                var existe = _context.Cliente.Find(cliente.id);
                 if (existe == null) {
                     CrearCliente(cliente);
                 }
                 else {
                     ModificarCliente(cliente);
                 }
-                context.SaveChanges();
-            }
+                _context.SaveChanges();            
         }
 
         //Eliminar
         public void EliminarCliente(int id) {
-            var cliente = _context.Cliente.FirstOrDefault(c => c.id == id);
-            if (cliente != null) {
-                _context.Cliente.Remove(cliente);
-                _context.SaveChanges();
-            }
+            var cliente = _context.Cliente.Find(id);
+            if (cliente == null) 
+                return;
+            _context.Cliente.Remove(cliente);
+            _context.SaveChanges();
+            
         }
         //Busqueda individual
-        public void BuscarClienteIndividual(Cliente cliente) {  
-            var clienteC = _context.Cliente.FirstOrDefault(c => c.id == cliente.id);
-                _context.SaveChanges();            
-        }
+        public Cliente BuscarClienteIndividual(int id) {  
+             return _context.Cliente.Find(id);
+                     }
         //Busqueda general
         public List<Cliente> ObtenerClientes() {
             return _context.Cliente.ToList();
