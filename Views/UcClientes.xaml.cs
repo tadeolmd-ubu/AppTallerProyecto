@@ -87,5 +87,55 @@ namespace AppTaller.Views
             txtNumeroCasa.Text = " ";
         }
 
+        private void btnBorrar_Click(object sender, RoutedEventArgs e)
+        {
+            try {
+                if (int.TryParse(txtIdCliente.Text, out int id)){
+                    _clienteService.EliminarCliente(id);
+                }
+            }
+            catch (Exception ex)
+            {
+                Exception inner = ex;
+                while (inner.InnerException != null)
+                    inner = inner.InnerException;
+                MessageBox.Show("Error detallado:\n" + inner.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+
+        }
+
+        private void btnBuscar_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var clientes= _clienteService.ObtenerClientes(); // List<Usuario>
+
+                string[] columnas = { "id", "nombre", "telefono", "estatus", "idDireccion"};
+
+                var ventana = new FrmBusqueda("Búsqueda de Clientes", clientes, columnas);
+
+                if (ventana.ShowDialog() == true)
+                {
+                    if (ventana.seleccionado is Cliente clienteSeleccionado)
+                    {
+                        txtIdCliente.Text = clienteSeleccionado.id.ToString();
+                        txtNombreCliente.Text = clienteSeleccionado.nombre;
+                        txtTelefono.Text = clienteSeleccionado.telefono;
+                        chkEstatus.IsChecked = clienteSeleccionado.estatus;
+                        txtIdDireccion.Text = clienteSeleccionado.idDireccion.ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al buscar usuarios: " + ex.Message);
+            }
+        }
+
+        private void btnBuscar_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
