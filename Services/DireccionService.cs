@@ -21,7 +21,6 @@ namespace AppTaller.Services
 
         public void GuardarDireccion(Direccion direccion) {
             _context.Direccion.Add(direccion);
-            _context.SaveChanges();
         }
         public void ModificarDireccion(Direccion direccion) {
             var existente = _context.Direccion.Find(direccion.id);
@@ -29,7 +28,6 @@ namespace AppTaller.Services
                 return;
 
             _context.Entry(existente).CurrentValues.SetValues(direccion);
-            _context.SaveChanges();
         }
         public void CrearOActualizarDireccion(Direccion direccion) {         
                 var existe = _context.Direccion.Find(direccion.id);
@@ -38,8 +36,7 @@ namespace AppTaller.Services
                 }
                 else {
                     ModificarDireccion(direccion);
-                }
-                _context.SaveChanges();            
+                }          
         }
 
         public void EliminarDireccion(int id) {            

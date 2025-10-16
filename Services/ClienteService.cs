@@ -19,17 +19,15 @@ namespace AppTaller.Services
         //Crear usuarios
         public void CrearCliente(Cliente cliente) {
             _context.Cliente.Add(cliente);
-            _context.SaveChanges();
         }
 
         //modificar los usuarios
         public void ModificarCliente(Cliente cliente) {
-            var existente = _context.Direccion.Find(cliente.id);
+            var existente = _context.Cliente.Find(cliente.id);
             if (existente == null)
                 return;
 
             _context.Entry(existente).CurrentValues.SetValues(cliente);
-            _context.SaveChanges();
         }
         //el metodo es pa que un solo boton de guardar haga las dos cosas
         public void CrearOActualizarCliente(Cliente cliente) {
@@ -39,8 +37,7 @@ namespace AppTaller.Services
                 }
                 else {
                     ModificarCliente(cliente);
-                }
-                _context.SaveChanges();            
+                }            
         }
 
         //Eliminar

@@ -56,16 +56,16 @@
         <Label Content="Telefono" HorizontalAlignment="Left" Margin="41,257,0,0" VerticalAlignment="Top" FontSize="14"/>
         <TextBox x:Name="txtTelefono" HorizontalAlignment="Left" Margin="41,281,0,0" TextWrapping="Wrap" Text="&#xA;" VerticalAlignment="Top" Width="244"/>
         <Label Content="Direccion" HorizontalAlignment="Left" Margin="578,131,0,0" VerticalAlignment="Top" FontSize="20" />
-        <TextBox x:Name="txtCiudad" HorizontalAlignment="Left" Margin="502,194,0,0" TextWrapping="Wrap" Text="&#xA;" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Ciudad" HorizontalAlignment="Left" Margin="502,170,0,0" VerticalAlignment="Top" FontSize="14"/>
-        <TextBox x:Name="txtColonia" HorizontalAlignment="Left" Margin="664,194,0,0" TextWrapping="Wrap" Text="&#xA;" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Colonia" HorizontalAlignment="Left" Margin="664,170,0,0" VerticalAlignment="Top" FontSize="14"/>
-        <TextBox x:Name="txtCodigoPostal" HorizontalAlignment="Left" Margin="665,266,0,0" TextWrapping="Wrap" Text="&#xA;" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Codigo postal" HorizontalAlignment="Left" Margin="665,242,0,0" VerticalAlignment="Top" FontSize="14"/>
-        <TextBox x:Name="txtCalle" HorizontalAlignment="Left" Margin="502,266,0,0" TextWrapping="Wrap" Text="&#xA;" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Calle" HorizontalAlignment="Left" Margin="502,242,0,0" VerticalAlignment="Top" FontSize="14"/>
-        <TextBox x:Name="txtNumeroCasa" HorizontalAlignment="Left" Margin="502,330,0,0" TextWrapping="Wrap" Text="&#xA;" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Numero de Casa" HorizontalAlignment="Left" Margin="502,306,0,0" VerticalAlignment="Top" FontSize="14"/>
+        <TextBox x:Name="txtCiudad" HorizontalAlignment="Left" Margin="482,236,0,0" TextWrapping="Wrap" Text="&#xA;" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Ciudad" HorizontalAlignment="Left" Margin="482,212,0,0" VerticalAlignment="Top" FontSize="14"/>
+        <TextBox x:Name="txtColonia" HorizontalAlignment="Left" Margin="644,236,0,0" TextWrapping="Wrap" Text="&#xA;" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Colonia" HorizontalAlignment="Left" Margin="644,212,0,0" VerticalAlignment="Top" FontSize="14"/>
+        <TextBox x:Name="txtCodigoPostal" HorizontalAlignment="Left" Margin="645,308,0,0" TextWrapping="Wrap" Text="&#xA;" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Codigo postal" HorizontalAlignment="Left" Margin="645,284,0,0" VerticalAlignment="Top" FontSize="14"/>
+        <TextBox x:Name="txtCalle" HorizontalAlignment="Left" Margin="482,308,0,0" TextWrapping="Wrap" Text="&#xA;" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Calle" HorizontalAlignment="Left" Margin="482,284,0,0" VerticalAlignment="Top" FontSize="14"/>
+        <TextBox x:Name="txtNumeroCasa" HorizontalAlignment="Left" Margin="482,372,0,0" TextWrapping="Wrap" Text="&#xA;" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Numero de Casa" HorizontalAlignment="Left" Margin="482,348,0,0" VerticalAlignment="Top" FontSize="14"/>
 
         <Button x:Name="btnGuardar"         
                 Style ="{StaticResource controlBoton}"
@@ -74,12 +74,14 @@
                 Height="25"
                 Width="70"
                 FontSize="14"
-                Margin="707,347,23,178">
+                Margin="687,389,43,136">
 
         </Button>
-        <CheckBox Content="Vigente" HorizontalAlignment="Left" Margin="41,349,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="chkEstatus" Content="Vigente" HorizontalAlignment="Left" Margin="41,349,0,0" VerticalAlignment="Top" Foreground="White"/>
         <Label Content="Estatus" HorizontalAlignment="Left" Margin="41,320,0,0" VerticalAlignment="Top"/>
         <Label Content="Clientes" FontSize="28" FontWeight="Bold" Padding="0" Foreground="{StaticResource titleColor1}" Margin="80,38,114,479"/>
         <Label Content="Completa el formulario para crear el usuario" Foreground="#FF81969C" FontSize="10" Padding="0,2,0,0" Margin="80,71,114,465"/>
+        <TextBox x:Name="txtIdDireccion" HorizontalAlignment="Left" Margin="482,442,0,0" TextWrapping="Wrap" Text="&#xA;" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Id direccion" HorizontalAlignment="Left" Margin="482,418,0,0" VerticalAlignment="Top" FontSize="14"/>
     </Grid>
 </UserControl>
