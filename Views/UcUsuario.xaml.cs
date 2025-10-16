@@ -22,108 +22,110 @@ namespace AppTaller.Views
     /// </summary>
     public partial class UcUsuario : UserControl
     {
+        private readonly EF.efAppDbContext _context;
+        private readonly UsuarioService _usuarioService;
+        private readonly RolService _rolService;
+
         public UcUsuario()
         {
             InitializeComponent();
+            _context = new EF.efAppDbContext();
+            _usuarioService = new UsuarioService(_context);
+            _rolService = new RolService(_context);
+
             CargarRoles();
         }
 
 
         private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                // Crear objeto usuario con los datos del formulario
-                Usuario usuario = new Usuario
-                {
-                    id = int.Parse(txtId.Text),
-                    nombre = txtNombre.Text,
-                    correo = txtCorreo.Text,
-                    contrasena = txtContrasena.Password,
-                    telefono = txtTelefono.Text,
-                    estatus = estatus.IsChecked ?? false,
-                    idRol = int.Parse(idRol.Text)
-                };
+        {                // Crear objeto usuario con los datos del formulario
+                try{
+                    // Crear objeto usuario con los datos del formulario
+                    Usuario usuario = new Usuario {
+                        id = int.TryParse(txtId.Text, out int idValue) ? idValue : 0,
+                        nombre = txtNombre.Text,
+                        correo = txtCorreo.Text,
+                        contrasena = txtContrasena.Password,
+                        telefono = txtTelefono.Text,
+                        estatus = estatus.IsChecked ?? false,
+                        idRol = int.TryParse(idRol.Text, out int rolValue) ? rolValue : 0
+                    };
 
-                var service = new Services.UsuarioService();
-                service.CrearOActualizarUsuario(usuario);
+                    _usuarioService.CrearOActualizarUsuario(usuario);
 
-                LimpiarCampos();
+                    LimpiarCampos();
 
-                MessageBox.Show("Operacion exitosa");
+                    MessageBox.Show("Operación exitosa");
+                }
+                catch (Exception ex) {
+                    MessageBox.Show("Error al guardar o modificar: " + ex.Message);
+                }
+            
+        }    
+        private void CargarRoles() {
+            try{
+                var roles = _rolService.ObtenerRoles();
 
+                idRol.ItemsSource = roles;
+                idRol.SelectedValuePath = "id";     
 
+                if (roles.Count > 0)
+                    idRol.SelectedIndex = 0;
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al guardar o modificar: " + ex.Message);
+            catch (Exception ex){
+                MessageBox.Show("Error al cargar roles: " + ex.Message);
             }
-        }
-
-      
-
-    
-        private void CargarRoles()
-        {
-            RolService servicio = new RolService();
-            var roles = servicio.ObtenerRoles();
-
-            idRol.ItemsSource = roles;
-            if (roles.Count > 0)
-                idRol.SelectedIndex = 0;
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-
+            
             LimpiarCampos();
         }
 
         private void btnBuscar_Click(object sender, RoutedEventArgs e)
         {
-            var service = new Services.UsuarioService();
-            var usuarios = service.ObtenerUsuarios(); // List<Usuario>
+            try {
+                var usuarios = _usuarioService.ObtenerUsuarios(); // List<Usuario>
 
-            // Los nombres deben coincidir EXACTAMENTE con las propiedades de Usuario
-            string[] columnas = { "id", "nombre", "correo", "telefono", "estatus", "idRol" };
+                string[] columnas = { "id", "nombre", "correo", "telefono", "estatus", "idRol" };
 
-            var ventana = new FrmBusqueda("Búsqueda de Usuarios", usuarios, columnas);
+                var ventana = new FrmBusqueda("Búsqueda de Usuarios", usuarios, columnas);
 
-            if (ventana.ShowDialog() == true)
-            {
-                var usuarioSeleccionado = ventana.seleccionado as Usuario;
-                if (usuarioSeleccionado != null)
-                {
-                    txtId.Text = usuarioSeleccionado.id.ToString();
-                    txtNombre.Text = usuarioSeleccionado.nombre;
-                    txtCorreo.Text = usuarioSeleccionado.correo;
-                    txtTelefono.Text = usuarioSeleccionado.telefono;
-
+                if (ventana.ShowDialog() == true) {
+                    if (ventana.seleccionado is Usuario usuarioSeleccionado) {
+                        txtId.Text = usuarioSeleccionado.id.ToString();
+                        txtNombre.Text = usuarioSeleccionado.nombre;
+                        txtCorreo.Text = usuarioSeleccionado.correo;
+                        txtTelefono.Text = usuarioSeleccionado.telefono;
+                        estatus.IsChecked = usuarioSeleccionado.estatus;
+                        idRol.SelectedValue = usuarioSeleccionado.idRol;
+                    }
                 }
             }
+            catch (Exception ex) {
+                MessageBox.Show("Error al buscar usuarios: " + ex.Message);
+            }
         }
-
         private void btnBorrar_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
+            try {
+                if (int.TryParse(txtId.Text, out int id)) {
+                    _usuarioService.EliminarUsuario(id);
 
-                Services.UsuarioService usuarioService = new Services.UsuarioService();
-                usuarioService.EliminarUsuario(int.Parse(txtId.Text));
-
-                MessageBox.Show("Usuario borrado exitosamente");
-                LimpiarCampos();
+                    MessageBox.Show("Usuario borrado exitosamente");
+                    LimpiarCampos();
+                }
+                else {
+                    MessageBox.Show("ID inválido");
+                }
             }
-            catch (Exception ex)
-            {
-
+            catch (Exception ex) {
                 MessageBox.Show("Error al borrar: " + ex.Message);
             }
         }
-
         // Método de instancia
-        private void LimpiarCampos()
-        {
+        private void LimpiarCampos() {
             txtId.Text = "";
             txtNombre.Text = "";
             txtCorreo.Text = "";

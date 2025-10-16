@@ -228,9 +228,13 @@
     </Compile>
     <Compile Include="EF\efAppDbContext.cs" />
     <Compile Include="Model\catRol.cs" />
+    <Compile Include="Model\Cliente.cs" />
     <Compile Include="Model\Conexion.cs" />
+    <Compile Include="Model\Direccion.cs" />
     <Compile Include="Model\Login.cs" />
     <Compile Include="Model\Usuario.cs" />
+    <Compile Include="Services\ClienteService.cs" />
+    <Compile Include="Services\DireccionService.cs" />
     <Compile Include="Services\RolService.cs" />
     <Compile Include="Services\UsuarioService.cs" />
     <Compile Include="Views\FrmBusqueda.xaml.cs">
@@ -244,6 +248,12 @@
     </Compile>
     <Compile Include="Views\FrmUsuario.xaml.cs">
       <DependentUpon>FrmUsuario.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UcClientes.xaml.cs">
+      <DependentUpon>UcClientes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UcInicio.xaml.cs">
+      <DependentUpon>UcInicio.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UcUsuario.xaml.cs">
       <DependentUpon>UcUsuario.xaml</DependentUpon>
@@ -312,6 +322,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FrmUsuario.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UcClientes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UcInicio.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -12,12 +12,16 @@ namespace AppTaller.Services
 {
     internal class RolService
     {
-        public List<catRol> ObtenerRoles()
+        private readonly EF.efAppDbContext _context;
+
+        public RolService(EF.efAppDbContext context)
         {
-            using (var context = new efAppDbContext())
-            {
-                return context.catRol.ToList();
-            }
+            _context = context;
+        }
+
+        public List<catRol> ObtenerRoles(){
+                return _context.catRol.ToList();
+            
         }
     }
 }

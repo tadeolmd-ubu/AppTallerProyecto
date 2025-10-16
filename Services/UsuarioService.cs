@@ -10,81 +10,48 @@ namespace AppTaller.Services
 {
     internal class UsuarioService
     {
+        private readonly EF.efAppDbContext _context;
+        public UsuarioService(EF.efAppDbContext context) {
+            _context = context;
+        }
         // CREATE
-        public void CrearUsuario(Usuario usuario)
-        {
-            using (var context = new efAppDbContext())
-            {
-                context.Usuario.Add(usuario);
-                context.SaveChanges();
-            }
+        public void CrearUsuario(Usuario usuario) {            
+                _context.Usuario.Add(usuario);
+                _context.SaveChanges();            
         }
+        public void ActualizarUsuario(Usuario usuario) {
+            var existente = _context.Usuario.Find(usuario.id);
+            if (existente == null) 
+                return;
 
-        public void ActualizarUsuario(Usuario usuario)
-        {
-            using (var context = new efAppDbContext())
-            {
-                context.Usuario.Update(usuario);
-                context.SaveChanges();
-            }
+            _context.Entry(existente).CurrentValues.SetValues(usuario);
+            _context.SaveChanges();
         }
-
-
         public void CrearOActualizarUsuario(Usuario usuario) {
-
-            using (var context = new efAppDbContext()) {
-
-                var existe = context.Usuario.FirstOrDefault(u => u.id == usuario.id);
-
-                if (existe == null)
-                {
-                    CrearUsuario(usuario);
-                }
-                else {
-                    ActualizarUsuario(usuario);
-                }
-                context.SaveChanges();
+            var existe = _context.Usuario.Find(usuario.id);
+            if (existe == null) {
+                CrearUsuario(usuario);
             }
-
-
-        }
-
-
-
-        // READ (todos)
-        public List<Usuario> ObtenerUsuarios()
-        {
-            using (var context = new efAppDbContext())
-            {
-                return context.Usuario.ToList();
+            else {
+                ActualizarUsuario(usuario);
             }
+            _context.SaveChanges();
         }
-
-        // READ (por id)
-        public Usuario ObtenerPorId(int id)
-        {
-            using (var context = new efAppDbContext())
-            {
-                return context.Usuario.FirstOrDefault(u => u.id == id);
-            }
+        // busca (todos)
+        public List<Usuario> ObtenerUsuarios() {
+            return _context.Usuario.ToList();            
         }
-
-        // UPDATE
-     
-
-        // DELETE
-        public void EliminarUsuario(int id)
-        {
-            using (var context = new efAppDbContext())
-            {
-                var usuario = context.Usuario.FirstOrDefault(u => u.id == id);
-                if (usuario != null)
-                {
-                    context.Usuario.Remove(usuario);
-                    context.SaveChanges();
-                }
-            }
+        // busca (por id)
+        public Usuario ObtenerPorId(int id) {            
+                return _context.Usuario.Find(id);            
         }
-
+        // borra
+        public void EliminarUsuario(int id) {            
+                var usuario = _context.Usuario.Find(id);
+            if (usuario == null)
+                return;
+           _context.Usuario.Remove(usuario);
+           _context.SaveChanges();                            
+        }
     }
 }
