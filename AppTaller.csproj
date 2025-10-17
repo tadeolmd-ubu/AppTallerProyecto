@@ -247,9 +247,6 @@
     <Compile Include="Views\FrmMenuPrincipal.xaml.cs">
       <DependentUpon>FrmMenuPrincipal.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\FrmUsuario.xaml.cs">
-      <DependentUpon>FrmUsuario.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\UcClientes.xaml.cs">
       <DependentUpon>UcClientes.xaml</DependentUpon>
     </Compile>
@@ -319,10 +316,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FrmMenuPrincipal.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\FrmUsuario.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

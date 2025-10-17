@@ -36,28 +36,51 @@ namespace AppTaller.Views
             _direccionService = new DireccionService(_context);
             _logic = new Logics.ClienteLogic();
         }
-
+       
         private void btnGuardar_Click(object sender, RoutedEventArgs e)
         {
            try {
+             
+                if (string.IsNullOrWhiteSpace(txtNombreCliente.Text) ||
+                    string.IsNullOrWhiteSpace(txtTelefono.Text) ||
+                    string.IsNullOrWhiteSpace(txtCiudad.Text) ||
+                    string.IsNullOrWhiteSpace(txtColonia.Text) ||
+                    string.IsNullOrWhiteSpace(txtCodigoPostal.Text) ||
+                    string.IsNullOrWhiteSpace(txtCalle.Text) ||
+                    string.IsNullOrWhiteSpace(txtNumeroCasa.Text) ||
+                    string.IsNullOrWhiteSpace(txtIdCliente.Text) ||
+                    string.IsNullOrWhiteSpace(txtIdDireccion.Text))
+                {
+                    MessageBox.Show("Por favor, complete todos los campos obligatorios.", "Campos incompletos", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                if (!int.TryParse(txtCodigoPostal.Text, out int codigoPostal) ||
+                    !int.TryParse(txtNumeroCasa.Text, out int numeroCasa) ||
+                    !int.TryParse(txtIdCliente.Text, out int idCliente) ||
+                    !int.TryParse(txtIdDireccion.Text, out int idDireccion) ||
+                    !int.TryParse(txtTelefono.Text, out int telefono))
+                {
+                    MessageBox.Show("Por favor, ingrese valores numéricos válidos para Código Postal y Número de Casa.", "Entrada inválida", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
                 Direccion direccion = new Direccion
                 {
-
-                    id = 0,
+                    id = idDireccion,
                     ciudad = txtCiudad.Text,
                     colonia = txtColonia.Text,
-                    codigoPostal = int.TryParse(txtCodigoPostal.Text, out int codigoPostal) ? codigoPostal : 0,
+                    codigoPostal = codigoPostal.ToString(),
                     calle = txtCalle.Text,
-                    numeroCasa = int.TryParse(txtNumeroCasa.Text, out int numeroCasa) ? numeroCasa : 0,
+                    numeroCasa = numeroCasa.ToString(),
                 };
 
                 Cliente cliente = new Cliente
                 {
-                    id =  0,
+                    id =  idCliente,
                     nombre = txtNombreCliente.Text,
-                    telefono = txtTelefono.Text,
+                    telefono = telefono.ToString(),
                     estatus = chkEstatus.IsChecked ?? false,
-                    idDireccion = int.TryParse(txtIdDireccion.Text, out int direccionValue) ? direccionValue : 0,
+                    idDireccion = idDireccion,
                 };                
 
                 

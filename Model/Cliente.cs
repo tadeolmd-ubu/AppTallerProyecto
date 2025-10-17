@@ -10,8 +10,7 @@ namespace AppTaller.Model
 {
     internal class Cliente
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        
         public int id { get; set; }
         public string nombre { get; set; }
         public string telefono { get; set; }

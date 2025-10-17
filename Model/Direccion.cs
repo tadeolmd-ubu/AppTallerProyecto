@@ -11,14 +11,13 @@ namespace AppTaller.Model
     internal class Direccion
     {
 
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        
         public int id { get; set; }
         public string ciudad { get; set; }
         public string colonia { get; set; }
-        public int codigoPostal { get; set; }
+        public string codigoPostal { get; set; }
         public string calle { get; set; }
-        public int numeroCasa { get; set; }
+        public string numeroCasa { get; set; }
 
         public Direccion() {
         }
