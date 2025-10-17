@@ -107,7 +107,7 @@
 
                         <StackPanel Grid.Column="0">
                             <Label Content="Id del rol" FontSize="14" Padding="0" Margin="0,0,0,5"/>
-                            <ComboBox x:Name="idRol" DisplayMemberPath="Id" SelectedValuePath="Id" Foreground="Black"/>
+                            <ComboBox x:Name="cmbIdRol" DisplayMemberPath="Id" SelectedValuePath="Id" Foreground="Black"/>
                         </StackPanel>
 
                         <Button x:Name="btnBuscar" Grid.Column="1" VerticalAlignment="Bottom" Click="btnBuscar_Click"

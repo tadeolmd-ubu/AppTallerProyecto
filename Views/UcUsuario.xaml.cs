@@ -40,15 +40,30 @@ namespace AppTaller.Views
         private void Button_Click(object sender, RoutedEventArgs e)
         {                // Crear objeto usuario con los datos del formulario
                 try{
+
+                if (string.IsNullOrWhiteSpace(txtNombre.Text) ||
+                    string.IsNullOrWhiteSpace(txtCorreo.Text) ||
+                    string.IsNullOrWhiteSpace(txtContrasena.Password) ||
+                    string.IsNullOrWhiteSpace(txtTelefono.Text) ||
+                    string.IsNullOrWhiteSpace(cmbIdRol.Text)) {
+                    MessageBox.Show("Por favor, complete todos los campos obligatorios.", "Campos incompletos", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                if (!int.TryParse(txtId.Text, out int id) ||
+                    !int.TryParse(cmbIdRol.Text, out int idRol)) {
+                    MessageBox.Show("Por favor, ingrese valores numéricos válidos para el ID del usuario.", "Entrada inválida", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
                     // Crear objeto usuario con los datos del formulario
                     Usuario usuario = new Usuario {
-                        id = int.TryParse(txtId.Text, out int idValue) ? idValue : 0,
+                        id = id,
                         nombre = txtNombre.Text,
                         correo = txtCorreo.Text,
                         contrasena = txtContrasena.Password,
                         telefono = txtTelefono.Text,
                         estatus = estatus.IsChecked ?? false,
-                        idRol = int.TryParse(idRol.Text, out int rolValue) ? rolValue : 0
+                        idRol = idRol
                     };
 
                     _usuarioService.CrearOActualizarUsuario(usuario);
@@ -66,11 +81,11 @@ namespace AppTaller.Views
             try{
                 var roles = _rolService.ObtenerRoles();
 
-                idRol.ItemsSource = roles;
-                idRol.SelectedValuePath = "id";     
+                cmbIdRol.ItemsSource = roles;
+                cmbIdRol.SelectedValuePath = "id";     
 
                 if (roles.Count > 0)
-                    idRol.SelectedIndex = 0;
+                    cmbIdRol.SelectedIndex = 0;
             }
             catch (Exception ex){
                 MessageBox.Show("Error al cargar roles: " + ex.Message);
@@ -99,7 +114,7 @@ namespace AppTaller.Views
                         txtCorreo.Text = usuarioSeleccionado.correo;
                         txtTelefono.Text = usuarioSeleccionado.telefono;
                         estatus.IsChecked = usuarioSeleccionado.estatus;
-                        idRol.SelectedValue = usuarioSeleccionado.idRol;
+                        cmbIdRol.SelectedValue = usuarioSeleccionado.idRol;
                     }
                 }
             }
@@ -132,7 +147,7 @@ namespace AppTaller.Views
             txtTelefono.Text = "";
             txtContrasena.Password= "";
             estatus.IsChecked = false;
-            idRol.SelectedIndex = -1;
+            cmbIdRol.SelectedIndex = -1;
             txtId.Focus();
         }
 
