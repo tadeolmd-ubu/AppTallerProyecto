@@ -26,6 +26,7 @@ namespace AppTaller.Views
         private UcUsuario _ucUsuario;
         private UcInicio _ucInicio;
         private UcClientes _ucClientes;
+        private UcProveedores _ucProveedores;
         public FrmMenuPrincipal()
         {
             InitializeComponent();
@@ -81,15 +82,6 @@ namespace AppTaller.Views
 
         //metodo para mostrar los forms dentro del mismo menu 
 
-        private void MostrarFormularioEnMenu(UserControl control){
-            // Ajusta el tamaño del UserControl al contenedor
-            control.HorizontalAlignment = HorizontalAlignment.Stretch;
-            control.VerticalAlignment = VerticalAlignment.Stretch;
-
-            // Muestra el control dentro del ContentControl
-            contenedorFormularios.Content = control;
-        }
-
         private void inicio_Checked(object sender, RoutedEventArgs e)
         {
             if (_ucInicio == null)
@@ -122,6 +114,17 @@ namespace AppTaller.Views
             }
 
             contenedorFormularios.Content = _ucClientes;
+        }
+
+        private void Proveedores_Checked(object sender, RoutedEventArgs e)
+        {
+            if (_ucProveedores == null)
+            {
+                _ucProveedores = new UcProveedores();
+            }
+
+            contenedorFormularios.Content = _ucProveedores;
+
         }
     }
 }

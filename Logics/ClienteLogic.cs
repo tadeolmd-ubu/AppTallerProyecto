@@ -11,29 +11,29 @@ namespace AppTaller.Logics
 {
     internal class ClienteLogic
     {
-        public void GuardarClienteYDireccion(Cliente cliente, Direccion direccion)
-        {
-            using (var context = new efAppDbContext())
-            using (var transaction = context.Database.BeginTransaction())
-            {
-                try
-                {
-                    var direccionService = new DireccionService(context);
-                    var clienteService = new ClienteService(context);
+        private readonly efAppDbContext _context;
+        private readonly DireccionService _direccionService;
+        private readonly ClienteService _clienteService;
 
-                    
-                    direccionService.CrearOActualizarDireccion(direccion);
-                    context.SaveChanges();
-                   
+        public ClienteLogic( efAppDbContext context,DireccionService direccionService,ClienteService clienteService){
+            _context = context;
+            _direccionService = direccionService;
+            _clienteService = clienteService;
+        }
+
+        public void GuardarClienteYDireccion(Cliente cliente, Direccion direccion) {
+            using (var transaction = _context.Database.BeginTransaction()){
+                try{
+                    _direccionService.CrearOActualizarDireccion(direccion);
+                    _context.SaveChanges();
+
                     cliente.idDireccion = direccion.id;
-                    
-                    clienteService.CrearOActualizarCliente(cliente);
+                    _clienteService.CrearOActualizarCliente(cliente);
 
-                    context.SaveChanges();
+                    _context.SaveChanges();
                     transaction.Commit();
                 }
-                catch (Exception)
-                {
+                catch (Exception){
                     transaction.Rollback();
                     throw;
                 }

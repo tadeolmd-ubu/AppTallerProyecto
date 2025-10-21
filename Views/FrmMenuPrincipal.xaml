@@ -91,6 +91,16 @@
                     </StackPanel>
 
                 </RadioButton>
+                <RadioButton x:Name="chkProveedores" 
+             Style="{StaticResource menuBoton}"
+             Tag="{StaticResource color1}"
+             Checked="Proveedores_Checked">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="UserAlt" Style="{StaticResource menuBotonIcono}"/>
+                        <TextBlock Text="Proveedores" Style="{StaticResource menuBotonTexto}"/>
+                    </StackPanel>
+
+                </RadioButton>
 
 
             </StackPanel>

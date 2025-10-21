@@ -34,7 +34,7 @@ namespace AppTaller.Views
             _context = new EF.efAppDbContext();
             _clienteService = new ClienteService(_context);
             _direccionService = new DireccionService(_context);
-            _logic = new Logics.ClienteLogic();
+            _logic = new Logics.ClienteLogic(_context, _direccionService, _clienteService);
         }
        
         private void btnGuardar_Click(object sender, RoutedEventArgs e)
@@ -89,13 +89,13 @@ namespace AppTaller.Views
                 LimpiarControles();
                 MessageBox.Show("Operacion exitosa.");
 
-            } catch(Exception ex) {
+           }catch(Exception ex) {
                 Exception inner = ex;
                 while (inner.InnerException != null)
                     inner = inner.InnerException;
 
                 MessageBox.Show("Error detallado:\n" + inner.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+           }
         }
 
         private void LimpiarControles() {
@@ -124,10 +124,7 @@ namespace AppTaller.Views
                     inner = inner.InnerException;
                 MessageBox.Show("Error detallado:\n" + inner.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
-
         }
-
         private void btnBuscar_Click(object sender, RoutedEventArgs e)
         {
             try
