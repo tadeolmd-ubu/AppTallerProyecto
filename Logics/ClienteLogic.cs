@@ -21,10 +21,12 @@ namespace AppTaller.Logics
                     var direccionService = new DireccionService(context);
                     var clienteService = new ClienteService(context);
 
+                    
                     direccionService.CrearOActualizarDireccion(direccion);
                     context.SaveChanges();
-
+                   
                     cliente.idDireccion = direccion.id;
+                    
                     clienteService.CrearOActualizarCliente(cliente);
 
                     context.SaveChanges();
