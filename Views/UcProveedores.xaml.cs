@@ -163,32 +163,23 @@ namespace AppTaller.Views
                 MessageBox.Show("Error al buscar usuarios: " + ex.Message);
             }
         }
-        private void CargarEmpresas()
-        {
-            try
-            {
+        private void CargarEmpresas(){
+            try{
                 var empresas = _empresaService.ObtenerEmpresas();
 
-                if (empresas == null || empresas.Count == 0)
-                {
+                if (empresas == null || empresas.Count == 0){
                     MessageBox.Show("No se encontraron empresas.");
                     return;
                 }
-
                 cmbIdEmpresa.ItemsSource = empresas;
-                cmbIdEmpresa.SelectedValuePath = "id"; // propiedad pública exacta
-
-                // Esto hará que se muestre el Id directamente
+                cmbIdEmpresa.SelectedValuePath = "id";             
                 cmbIdEmpresa.DisplayMemberPath = "id";
 
                 cmbIdEmpresa.SelectedIndex = 0;
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex){
                 MessageBox.Show("Error al cargar empresas: " + ex.Message);
             }
-        }
-       
-       
+        }      
     }
 }
