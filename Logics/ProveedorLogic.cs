@@ -9,26 +9,25 @@ using System.Threading.Tasks;
 
 namespace AppTaller.Logics
 {
-    internal class ClienteLogic
+    internal class ProveedorLogic
     {
         private readonly efAppDbContext _context;
         private readonly DireccionService _direccionService;
-        private readonly ClienteService _clienteService;
+        private readonly ProveedorService _proveedorService;
 
-        public ClienteLogic( efAppDbContext context,DireccionService direccionService,ClienteService clienteService){
+        public ProveedorLogic(efAppDbContext context,DireccionService direccionService, ProveedorService proveedorService){
             _context = context;
             _direccionService = direccionService;
-            _clienteService = clienteService;
+            _proveedorService = proveedorService;
         }
-
-        public void GuardarClienteYDireccion(Cliente cliente, Direccion direccion) {
+        public void GuardarProveedorYDireccion(Proveedor proveedor, Direccion direccion) {
             using (var transaction = _context.Database.BeginTransaction()){
                 try{
                     _direccionService.CrearOActualizarDireccion(direccion);
                     _context.SaveChanges();
 
-                    cliente.idDireccion = direccion.id;
-                    _clienteService.CrearOActualizarCliente(cliente);
+                    proveedor.idDireccion = direccion.id;
+                    _proveedorService.CrearOModificarProveedor(proveedor);
 
                     _context.SaveChanges();
                     transaction.Commit();
@@ -40,4 +39,6 @@ namespace AppTaller.Logics
             }
         }
     }
+
 }
+

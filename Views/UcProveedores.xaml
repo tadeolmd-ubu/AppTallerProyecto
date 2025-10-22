@@ -1,0 +1,117 @@
+﻿<UserControl x:Class="AppTaller.Views.UcProveedores"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Width="867"
+             Height="614"
+             Background="#0A003A">
+
+    <UserControl.Resources>
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="GhostWhite"/>
+            <Setter Property="FontFamily" Value="Montserrat"/>
+        </Style>
+
+        <Style TargetType="{x:Type Control}" x:Key="BaseFormStyle">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="FontFamily" Value="Montserrat"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="DarkGray"/>
+            <Setter Property="BorderThickness" Value="0,0,0,2"/>
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="{x:Null}"/>
+            <Setter Property="Width" Value="252"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
+        </Style>
+
+        <Style TargetType="TextBox" BasedOn="{StaticResource BaseFormStyle}"/>
+        
+    </UserControl.Resources>
+
+    <Grid Background="#0A003A" Margin="30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- encabezado -->
+            <RowDefinition Height="*"/>
+            <!-- formulario -->
+            <RowDefinition Height="Auto"/>
+            <!-- boton guardar -->
+        </Grid.RowDefinitions>
+
+        <!-- Encabezado -->
+        <Grid Grid.Row="0" Margin="10,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                <Image Source="/Images/TRACTOR_V2.png" Stretch="Fill" Height="60" Width="60" Margin="0,0,15,0"/>
+                <StackPanel VerticalAlignment="Center">
+                    <Label Content="Registrar Proveedor" FontSize="28" FontWeight="Bold" Padding="0"/>
+                    <Label Content="Completa el formulario para registrar el proveedor" Foreground="#FF81969C" FontSize="10" Padding="0,2,0,0"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+
+        <!-- Formulario -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Columna izquierda: Proveedor -->
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <!-- Campos del proveedor -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Botones BUSCAR/BORRAR -->
+                </Grid.RowDefinitions>
+
+                <!-- Campos del proveedor -->
+                <StackPanel Grid.Row="0">
+                    <Label Content="ID Proveedor" FontSize="14"/>
+                    <TextBox x:Name="txtIdProveedor" Width="298"/>
+                    <Label Content="Nombre del Proveedor" FontSize="14"/>
+                    <TextBox x:Name="txtNombre" Width="292"/>
+                    <Label Content="Teléfono" FontSize="14"/>
+                    <TextBox x:Name="txtTelefono" Width="295"/>
+                    <Label Content="ID Empresa" FontSize="14"/>
+                    <ComboBox x:Name="cmbIdEmpresa" DisplayMemberPath="id" SelectedValuePath="Id" Foreground="Black" Width="283"/>
+                    <Label Content="Estatus" FontSize="14"/>
+                    <CheckBox x:Name="chkEstatus" Content="Activo" Foreground="White" FontFamily="Montserrat" Margin="0,5,0,0"/>
+                </StackPanel>
+
+                <!-- Botones BUSCAR y BORRAR -->
+                <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,15,0,0" HorizontalAlignment="Left" >
+                    <Button x:Name="btnBuscar" Content="BUSCAR" Style="{StaticResource controlBoton}" Width="120" Height="35" Click="btnBuscar_Click"/>
+                    <Button x:Name="btnBorrar" Content="BORRAR" Style="{StaticResource controlBoton}" Width="120" Height="35" Click="btnBorrar_Click"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- Columna derecha: Dirección -->
+            <StackPanel Grid.Column="1" Margin="20,0,0,0">
+                <Label Content="ID Dirección" FontSize="14" Width="255"/>
+                <TextBox x:Name="txtIdDireccion" Width="254"/>
+                <Label Content="Ciudad" FontSize="14" Width="252"/>
+                <TextBox x:Name="txtCiudad"/>
+                <Label Content="Código Postal" FontSize="14" Width="251"/>
+                <TextBox x:Name="txtCodigoPostal"/>
+                <Label Content="Colonia" FontSize="14" Width="247"/>
+                <TextBox x:Name="txtColonia"/>
+                <Label Content="Calle" FontSize="14" Width="251"/>
+                <TextBox x:Name="txtCalle"/>
+                <Label Content="Número de Casa" FontSize="14" Width="253"/>
+                <TextBox x:Name="txtNumeroCasa"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Botón GUARDAR -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button x:Name="btnGuardar" Content="GUARDAR" Style="{StaticResource controlBoton}" Width="120" Height="35" Click="btnGuardar_Click_1"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

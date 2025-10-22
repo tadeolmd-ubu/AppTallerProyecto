@@ -38,7 +38,7 @@ namespace AppTaller.Views
 
 
         private void Button_Click(object sender, RoutedEventArgs e)
-        {                // Crear objeto usuario con los datos del formulario
+        {               
                 try{
 
                 if (string.IsNullOrWhiteSpace(txtNombre.Text) ||
@@ -139,7 +139,6 @@ namespace AppTaller.Views
                 MessageBox.Show("Error al borrar: " + ex.Message);
             }
         }
-        // Método de instancia
         private void LimpiarCampos() {
             txtId.Text = "";
             txtNombre.Text = "";

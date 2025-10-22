@@ -62,8 +62,8 @@ namespace AppTaller.Views
                     //mp.Show();
 
 
-                FrmUsuario fu= new FrmUsuario();
-                fu.Show();
+                
+                
 
                     this.Hide();
                 }
