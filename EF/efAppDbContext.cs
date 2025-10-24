@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AppTaller.Model;
+using AppTaller.Services;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,6 +20,8 @@ namespace AppTaller.EF
         public DbSet<Direccion> Direccion { get; set; }
         public DbSet<catEmpresa> catEmpresa { get; set; }
         public DbSet<Proveedor> Proveedor { get; set; }
+        public DbSet<TipoProducto> TipoProducto { get; set; }
+        public DbSet<Producto> Producto { get; set; }
 
         //Cadena de conexion
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -34,6 +37,7 @@ namespace AppTaller.EF
             modelBuilder.Entity<Direccion>().ToTable("Direccion");
             modelBuilder.Entity<catEmpresa>().ToTable("catEmpresa");
             modelBuilder.Entity<Proveedor>().ToTable("Proveedor");
+            modelBuilder.Entity<TipoProducto>().ToTable("TipoProducto");
         }
 
     }
