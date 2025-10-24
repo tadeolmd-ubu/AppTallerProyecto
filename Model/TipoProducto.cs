@@ -8,5 +8,9 @@ namespace AppTaller.Model
 {
     internal class TipoProducto
     {
+        public int id { get; set; }
+        public string nombre { get; set; }
+        TipoProducto() {
+        }
     }
 }
