@@ -38,6 +38,7 @@ namespace AppTaller.EF
             modelBuilder.Entity<catEmpresa>().ToTable("catEmpresa");
             modelBuilder.Entity<Proveedor>().ToTable("Proveedor");
             modelBuilder.Entity<TipoProducto>().ToTable("TipoProducto");
+            modelBuilder.Entity<Producto>().ToTable("Producto");
         }
 
     }
