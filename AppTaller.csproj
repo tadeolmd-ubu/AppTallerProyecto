@@ -242,6 +242,7 @@
     <Compile Include="Services\ClienteService.cs" />
     <Compile Include="Services\DireccionService.cs" />
     <Compile Include="Services\EmpresaService.cs" />
+    <Compile Include="Services\ProductoService.cs" />
     <Compile Include="Services\ProveedorService.cs" />
     <Compile Include="Services\RolService.cs" />
     <Compile Include="Services\TipoProductoService.cs" />
@@ -260,6 +261,9 @@
     </Compile>
     <Compile Include="Views\UcInicio.xaml.cs">
       <DependentUpon>UcInicio.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UcProductos.xaml.cs">
+      <DependentUpon>UcProductos.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UcProveedores.xaml.cs">
       <DependentUpon>UcProveedores.xaml</DependentUpon>
@@ -335,6 +339,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UcInicio.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UcProductos.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

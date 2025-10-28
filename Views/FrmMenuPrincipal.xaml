@@ -99,9 +99,18 @@
                         <fa:IconImage Icon="UserAlt" Style="{StaticResource menuBotonIcono}"/>
                         <TextBlock Text="Proveedores" Style="{StaticResource menuBotonTexto}"/>
                     </StackPanel>
-
                 </RadioButton>
 
+                <RadioButton x:Name="chkProductos" 
+                             Style="{StaticResource menuBoton}"
+                             Tag="{StaticResource color1}"
+                             Checked="Productos_Checked">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="BoxesStacked" Style="{StaticResource menuBotonIcono}"/>
+                        <TextBlock Text="Productos" Style="{StaticResource menuBotonTexto}"/>
+                    </StackPanel>
+
+                </RadioButton>
 
             </StackPanel>
 
