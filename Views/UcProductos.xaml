@@ -39,6 +39,7 @@
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Background" Value="#1B1428"/>
             <Setter Property="Margin" Value="0"/>
+            <Setter Property="Foreground" Value="Black"/>
         </Style>
     </UserControl.Resources>
 

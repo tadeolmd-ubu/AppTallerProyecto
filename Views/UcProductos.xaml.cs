@@ -24,12 +24,18 @@ namespace AppTaller.Views
     {
         private readonly EF.efAppDbContext _context;
         private readonly ProductoService _productoService;
+        private readonly MarcaService _marcaService;
+        private readonly TipoProductoService _tipoProductoService;
 
         public UcProductos()
         {
             InitializeComponent();
             _context = new EF.efAppDbContext();
             _productoService = new ProductoService(_context);
+            _marcaService = new MarcaService(_context);
+            _tipoProductoService = new TipoProductoService(_context);
+            CargarMarcas();
+            CargarTipoProducto();
         }
 
         private void btnGuardar_Click(object sender, RoutedEventArgs e)
@@ -55,7 +61,7 @@ namespace AppTaller.Views
                 }
 
                 if (!int.TryParse(cmbMarca.SelectedValue?.ToString(), out int idMarca) ||
-                    !int.TryParse(cmbTipoProducto.SelectedValue?.ToString(), out int idTipoProducto){
+                    !int.TryParse(cmbTipoProducto.SelectedValue?.ToString(), out int idTipoProducto)){
                     MessageBox.Show("Por favor, seleccione valores válidos para Marca y Tipo de Producto.",
                                     "Entrada inválida", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
@@ -101,6 +107,46 @@ namespace AppTaller.Views
         private void btnBuscar_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void CargarMarcas(){
+            try{
+                var marcas = _marcaService.ObtenerTodasLasMarcas();
+
+                if (marcas == null || marcas.Count == 0){
+                    MessageBox.Show("No se encontraron marcas.");
+                    return;
+                }
+                cmbMarca.ItemsSource = marcas;
+                cmbMarca.SelectedValuePath = "id";
+                cmbMarca.DisplayMemberPath = "id";
+
+                cmbMarca.SelectedIndex = 0;
+            }
+            catch (Exception ex){
+                MessageBox.Show("Error al cargar marcas: " + ex.Message);
+            }
+        }
+        private void CargarTipoProducto()
+        {
+            try{
+                var tipo = _tipoProductoService.ObtenerTiposProducto();
+
+                if (tipo == null || tipo.Count == 0)
+                {
+                    MessageBox.Show("No se encontraron Tipos de producto.");
+                    return;
+                }
+                cmbMarca.ItemsSource = tipo;
+                cmbMarca.SelectedValuePath = "id";
+                cmbMarca.DisplayMemberPath = "id";
+
+                cmbMarca.SelectedIndex = 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los tipos de productos: " + ex.Message);
+            }
         }
     }
 }
