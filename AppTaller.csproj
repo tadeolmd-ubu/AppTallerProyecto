@@ -230,6 +230,7 @@
     <Compile Include="Logics\ClienteLogic.cs" />
     <Compile Include="Logics\ProveedorLogic.cs" />
     <Compile Include="Model\catEmpresa.cs" />
+    <Compile Include="Model\catMarca.cs" />
     <Compile Include="Model\catRol.cs" />
     <Compile Include="Model\Cliente.cs" />
     <Compile Include="Model\Conexion.cs" />
@@ -242,6 +243,7 @@
     <Compile Include="Services\ClienteService.cs" />
     <Compile Include="Services\DireccionService.cs" />
     <Compile Include="Services\EmpresaService.cs" />
+    <Compile Include="Services\MarcaService.cs" />
     <Compile Include="Services\ProductoService.cs" />
     <Compile Include="Services\ProveedorService.cs" />
     <Compile Include="Services\RolService.cs" />
