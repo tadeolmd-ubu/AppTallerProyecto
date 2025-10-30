@@ -17,7 +17,6 @@ namespace AppTaller.Services
 
         public void AgregarProducto(Producto producto) {
             _context.Producto.Add(producto);
-            _context.SaveChanges();
         }
         public void ModificarProducoto(Producto producto) {
             var existente = _context.Producto.Find(producto.id);
@@ -25,7 +24,6 @@ namespace AppTaller.Services
                 return;
             else{
                 _context.Entry(existente).CurrentValues.SetValues(producto);
-                _context.SaveChanges();
             }
         }
         public void CrearOActualizarProducto(Producto producto){
@@ -36,6 +34,7 @@ namespace AppTaller.Services
             else{
                 ModificarProducoto(producto);
             }
+            _context.SaveChanges();
         }
         public void EliminarProducto(int id){
             var producto = _context.Producto.Find(id);

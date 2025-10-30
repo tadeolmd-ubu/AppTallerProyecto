@@ -58,8 +58,8 @@ namespace AppTaller.Views
                 {
                  
                     //en caso de existi, muestra el menu y oculta el login
-                    //FrmMenuPrincipal mp = new FrmMenuPrincipal();
-                    //mp.Show();
+                    FrmMenuPrincipal mp = new FrmMenuPrincipal();
+                   mp.Show();
 
 
                 

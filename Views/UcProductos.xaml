@@ -57,7 +57,7 @@
 
         <!-- COLUMNA IZQUIERDA -->
         <Label Content="Id del producto" HorizontalAlignment="Left" Margin="41,134,0,0" VerticalAlignment="Top" FontSize="14"/>
-        <TextBox x:Name="txtIdProducto" HorizontalAlignment="Left" Margin="180,131,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" IsReadOnly="True"/>
+        <TextBox x:Name="txtIdProducto" HorizontalAlignment="Left" Margin="180,131,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" />
 
         <Label Content="Nombre del producto" HorizontalAlignment="Left" Margin="41,170,0,0" VerticalAlignment="Top" FontSize="14"/>
         <TextBox x:Name="txtNombreProducto" HorizontalAlignment="Left" Margin="41,194,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="244"/>
@@ -103,18 +103,14 @@
         <Label Content="Detalles del Producto" HorizontalAlignment="Left" Margin="450,131,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold"/>
 
         <Label Content="Marca" HorizontalAlignment="Left" Margin="450,170,0,0" VerticalAlignment="Top" FontSize="14"/>
-        <ComboBox x:Name="cmbMarca" HorizontalAlignment="Left" Margin="450,194,0,0" VerticalAlignment="Top" Width="140"
-                  />
+        <ComboBox x:Name="cmbMarca" HorizontalAlignment="Left" Margin="450,194,0,0" VerticalAlignment="Top" Width="140" SelectedIndex="0"/>
 
-        <Label Content="Tipo de producto" HorizontalAlignment="Left" Margin="620,170,0,0" VerticalAlignment="Top" FontSize="14"/>
-        <ComboBox x:Name="cmbTipoProducto" HorizontalAlignment="Left" Margin="620,194,0,0" VerticalAlignment="Top" Width="140"
-                  />
+        <Label Content="Tipo de producto" HorizontalAlignment="Left" Margin="620,170,0,0" VerticalAlignment="Top" FontSize="14" />
+        <ComboBox x:Name="cmbTipoProducto" HorizontalAlignment="Left" Margin="620,194,0,0" VerticalAlignment="Top" Width="140" SelectedIndex="0"/>
 
-        <Label Content="Fecha creación" HorizontalAlignment="Left" Margin="450,227,0,0" VerticalAlignment="Top" FontSize="14"/>
-        <TextBox x:Name="txtFechaCreacion" HorizontalAlignment="Left" Margin="450,251,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" IsReadOnly="True"/>
+        <Label x:Name="lblFechaCreacion" Content="Fecha creación" HorizontalAlignment="Left" Margin="450,227,0,0" VerticalAlignment="Top" FontSize="14"/>
 
-        <Label Content="Fecha actualización" HorizontalAlignment="Left" Margin="620,227,0,0" VerticalAlignment="Top" FontSize="14"/>
-        <TextBox x:Name="txtFechaActualizacion" HorizontalAlignment="Left" Margin="620,251,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" IsReadOnly="True"/>
+        <Label x:Name="lblFechaActualizacion" Content="Fecha actualización" HorizontalAlignment="Left" Margin="620,227,0,0" VerticalAlignment="Top" FontSize="14"/>
 
         <!-- BOTON GUARDAR -->
         <Button x:Name="btnGuardar"         
