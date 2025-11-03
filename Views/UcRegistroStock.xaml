@@ -45,9 +45,9 @@
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- Título y logo -->
+            <!-- Título + logo -->
             <RowDefinition Height="*"/>
-            <!-- Contenido -->
+            <!-- Campos -->
             <RowDefinition Height="Auto"/>
             <!-- Botones -->
         </Grid.RowDefinitions>
@@ -61,33 +61,38 @@
             </StackPanel>
         </StackPanel>
 
-        <!-- Contenido: Campos del movimiento -->
+        <!-- Campos -->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Columna izquierda: Producto y Almacén -->
             <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                <!-- Producto -->
                 <Label Content="Producto"/>
-                <ComboBox x:Name="cmbProducto"/>
+                <ComboBox x:Name="cmbProducto" IsEditable="True" />
 
+                <!-- Almacén -->
                 <Label Content="Almacén"/>
                 <ComboBox x:Name="cmbAlmacen"/>
 
-                <Label Content="Tipo de Movimiento"/>
-                <ComboBox x:Name="cmbTipoMovimiento"/>
-
-                <Label Content="Referencia"/>
-                <ComboBox x:Name="cmbReferenciaMovimiento"/>
-
+                <!-- Cantidad -->
                 <Label Content="Cantidad"/>
                 <TextBox x:Name="txtCantidad"/>
+
+                <!-- Tipo de movimiento -->
+                <Label Content="Tipo de Movimiento"/>
+                <ComboBox x:Name="cmbTipoMovimiento"/>
             </StackPanel>
 
-            <!-- Columna derecha: vacía por ahora, se puede usar si agregas historial o info adicional -->
-            <StackPanel Grid.Column="1"/>
+            <StackPanel Grid.Column="1">
+                <!-- Usuario -->
+                
+                <!-- Referencia -->
+                <Label Content="Referencia"/>
+                <TextBox x:Name="txtReferencia"/>
+            </StackPanel>
         </Grid>
 
         <!-- Botones -->

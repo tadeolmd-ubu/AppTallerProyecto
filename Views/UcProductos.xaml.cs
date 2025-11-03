@@ -178,7 +178,7 @@ namespace AppTaller.Views
                 cmbTipoProducto.SelectedValuePath = "id";
                 cmbTipoProducto.DisplayMemberPath = "id";
 
-                cmbMarca.SelectedIndex = 0;
+                cmbTipoProducto.SelectedIndex = 0;
             }
             catch (Exception ex)
             {

@@ -239,6 +239,7 @@
     <Compile Include="Model\Login.cs" />
     <Compile Include="Model\Producto.cs" />
     <Compile Include="Model\Proveedor.cs" />
+    <Compile Include="Model\TipoMovimiento.cs" />
     <Compile Include="Model\TipoProducto.cs" />
     <Compile Include="Model\Usuario.cs" />
     <Compile Include="Services\AlmacenService.cs" />
@@ -249,6 +250,7 @@
     <Compile Include="Services\ProductoService.cs" />
     <Compile Include="Services\ProveedorService.cs" />
     <Compile Include="Services\RolService.cs" />
+    <Compile Include="Services\TipoMovimientoService.cs" />
     <Compile Include="Services\TipoProductoService.cs" />
     <Compile Include="Services\UsuarioService.cs" />
     <Compile Include="Views\FrmBusqueda.xaml.cs">

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AppTaller.Model;
+using AppTaller.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +22,15 @@ namespace AppTaller.Views
     /// </summary>
     public partial class UcRegistroStock : UserControl
     {
+        private readonly EF.efAppDbContext _context;
+        private readonly ProductoService _productoService;
+        private readonly AlmacenService _almacenService;
         public UcRegistroStock()
         {
             InitializeComponent();
+            _context = new EF.efAppDbContext();
+            _productoService = new ProductoService(_context);
+            _almacenService = new AlmacenService(_context);
         }
 
         private void btnGuardar_Click(object sender, RoutedEventArgs e)
@@ -33,6 +41,54 @@ namespace AppTaller.Views
         private void btnCancelar_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+
+        private void CargarProducto()
+        {
+            try
+            {
+                var producto = _productoService.ObtenerProductos();
+
+                if (producto == null || producto.Count == 0)
+                {
+                    MessageBox.Show("No se encontraron el producto.");
+                    return;
+                }
+                cmbProducto.ItemsSource = producto;
+                cmbProducto.SelectedValuePath = "id";
+                cmbProducto.DisplayMemberPath = "id";
+
+                cmbProducto.SelectedIndex = 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los productos: " + ex.Message);
+
+            }
+        }
+        private void CargarAlmacen()
+        {
+            try
+            {
+                var almacen = _almacenService.ObtenerAlmacenes();
+
+                if (almacen == null || almacen.Count == 0)
+                {
+                    MessageBox.Show("No se encontraron el almacen.");
+                    return;
+                }
+                cmbAlmacen.ItemsSource = almacen;
+                cmbAlmacen.SelectedValuePath = "id";
+                cmbAlmacen.DisplayMemberPath = "id";
+
+                cmbAlmacen.SelectedIndex = 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los almacenes: " + ex.Message);
+
+            }
         }
     }
 }
