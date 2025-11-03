@@ -25,12 +25,17 @@ namespace AppTaller.Views
         private readonly EF.efAppDbContext _context;
         private readonly ProductoService _productoService;
         private readonly AlmacenService _almacenService;
+        private readonly TipoMovimientoService _tipoMovimientoService;
         public UcRegistroStock()
         {
             InitializeComponent();
             _context = new EF.efAppDbContext();
             _productoService = new ProductoService(_context);
             _almacenService = new AlmacenService(_context);
+            _tipoMovimientoService = new TipoMovimientoService(_context);
+            CargarProducto();
+            CargarAlmacen();
+            CargarTipoMovimiento();
         }
 
         private void btnGuardar_Click(object sender, RoutedEventArgs e)
@@ -87,6 +92,29 @@ namespace AppTaller.Views
             catch (Exception ex)
             {
                 MessageBox.Show("Error al cargar los almacenes: " + ex.Message);
+
+            }
+        }
+        private void CargarTipoMovimiento()
+        {
+            try
+            {
+                var tipoMovimiento = _tipoMovimientoService.ObtenerTiposMovimientos();
+
+                if (tipoMovimiento == null || tipoMovimiento.Count == 0)
+                {
+                    MessageBox.Show("No se encontraron los tipos de movimiento.");
+                    return;
+                }
+                cmbTipoMovimiento.ItemsSource = tipoMovimiento;
+                cmbTipoMovimiento.SelectedValuePath = "id";
+                cmbTipoMovimiento.DisplayMemberPath = "id";
+
+                cmbTipoMovimiento.SelectedIndex = 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los tipos de movimiento: " + ex.Message);
 
             }
         }

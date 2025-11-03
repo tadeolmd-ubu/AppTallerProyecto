@@ -30,6 +30,7 @@
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Background" Value="#1B1428"/>
             <Setter Property="Margin" Value="0"/>
+            <Setter Property="Foreground" Value="Black"/>
         </Style>
 
         <Style TargetType="Button" x:Key="BotonAccion">
@@ -71,7 +72,7 @@
             <StackPanel Grid.Column="0" Margin="0,0,20,0">
                 <!-- Producto -->
                 <Label Content="Producto"/>
-                <ComboBox x:Name="cmbProducto" IsEditable="True" />
+                <ComboBox x:Name="cmbProducto" />
 
                 <!-- Almacén -->
                 <Label Content="Almacén"/>
