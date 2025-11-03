@@ -122,8 +122,8 @@ namespace AppTaller.Views
 
         private void btnBuscar_Click(object sender, RoutedEventArgs e)
         {
-            try{
-                var productos = _productoService.ObtenerProductos(); // List<Usuario>
+            try{                
+                var productos = _productoService.ObtenerProductos(); 
 
                 string[] columnas = { "id", "nombre", "precio", "estatus", "idMarca", "idTipoProducto", "fechaCreacion", "fechaActualizacion"};
 

@@ -23,6 +23,7 @@ namespace AppTaller.EF
         public DbSet<TipoProducto> TipoProducto { get; set; }
         public DbSet<Producto> Producto { get; set; }
         public DbSet<catMarca> catMarcas { get; set; }
+        public DbSet<catAlmacen> catAlmacen { get; set; }
 
         //Cadena de conexion
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -41,6 +42,7 @@ namespace AppTaller.EF
             modelBuilder.Entity<TipoProducto>().ToTable("TipoProducto");
             modelBuilder.Entity<Producto>().ToTable("Producto");
             modelBuilder.Entity<catMarca>().ToTable("catMarca");
+            modelBuilder.Entity<catAlmacen>().ToTable("catAlmacen");
         }
 
     }

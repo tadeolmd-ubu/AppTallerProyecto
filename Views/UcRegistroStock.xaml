@@ -1,0 +1,99 @@
+﻿<UserControl x:Class="AppTaller.Views.UcRegistroStock"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Width="800" Height="600"
+             Background="#0A003A">
+
+    <UserControl.Resources>
+        <!-- Estilos reutilizados -->
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="GhostWhite"/>
+            <Setter Property="FontFamily" Value="Montserrat"/>
+        </Style>
+
+        <Style TargetType="{x:Type Control}" x:Key="BaseFormStyle">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="FontFamily" Value="Montserrat"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="DarkGray"/>
+            <Setter Property="BorderThickness" Value="0,0,0,2"/>
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="{x:Null}"/>
+            <Setter Property="Width" Value="250"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
+        </Style>
+
+        <Style TargetType="TextBox" BasedOn="{StaticResource BaseFormStyle}"/>
+        <Style TargetType="ComboBox" BasedOn="{StaticResource BaseFormStyle}">
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="#1B1428"/>
+            <Setter Property="Margin" Value="0"/>
+        </Style>
+
+        <Style TargetType="Button" x:Key="BotonAccion">
+            <Setter Property="Background" Value="#2C2545"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#3E3556"/>
+            <Setter Property="FontFamily" Value="Montserrat"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Título y logo -->
+            <RowDefinition Height="*"/>
+            <!-- Contenido -->
+            <RowDefinition Height="Auto"/>
+            <!-- Botones -->
+        </Grid.RowDefinitions>
+
+        <!-- Título + Logo -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,20">
+            <Image Source="/Images/TRACTOR_V2.png" Stretch="Fill" Height="60" Width="60" Margin="0,0,10,0"/>
+            <StackPanel>
+                <Label Content="Registro de Stock" FontSize="28" FontWeight="Bold"/>
+                <Label Content="Completa el formulario para registrar un movimiento de inventario" Foreground="#FF81969C" FontSize="10"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Contenido: Campos del movimiento -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Columna izquierda: Producto y Almacén -->
+            <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                <Label Content="Producto"/>
+                <ComboBox x:Name="cmbProducto"/>
+
+                <Label Content="Almacén"/>
+                <ComboBox x:Name="cmbAlmacen"/>
+
+                <Label Content="Tipo de Movimiento"/>
+                <ComboBox x:Name="cmbTipoMovimiento"/>
+
+                <Label Content="Referencia"/>
+                <ComboBox x:Name="cmbReferenciaMovimiento"/>
+
+                <Label Content="Cantidad"/>
+                <TextBox x:Name="txtCantidad"/>
+            </StackPanel>
+
+            <!-- Columna derecha: vacía por ahora, se puede usar si agregas historial o info adicional -->
+            <StackPanel Grid.Column="1"/>
+        </Grid>
+
+        <!-- Botones -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0" >
+            <Button x:Name="btnCancelar" Content="Cancelar" Style="{StaticResource BotonAccion}" Width="100" Height="35" Click="btnCancelar_Click"/>
+            <Button x:Name="btnGuardar" Content="Guardar" Style="{StaticResource BotonAccion}" Width="100" Height="35" Click="btnGuardar_Click"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

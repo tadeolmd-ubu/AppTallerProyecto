@@ -229,6 +229,7 @@
     <Compile Include="EF\efAppDbContext.cs" />
     <Compile Include="Logics\ClienteLogic.cs" />
     <Compile Include="Logics\ProveedorLogic.cs" />
+    <Compile Include="Model\catAlmacen.cs" />
     <Compile Include="Model\catEmpresa.cs" />
     <Compile Include="Model\catMarca.cs" />
     <Compile Include="Model\catRol.cs" />
@@ -240,6 +241,7 @@
     <Compile Include="Model\Proveedor.cs" />
     <Compile Include="Model\TipoProducto.cs" />
     <Compile Include="Model\Usuario.cs" />
+    <Compile Include="Services\AlmacenService.cs" />
     <Compile Include="Services\ClienteService.cs" />
     <Compile Include="Services\DireccionService.cs" />
     <Compile Include="Services\EmpresaService.cs" />
@@ -269,6 +271,9 @@
     </Compile>
     <Compile Include="Views\UcProveedores.xaml.cs">
       <DependentUpon>UcProveedores.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UcRegistroStock.xaml.cs">
+      <DependentUpon>UcRegistroStock.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UcUsuario.xaml.cs">
       <DependentUpon>UcUsuario.xaml</DependentUpon>
@@ -349,6 +354,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UcProveedores.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UcRegistroStock.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
