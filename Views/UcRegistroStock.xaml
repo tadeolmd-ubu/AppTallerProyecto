@@ -92,7 +92,7 @@
                 
                 <!-- Referencia -->
                 <Label Content="Referencia"/>
-                <TextBox x:Name="txtReferencia"/>
+                <ComboBox x:Name="cmbReferencia"/>
             </StackPanel>
         </Grid>
 
