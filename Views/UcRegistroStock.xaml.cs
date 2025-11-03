@@ -26,6 +26,7 @@ namespace AppTaller.Views
         private readonly ProductoService _productoService;
         private readonly AlmacenService _almacenService;
         private readonly TipoMovimientoService _tipoMovimientoService;
+        private readonly ReferenciaService _referenciaService;
         public UcRegistroStock()
         {
             InitializeComponent();
@@ -33,9 +34,11 @@ namespace AppTaller.Views
             _productoService = new ProductoService(_context);
             _almacenService = new AlmacenService(_context);
             _tipoMovimientoService = new TipoMovimientoService(_context);
+            _referenciaService = new ReferenciaService(_context);
             CargarProducto();
             CargarAlmacen();
             CargarTipoMovimiento();
+            CargarReferencias();
         }
 
         private void btnGuardar_Click(object sender, RoutedEventArgs e)
@@ -117,6 +120,45 @@ namespace AppTaller.Views
                 MessageBox.Show("Error al cargar los tipos de movimiento: " + ex.Message);
 
             }
+        }
+        private void CargarReferencias()
+        {
+            try
+            {
+                var referencia = _referenciaService.ObtenerReferencias();
+
+                if (referencia == null || referencia.Count == 0)
+                {
+                    MessageBox.Show("No se encontraron las referencias de movimientos.");
+                    return;
+                }
+                cmbReferencia.ItemsSource = referencia;
+                cmbReferencia.SelectedValuePath = "id";
+                cmbReferencia.DisplayMemberPath = "id";
+
+                cmbReferencia.SelectedIndex = 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los tipos de movimiento: " + ex.Message);
+
+            }
+        }
+
+        private void BtnSumar_Click(object sender, RoutedEventArgs e)
+        {
+            int val = int.Parse(txtCantidad.Text);
+            txtCantidad.Text = (val + 1).ToString();
+        }
+
+        private void BtnRestar_Click(object sender, RoutedEventArgs e)
+        {
+            int val = int.Parse(txtCantidad.Text);
+            if (val > 0) txtCantidad.Text = (val - 1).ToString();
+        }
+        private void SoloNumeros(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !int.TryParse(e.Text, out _);
         }
     }
 }

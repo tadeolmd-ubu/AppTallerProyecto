@@ -14,8 +14,7 @@ namespace AppTaller.Model
         public bool estatus { get; set; }
         public int idEmpresa { get; set; }          
         public int idDireccion { get; set; }
-        public Proveedor()
-        {
+        public Proveedor(){
         }
     }
 }
