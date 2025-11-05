@@ -26,7 +26,7 @@ namespace AppTaller.EF
         public DbSet<catAlmacen> catAlmacen { get; set; }
         public DbSet<TipoMovimiento> TipoMovimiento { get; set; }
         public DbSet<ReferenciaMovimiento> ReferenciaMovimiento { get; set; }
-        public DbSet<Inventario> inventarios { get; set; }
+        public DbSet<Inventario> Inventario { get; set; }
         public DbSet<MovimientoInventario> MovimientoInventario { get; set; }
         //Cadena de conexion
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

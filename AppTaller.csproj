@@ -261,6 +261,7 @@
     <Compile Include="Services\ClienteService.cs" />
     <Compile Include="Services\DireccionService.cs" />
     <Compile Include="Services\EmpresaService.cs" />
+    <Compile Include="Services\InventarioService.cs" />
     <Compile Include="Services\MarcaService.cs" />
     <Compile Include="Services\ProductoService.cs" />
     <Compile Include="Services\ProveedorService.cs" />

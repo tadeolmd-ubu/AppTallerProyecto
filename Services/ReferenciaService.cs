@@ -15,7 +15,7 @@ namespace AppTaller.Services
         }
 
         public List<ReferenciaMovimiento> ObtenerReferencias() {
-        return _context.ReferenciaMovimientos.ToList();
+        return _context.ReferenciaMovimiento.ToList();
         }
     }
 }

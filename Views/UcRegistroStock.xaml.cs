@@ -1,5 +1,6 @@
 ﻿using AppTaller.Model;
 using AppTaller.Services;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,7 @@ namespace AppTaller.Views
         private readonly AlmacenService _almacenService;
         private readonly TipoMovimientoService _tipoMovimientoService;
         private readonly ReferenciaService _referenciaService;
+        private readonly InventarioService _inventarioService;
         public UcRegistroStock()
         {
             InitializeComponent();
@@ -35,6 +37,7 @@ namespace AppTaller.Views
             _almacenService = new AlmacenService(_context);
             _tipoMovimientoService = new TipoMovimientoService(_context);
             _referenciaService = new ReferenciaService(_context);
+            _inventarioService = new InventarioService(_context);
             CargarProducto();
             CargarAlmacen();
             CargarTipoMovimiento();
@@ -43,8 +46,83 @@ namespace AppTaller.Views
 
         private void btnGuardar_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                // Validaciones
+                if (cmbProducto.SelectedIndex == -1)
+                {
+                    MessageBox.Show("Selecciona un producto.", "Atención", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
 
+                if (cmbAlmacen.SelectedIndex == -1)
+                {
+                    MessageBox.Show("Selecciona un almacén.", "Atención", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                if (cmbTipoMovimiento.SelectedIndex == -1)
+                {
+                    MessageBox.Show("Selecciona el tipo de movimiento.", "Atención", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                if (cmbReferencia.SelectedIndex == -1)
+                {
+                    MessageBox.Show("Selecciona la referencia.", "Atención", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(txtCantidad.Text) || !int.TryParse(txtCantidad.Text, out int cantidad))
+                {
+                    MessageBox.Show("Ingresa una cantidad válida.", "Atención", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                // Obtener valores
+                int idProducto = Convert.ToInt32(cmbProducto.SelectedValue);
+                int idAlmacen = Convert.ToInt32(cmbAlmacen.SelectedValue);
+                int idTipoMovimiento = Convert.ToInt32(cmbTipoMovimiento.SelectedValue);
+                int idReferencia = Convert.ToInt32(cmbReferencia.SelectedValue);
+
+                if (string.IsNullOrWhiteSpace(txtId.Text))
+                {
+                    if (idTipoMovimiento == 1) // Entrada
+                    {
+                        MessageBox.Show("Debes indicar el ID para crear el inventario.", "Atención", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Para ajuste necesitas ingresar el ID del inventario existente.", "Atención", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                }
+
+                int idInventario = Convert.ToInt32(txtId.Text);
+
+                // Llamar al servicio
+                _inventarioService.RegistrarEntradaOAjuste(
+                    idInventario: idInventario,
+                    idProducto: idProducto,
+                    idAlmacen: idAlmacen,
+                    nuevoValor: cantidad,
+                    idTipoMovimiento: idTipoMovimiento,
+                    idReferenciaMovimiento: idReferencia
+                );
+
+                MessageBox.Show("Movimiento guardado exitosamente 🚀", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+
+
+            }
+            catch (Exception ex)
+            {
+                string error = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                MessageBox.Show(error, "Error 😕", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
+            
+            
 
         private void btnCancelar_Click(object sender, RoutedEventArgs e)
         {

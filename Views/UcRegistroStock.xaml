@@ -79,17 +79,18 @@
                 <!-- Almacén -->
                 <Label Content="Almacén"/>
                 <ComboBox x:Name="cmbAlmacen"/>
-
+                <Label Content="Id de el registro"/>
+                <TextBox x:Name="txtId"/>
                 <!-- Cantidad -->
                 <Label Content="Cantidad"/>
                 <StackPanel Orientation="Horizontal" Width="251">
-                    <Button Content="-" Width="30" Click="BtnRestar_Click" />
+                    <Button Content="-" Width="20" Height="20" Click="BtnRestar_Click" />
                     <TextBox x:Name="txtCantidad"
                              Width="60"
                              TextAlignment="Center"
                              PreviewTextInput="SoloNumeros"
                              Text="0"/>
-                    <Button Content="+" Width="30" Click="BtnSumar_Click" />
+                    <Button Content="+" Width="20" Height="20" Click="BtnSumar_Click" />
                 </StackPanel>
 
                 <!-- Tipo de movimiento -->

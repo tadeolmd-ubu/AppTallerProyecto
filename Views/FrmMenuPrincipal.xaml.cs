@@ -28,6 +28,7 @@ namespace AppTaller.Views
         private UcClientes _ucClientes;
         private UcProveedores _ucProveedores;
         private UcProductos _ucProductos;
+        private UcRegistroStock _ucRegistroStock;
         public FrmMenuPrincipal()
         {
             InitializeComponent();
@@ -75,13 +76,7 @@ namespace AppTaller.Views
         private void btnMinimizar_Click(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
-        }
-
-
-
-
-
-        //metodo para mostrar los forms dentro del mismo menu 
+        } 
 
         private void inicio_Checked(object sender, RoutedEventArgs e)
         {
@@ -133,6 +128,15 @@ namespace AppTaller.Views
                 _ucProductos = new UcProductos();
             }
             contenedorFormularios.Content = _ucProductos;
+        }
+
+        private void Stock_Checked(object sender, RoutedEventArgs e)
+        {
+            if (_ucRegistroStock == null)
+            {
+                _ucRegistroStock = new UcRegistroStock();
+            }
+            contenedorFormularios.Content = _ucRegistroStock;
         }
     }
 }

@@ -111,6 +111,16 @@
                     </StackPanel>
 
                 </RadioButton>
+                <RadioButton x:Name="chkStock" 
+                             Style="{StaticResource menuBoton}"
+                             Tag="{StaticResource color1}"
+                             Checked="Stock_Checked">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="BoxesStacked" Style="{StaticResource menuBotonIcono}"/>
+                        <TextBlock Text="Movimientos" Style="{StaticResource menuBotonTexto}"/>
+                    </StackPanel>
+
+                </RadioButton>
 
             </StackPanel>
 
