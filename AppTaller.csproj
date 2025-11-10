@@ -314,6 +314,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Logics\.txt" />
     <Resource Include="Images\borrar.png" />
     <Resource Include="Images\buscar.png" />
     <Resource Include="Images\icon_search.png" />
