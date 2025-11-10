@@ -13,9 +13,12 @@ namespace AppTaller.Services
         public ReferenciaService(EF.efAppDbContext context){
             _context = context;
         }
-
         public List<ReferenciaMovimiento> ObtenerReferencias() {
         return _context.ReferenciaMovimiento.ToList();
+        }
+
+        public ReferenciaMovimiento BuscarReferencia(int id) {
+            return _context.ReferenciaMovimiento.Find(id);
         }
     }
 }

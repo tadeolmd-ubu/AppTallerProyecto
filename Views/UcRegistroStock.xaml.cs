@@ -1,4 +1,5 @@
-﻿using AppTaller.Model;
+﻿using AppTaller.Logics;
+using AppTaller.Model;
 using AppTaller.Services;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -29,6 +30,7 @@ namespace AppTaller.Views
         private readonly TipoMovimientoService _tipoMovimientoService;
         private readonly ReferenciaService _referenciaService;
         private readonly InventarioService _inventarioService;
+        private readonly StockLogic _stockLogic ;
         public UcRegistroStock()
         {
             InitializeComponent();
@@ -38,6 +40,7 @@ namespace AppTaller.Views
             _tipoMovimientoService = new TipoMovimientoService(_context);
             _referenciaService = new ReferenciaService(_context);
             _inventarioService = new InventarioService(_context);
+            _stockLogic = new StockLogic(_context);
             CargarProducto();
             CargarAlmacen();
             CargarTipoMovimiento();
@@ -102,23 +105,21 @@ namespace AppTaller.Views
                 int idInventario = Convert.ToInt32(txtId.Text);
 
                 // Llamar al servicio
-                _inventarioService.RegistrarEntradaOAjuste(
-                    idInventario: idInventario,
-                    idProducto: idProducto,
-                    idAlmacen: idAlmacen,
-                    nuevoValor: cantidad,
-                    idTipoMovimiento: idTipoMovimiento,
-                    idReferenciaMovimiento: idReferencia
-                );
+                _stockLogic.RegistrarEntradaOAjuste(idInventario,
+                                                   idProducto,
+                                                   idAlmacen,
+                                                   cantidad,
+                                                   idTipoMovimiento,
+                                                   idReferencia);
 
-                MessageBox.Show("Movimiento guardado exitosamente 🚀", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Movimiento guardado exitosamente ", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
 
 
             }
             catch (Exception ex)
             {
                 string error = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
-                MessageBox.Show(error, "Error 😕", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(error, "Error ", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
             
