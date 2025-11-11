@@ -2,6 +2,7 @@
 using AppTaller.Model;
 using AppTaller.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -121,16 +122,11 @@ namespace AppTaller.Views
                 string error = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
                 MessageBox.Show(error, "Error ", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        }
-            
-            
-
+        }                     
         private void btnCancelar_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
-
-
         private void CargarProducto()
         {
             try
@@ -238,6 +234,53 @@ namespace AppTaller.Views
         private void SoloNumeros(object sender, TextCompositionEventArgs e)
         {
             e.Handled = !int.TryParse(e.Text, out _);
+        }
+
+        private void btnProductos_Click(object sender, RoutedEventArgs e)
+        {
+            try{
+                var productos = _productoService.ObtenerProductos();
+
+                string[] columnas = { "id", "nombre", "precio", "estatus", "idMarca", "idTipoProducto", "fechaCreacion", "fechaActualizacion" };
+
+                var ventana = new FrmBusqueda("Búsqueda de Clientes", productos, columnas);
+
+                if (ventana.ShowDialog() == true){
+                    if (ventana.seleccionado is Producto productoSeleccionado){
+                        cmbProducto.SelectedValue = productoSeleccionado.id;
+                    }
+                }
+            }
+            catch (Exception ex){
+                MessageBox.Show("Error al buscar usuarios: " + ex.Message);
+            }
+        }
+
+        private void btnRegistros_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var inventarios= _inventarioService.ObtenerInventarios();
+
+                string[] columnas = { "id", "idProducto", "idAlmacen", "stockActual", "fechaUltimaActualizacion"};
+
+                var ventana = new FrmBusqueda("Búsqueda de Inventarios", inventarios, columnas);
+
+                if (ventana.ShowDialog() == true)
+                {
+                    if (ventana.seleccionado is Inventario inventarioSeleccionado)
+                    {
+                        cmbProducto.SelectedValue = inventarioSeleccionado.idProducto;
+                        cmbAlmacen.SelectedValue = inventarioSeleccionado.idAlmacen;
+                        txtId.Text = inventarioSeleccionado.id.ToString();
+                        txtCantidad.Text = inventarioSeleccionado.stockActual.ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al buscar usuarios: " + ex.Message);
+            }
         }
     }
 }

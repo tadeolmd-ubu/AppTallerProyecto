@@ -32,6 +32,9 @@ namespace AppTaller.Services
         public Inventario BuscarInventario(int id) {
         return _context.Inventario.Find(id);
         }
+        public List<Inventario> ObtenerInventarios(){
+            return _context.Inventario.ToList();
+        }
         public bool ExisteInventarioProductoAlmacen(int idProducto, int idAlmacen)
         {
             return _context.Inventario.Any(i => i.idProducto == idProducto && i.idAlmacen == idAlmacen);
