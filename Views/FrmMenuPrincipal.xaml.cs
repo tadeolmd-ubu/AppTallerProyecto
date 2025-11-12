@@ -29,6 +29,7 @@ namespace AppTaller.Views
         private UcProveedores _ucProveedores;
         private UcProductos _ucProductos;
         private UcRegistroStock _ucRegistroStock;
+        private UcPresupuestos _ucPresupuestos;
         public FrmMenuPrincipal()
         {
             InitializeComponent();
@@ -137,6 +138,15 @@ namespace AppTaller.Views
                 _ucRegistroStock = new UcRegistroStock();
             }
             contenedorFormularios.Content = _ucRegistroStock;
+        }
+
+        private void Presupuestos_Checked(object sender, RoutedEventArgs e)
+        {
+            if (_ucPresupuestos == null)
+            {
+                _ucPresupuestos = new UcPresupuestos();
+            }
+            contenedorFormularios.Content = _ucPresupuestos;
         }
     }
 }

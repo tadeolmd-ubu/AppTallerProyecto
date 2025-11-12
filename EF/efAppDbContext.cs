@@ -28,6 +28,8 @@ namespace AppTaller.EF
         public DbSet<ReferenciaMovimiento> ReferenciaMovimiento { get; set; }
         public DbSet<Inventario> Inventario { get; set; }
         public DbSet<MovimientoInventario> MovimientoInventario { get; set; }
+        public DbSet<Presupuesto> Presupuesto { get; set; }
+        public DbSet<PresupuestoDetalle> PresupuestoDetalle { get; set; }
         //Cadena de conexion
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -50,6 +52,8 @@ namespace AppTaller.EF
             modelBuilder.Entity<ReferenciaMovimiento>().ToTable("ReferenciaMovimiento");
             modelBuilder.Entity<Inventario>().ToTable("Inventario");
             modelBuilder.Entity<MovimientoInventario>().ToTable("MovimientoInventario");
+            modelBuilder.Entity<Presupuesto>().ToTable("Presupuesto");
+            modelBuilder.Entity<PresupuestoDetalle>().ToTable("PresupuestoDetalle");
         }
 
     }

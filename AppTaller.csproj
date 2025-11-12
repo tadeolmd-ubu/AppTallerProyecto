@@ -252,6 +252,8 @@
     <Compile Include="Model\Inventario .cs" />
     <Compile Include="Model\Login.cs" />
     <Compile Include="Model\MovimientoInventario.cs" />
+    <Compile Include="Model\Presupuesto.cs" />
+    <Compile Include="Model\PresupuestoDetalle.cs" />
     <Compile Include="Model\Producto.cs" />
     <Compile Include="Model\Proveedor.cs" />
     <Compile Include="Model\ReferenciaMovimiento.cs" />
@@ -265,6 +267,8 @@
     <Compile Include="Services\InventarioService.cs" />
     <Compile Include="Services\MarcaService.cs" />
     <Compile Include="Services\MovimientoInventarioService.cs" />
+    <Compile Include="Services\PresupuestoDetalleService.cs" />
+    <Compile Include="Services\PresupuestoService.cs" />
     <Compile Include="Services\ProductoService.cs" />
     <Compile Include="Services\ProveedorService.cs" />
     <Compile Include="Services\ReferenciaService.cs" />

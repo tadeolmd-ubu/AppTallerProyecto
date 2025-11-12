@@ -127,7 +127,7 @@ namespace AppTaller.Views
 
                 string[] columnas = { "id", "nombre", "precio", "estatus", "idMarca", "idTipoProducto", "fechaCreacion", "fechaActualizacion"};
 
-                var ventana = new FrmBusqueda("Búsqueda de Clientes", productos, columnas);
+                var ventana = new FrmBusqueda("Búsqueda de Productos", productos, columnas);
 
                 if (ventana.ShowDialog() == true){
                     if (ventana.seleccionado is Producto productoSeleccionado){

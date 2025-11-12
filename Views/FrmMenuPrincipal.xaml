@@ -121,6 +121,16 @@
                     </StackPanel>
 
                 </RadioButton>
+                <RadioButton x:Name="chkPresupuestos" 
+             Style="{StaticResource menuBoton}"
+             Tag="{StaticResource color1}"
+             Checked="Presupuestos_Checked">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="FileEdit" Style="{StaticResource menuBotonIcono}"/>
+                        <TextBlock Text="Presupuestos" Style="{StaticResource menuBotonTexto}"/>
+                    </StackPanel>
+
+                </RadioButton>
 
             </StackPanel>
 

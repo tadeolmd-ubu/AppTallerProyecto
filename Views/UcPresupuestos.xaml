@@ -4,8 +4,8 @@
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 mc:Ignorable="d"
-			 Width="900"
-			 Height="650"
+			 Width="1004"
+			 Height="661"
 			 Background="#0A003A">
 
     <UserControl.Resources>
@@ -40,7 +40,7 @@
 
     </UserControl.Resources>
 
-    <Grid Background="#0A003A" Width="900">
+    <Grid Background="#0A003A" Margin="0,0,10,0">
 
         <!-- LOGO -->
         <Image Source="/Images/TRACTOR_V2.png" 
@@ -147,7 +147,7 @@
 							   VerticalAlignment="Center"
 							   Margin="0,0,5,0"
 							   Width="60"/>
-                        <TextBox x:Name="txtBuscarProducto" 
+                        <TextBox x:Name="txtIdProducto" 
 								 Width="250" 
 								 Height="30"
 								 Background="#0A003A"
@@ -168,13 +168,13 @@
 								FontSize="12"
 								FontWeight="SemiBold"
 								BorderThickness="0"
-								Cursor="Hand"/>
+								Cursor="Hand" Click="btnBuscarProducto_Click_1"/>
                     </StackPanel>
                 </Border>
 
                 <!-- DataGrid de Detalles con ListView en su lugar -->
                 <Border BorderBrush="DarkGray" BorderThickness="1" Height="250" Margin="0,0,0,15">
-                    <ListView x:Name="lvDetalles"
+                    <ListView x:Name="dtgDetalles"
 							  Background="#1B1428"
 							  Foreground="White"
 							  BorderThickness="0"
@@ -194,13 +194,25 @@
                                 </GridView.ColumnHeaderContainerStyle>
 
                                 <!-- ID Producto -->
-                                <GridViewColumn Header="ID" Width="80">
+                                <GridViewColumn Header="ID" Width="30">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding IdProducto}" 
-													   Foreground="White"
-													   FontFamily="Montserrat"
-													   Padding="5,0"/>
+                                            <TextBlock Text="{Binding idProducto}" 
+                       Foreground="White"
+                       FontFamily="Montserrat"
+                       Padding="5,0"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                                <!-- Agregar columna de Nombre (usa la navegación) -->
+                                <GridViewColumn Header="Nombre" Width="150">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Producto.nombre}" 
+                       Foreground="White"
+                       FontFamily="Montserrat"
+                       Padding="5,0"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
@@ -211,68 +223,65 @@
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <Button Content="-" 
-														Width="30" 
-														Height="25"
-														Background="#8B2C4E" 
-														Foreground="White"
-														FontWeight="Bold"
-														FontSize="16"
-														BorderThickness="0"
-														Cursor="Hand"
-														
-														Tag="{Binding}"
-														Margin="0,0,5,0"/>
+                        Width="30" 
+                        Height="25"
+                        Background="#8B2C4E" 
+                        Foreground="White"
+                        FontWeight="Bold"
+                        FontSize="16"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Tag="{Binding}"
+                        Margin="0,0,5,0"/>
 
-                                                <TextBlock Text="{Binding Cantidad}" 
-														   Width="40"
-														   Height="25"
-														   Background="#0A003A"
-														   Foreground="White"
-														   TextAlignment="Center"
-														   VerticalAlignment="Center"
-														   Padding="0,3,0,0"
-														   FontFamily="Montserrat"
-														   FontWeight="SemiBold"
-														   Margin="0,0,5,0"/>
+                                                <TextBlock Text="{Binding cantidad}" 
+                           Width="40"
+                           Height="25"
+                           Background="#0A003A"
+                           Foreground="White"
+                           TextAlignment="Center"
+                           VerticalAlignment="Center"
+                           Padding="0,3,0,0"
+                           FontFamily="Montserrat"
+                           FontWeight="SemiBold"
+                           Margin="0,0,5,0"/>
 
                                                 <Button Content="+" 
-														Width="30" 
-														Height="25"
-														Background="#27C2FF" 
-														Foreground="#0A003A"
-														FontWeight="Bold"
-														FontSize="16"
-														BorderThickness="0"
-														Cursor="Hand"
-														
-														Tag="{Binding}"
-														Margin="0,0,5,0"/>
+                        Width="30" 
+                        Height="25"
+                        Background="#27C2FF" 
+                        Foreground="#0A003A"
+                        FontWeight="Bold"
+                        FontSize="16"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Tag="{Binding}"
+                        Margin="0,0,5,0"/>
 
                                                 <Button Content="X" 
-														Width="30" 
-														Height="25"
-														Background="#8B2C4E" 
-														Foreground="White"
-														FontWeight="Bold"
-														FontSize="14"
-														BorderThickness="0"
-														Cursor="Hand"
-														
-														Tag="{Binding}"/>
+                        Width="30" 
+                        Height="25"
+                        Background="#8B2C4E" 
+                        Foreground="White"
+                        FontWeight="Bold"
+                        FontSize="14"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Tag="{Binding}"/>
                                             </StackPanel>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
 
                                 <!-- Precio Unitario -->
-                                <GridViewColumn Header="Precio Unit." Width="100">
+                                <GridViewColumn Header="Precio Unit." Width="90">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding PrecioUnitario, StringFormat=C2}" 
-													   Foreground="White"
-													   FontFamily="Montserrat"
-													   TextAlignment="Right"
-													   Padding="5,0"/>
+                                            <TextBlock Text="{Binding precioUnitario, StringFormat=C2}" 
+                       Foreground="White"
+                       FontFamily="Montserrat"
+                       TextAlignment="Right"
+                       Padding="5,0"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
@@ -281,11 +290,11 @@
                                 <GridViewColumn Header="Importe" Width="100">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding Importe, StringFormat=C2}" 
-													   Foreground="White"
-													   FontFamily="Montserrat"
-													   TextAlignment="Right"
-													   Padding="5,0"/>
+                                            <TextBlock Text="{Binding importe, StringFormat=C2}" 
+                       Foreground="White"
+                       FontFamily="Montserrat"
+                       TextAlignment="Right"
+                       Padding="5,0"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
@@ -294,11 +303,11 @@
                                 <GridViewColumn Header="IVA" Width="80">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding IVA, StringFormat=C2}" 
-													   Foreground="White"
-													   FontFamily="Montserrat"
-													   TextAlignment="Right"
-													   Padding="5,0"/>
+                                            <TextBlock Text="{Binding iva, StringFormat=C2}" 
+                       Foreground="White"
+                       FontFamily="Montserrat"
+                       TextAlignment="Right"
+                       Padding="5,0"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
