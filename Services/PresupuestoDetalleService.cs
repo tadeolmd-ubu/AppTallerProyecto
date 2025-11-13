@@ -13,16 +13,11 @@ namespace AppTaller.Services
         public PresupuestoDetalleService(EF.efAppDbContext context){
             _context = context;
         }
-        
-
-        public void CrearPresupuestoDetalle(PresupuestoDetalle presupuestoDetalle)
-        {
+        public void CrearPresupuestoDetalle(PresupuestoDetalle presupuestoDetalle){
             _context.PresupuestoDetalle.Add(presupuestoDetalle);
             _context.SaveChanges();
         }
-
-        public void ModificarPresupuestoDetalle(PresupuestoDetalle presupuestoDetalle)
-        {
+        public void ModificarPresupuestoDetalle(PresupuestoDetalle presupuestoDetalle){
 
             var existe = _context.PresupuestoDetalle.Find(presupuestoDetalle.id);
 
@@ -32,28 +27,22 @@ namespace AppTaller.Services
             _context.SaveChanges();
 
         }
-        public void CrearOModificarPresupuestoDetalle(PresupuestoDetalle presupuestoDetalle)
-        {
+        public void CrearOModificarPresupuestoDetalle(PresupuestoDetalle presupuestoDetalle){
             var existe = _context.PresupuestoDetalle.Find(presupuestoDetalle.id);
-            if (existe == null)
-            {
+            if (existe == null){
                 CrearPresupuestoDetalle(presupuestoDetalle);
             }
-            else
-            {
+            else{
                 ModificarPresupuestoDetalle(presupuestoDetalle);
             }
         }
-        public PresupuestoDetalle BuscarPresupuestoDetalle(int id)
-        {
+        public PresupuestoDetalle BuscarPresupuestoDetalle(int id){
             return _context.PresupuestoDetalle.Find(id);
         }
-        public List<PresupuestoDetalle> ObtenerPresupuestosDetalle()
-        {
+        public List<PresupuestoDetalle> ObtenerPresupuestosDetalle(){
             return _context.PresupuestoDetalle.ToList();
         }
-        public void EliminarPresupuestoDetalle(int id)
-        {
+        public void EliminarPresupuestoDetalle(int id){
 
             var presupuestoDetalle = _context.PresupuestoDetalle.Find(id);
             if (presupuestoDetalle == null)

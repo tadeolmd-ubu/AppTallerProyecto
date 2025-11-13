@@ -19,8 +19,6 @@ namespace AppTaller.Views
     /// </summary>
     public partial class FrmBusqueda : Window
     {
-
-
         public object seleccionado { get; private set; }
         public FrmBusqueda(string titulo, IEnumerable<object> datos, string[] columnas)
         {

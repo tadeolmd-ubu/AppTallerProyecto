@@ -13,12 +13,10 @@ namespace AppTaller.Services
         public PresupuestoService(EF.efAppDbContext context){
             _context = context;
         }
-
         public void CrearPresupuesto(Presupuesto presupuesto) {
             _context.Presupuesto.Add(presupuesto);
             _context.SaveChanges();
         }
-
         public void ModificarPresupuesto(Presupuesto presupuesto) {
         
             var existe = _context.Presupuesto.Find(presupuesto.id);
@@ -45,7 +43,6 @@ namespace AppTaller.Services
             return _context.Presupuesto.ToList();
         }
         public void EliminarPresupuesto(int id) {
-
             var presupuesto = _context.Presupuesto.Find(id);
             if (presupuesto == null)
                 return;
