@@ -180,6 +180,11 @@ namespace AppTaller.Views
             catch (Exception ex){
                 MessageBox.Show("Error al cargar empresas: " + ex.Message);
             }
-        }      
+        }
+
+        private void cmbIdEmpresa_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+                                                                            
+        }
     }
 }

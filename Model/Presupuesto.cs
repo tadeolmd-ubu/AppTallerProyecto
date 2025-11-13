@@ -14,6 +14,7 @@ namespace AppTaller.Model
         public decimal total { get; set; }
         public bool estatus { get; set; }
         public string nota { get; set; }
+        public int idCliente { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime fechaCreacion { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]

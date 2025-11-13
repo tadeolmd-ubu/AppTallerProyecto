@@ -14,8 +14,7 @@ namespace AppTaller.Services
             _context = context;
         }
         public void CrearPresupuestoDetalle(PresupuestoDetalle presupuestoDetalle){
-            _context.PresupuestoDetalle.Add(presupuestoDetalle);
-            _context.SaveChanges();
+            _context.PresupuestoDetalle.Add(presupuestoDetalle);   
         }
         public void ModificarPresupuestoDetalle(PresupuestoDetalle presupuestoDetalle){
 
@@ -24,7 +23,7 @@ namespace AppTaller.Services
             if (existe == null)
                 return;
             _context.Entry(existe).CurrentValues.SetValues(presupuestoDetalle);
-            _context.SaveChanges();
+            
 
         }
         public void CrearOModificarPresupuestoDetalle(PresupuestoDetalle presupuestoDetalle){
@@ -49,6 +48,16 @@ namespace AppTaller.Services
                 return;
             _context.PresupuestoDetalle.Remove(presupuestoDetalle);
             _context.SaveChanges();
+        }
+
+        public int ObtenerSigienteIdPresupuestoDetalle()
+        {
+            var ultimo = _context.PresupuestoDetalle
+                                 .OrderByDescending(x => x.id)
+                                 .Select(x => x.id)
+                                 .FirstOrDefault();
+
+            return ultimo + 1;
         }
     }
 }

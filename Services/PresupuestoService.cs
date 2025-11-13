@@ -15,7 +15,6 @@ namespace AppTaller.Services
         }
         public void CrearPresupuesto(Presupuesto presupuesto) {
             _context.Presupuesto.Add(presupuesto);
-            _context.SaveChanges();
         }
         public void ModificarPresupuesto(Presupuesto presupuesto) {
         
@@ -24,8 +23,6 @@ namespace AppTaller.Services
             if (existe == null)
                 return;
             _context.Entry(existe).CurrentValues.SetValues(presupuesto);
-            _context.SaveChanges();
-
         }
         public void CrearOModificarPresupuesto(Presupuesto presupuesto){
             var existe = _context.Presupuesto.Find(presupuesto.id);

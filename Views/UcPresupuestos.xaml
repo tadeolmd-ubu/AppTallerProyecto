@@ -79,7 +79,7 @@
                 <Label Content="ID Presupuesto"/>
                 <TextBox x:Name="txtIdPresupuesto" 
 						     Width="252" 
-						     IsReadOnly="True"
+						    
 						     Background="#1B1428"
 						     Foreground="White"
 						     BorderBrush="DarkGray"
@@ -87,18 +87,10 @@
 						     Height="28"
 						     Margin="0,0,0,15"/>
 
-                <Label Content="ID Cliente"/>
-                <TextBox x:Name="txtIdCliente" 
-						     Width="252"
-						     Foreground="White"
-						     Background="{x:Null}"
-						     BorderBrush="DarkGray"
-						     BorderThickness="0,0,0,2"
-						     Height="28"
-						     Margin="0,0,0,15"/>
+                
 
                 <Label Content="Cliente"/>
-                <ComboBox x:Name="cmbCliente" Width="252"/>
+                <ComboBox x:Name="cmbCliente" Width="252" Foreground="Black"/>
 
                 <Label Content="Nota"/>
                 <TextBox x:Name="txtNota" 
