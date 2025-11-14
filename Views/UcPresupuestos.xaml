@@ -79,7 +79,7 @@
                 <Label Content="ID Presupuesto"/>
                 <TextBox x:Name="txtIdPresupuesto" 
 						     Width="252" 
-						    
+						     IsReadOnly="True"
 						     Background="#1B1428"
 						     Foreground="White"
 						     BorderBrush="DarkGray"
@@ -90,7 +90,7 @@
                 
 
                 <Label Content="Cliente"/>
-                <ComboBox x:Name="cmbCliente" Width="252" Foreground="Black"/>
+                <ComboBox x:Name="cmbCliente" Width="252" Foreground="Black" SelectedIndex="-1"/>
 
                 <Label Content="Nota"/>
                 <TextBox x:Name="txtNota" 
@@ -134,14 +134,15 @@
 						    Padding="10"
 						    Margin="0,0,0,15">
                     <StackPanel Orientation="Horizontal">
-                        <Label Content="Buscar:" 
+                        <Label Content="Id del producto:" 
 							       Foreground="White" 
 							       VerticalAlignment="Center"
 							       Margin="0,0,5,0"
-							       Width="60"/>
+							       Width="98"/>
                         <TextBox x:Name="txtIdProducto" 
-								     Width="250" 
+								     Width="205" 
 								     Height="30"
+                                     IsReadOnly="True"
 								     Background="#0A003A"
 								     Foreground="White"
 								     BorderBrush="DarkGray"

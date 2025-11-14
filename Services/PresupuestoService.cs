@@ -46,5 +46,13 @@ namespace AppTaller.Services
             _context.Presupuesto.Remove(presupuesto);
             _context.SaveChanges();
         }
+        public int ObtenerSigienteIdPresupuesto(){
+            var ultimo = _context.Presupuesto
+                                 .OrderByDescending(x => x.id)
+                                 .Select(x => x.id)
+                                 .FirstOrDefault();
+
+            return ultimo + 1;
+        }
     }
 }

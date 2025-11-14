@@ -33,7 +33,7 @@ namespace AppTaller.Views
         private readonly PresupuestoLogic _presupuestoLogic;
         private readonly ClienteService _clienteService;
         private readonly PresupuestoDetalleService _presupuestoDetalleService;
-
+        private readonly PresupuestoService _presupuestoService;
         public UcPresupuestos()
         {
             _context = new EF.efAppDbContext();
@@ -42,13 +42,14 @@ namespace AppTaller.Views
             _presupuestoLogic = new PresupuestoLogic(_context);
             _clienteService = new ClienteService(_context);
             _presupuestoDetalleService = new PresupuestoDetalleService(_context);
+            _presupuestoService = new PresupuestoService(_context);
             InitializeComponent();
 
             CargarClientes();
+            txtIdPresupuesto.Text = _presupuestoService.ObtenerSigienteIdPresupuesto().ToString();
             _detalles = new ObservableCollection<PresupuestoDetalle>();
             dtgDetalles.ItemsSource = _detalles;
 
-            // Suscribirse al evento del checkbox IVA
             chkAplicarIVA.Checked += (s, e) => RecalcularTotales();
             chkAplicarIVA.Unchecked += (s, e) => RecalcularTotales();
         }
@@ -89,6 +90,7 @@ namespace AppTaller.Views
                 var logic = new PresupuestoLogic(new EF.efAppDbContext());
                 logic.CrearPresupuestoConDetalles(presupuesto, detalles);
 
+                txtIdPresupuesto.Text = _presupuestoService.ObtenerSigienteIdPresupuesto().ToString();
                 MessageBox.Show("Presupuesto guardado correctamente.");
             }
             catch (Exception ex){
@@ -98,7 +100,31 @@ namespace AppTaller.Views
         }
         private void btnBuscar_Click(object sender, RoutedEventArgs e)
         {
-           
+
+            try
+            {
+                var presupuestos = _presupuestoService.ObtenerPresupuestos();
+                string[] columnas = { "id","total","estatus","nota","idCliente","idUsuario","fechaCreacion","fechaModificacion"};
+
+                var ventana = new FrmBusqueda("Búsqueda de Presupuestos", presupuestos, columnas);
+
+                if (ventana.ShowDialog() == true)
+                {
+                    if (ventana.seleccionado is Presupuesto presupuestoSeleccionado)
+                    {
+                       txtIdPresupuesto.Text = presupuestoSeleccionado.id.ToString();
+                       txtNota.Text = presupuestoSeleccionado.nota;
+                       cmbCliente.SelectedValue = presupuestoSeleccionado.idCliente;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al buscar Presupuesto: " + ex.Message,
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+
         }
 
         private void btnEliminar_Click(object sender, RoutedEventArgs e)
@@ -128,20 +154,24 @@ namespace AppTaller.Views
 
         private void btnBuscarProducto_Click_1(object sender, RoutedEventArgs e)
         {
-            try{
+            try
+            {
                 var inventarios = _inventarioService.ObtenerInventarios();
                 string[] columnas = { "id", "idProducto", "idAlmacen", "stockActual" };
                 var ventana = new FrmBusqueda("Búsqueda de Inventarios", inventarios, columnas);
 
-                if (ventana.ShowDialog() == true){
-                    if (ventana.seleccionado is Inventario inventarioSeleccionado){
+                if (ventana.ShowDialog() == true)
+                {
+                    if (ventana.seleccionado is Inventario inventarioSeleccionado)
+                    {
                         // Buscar el producto completo
                         var producto = _productoService.BuscarProductoIndividual(inventarioSeleccionado.idProducto);
-
-                        if (producto != null){
+                        if (producto != null)
+                        {
                             AgregarProducto(producto);
                         }
-                        else{
+                        else
+                        {
                             MessageBox.Show("Producto no encontrado", "Error",
                                 MessageBoxButton.OK, MessageBoxImage.Warning);
                         }
@@ -155,6 +185,7 @@ namespace AppTaller.Views
             }
         }
 
+       
         private void AgregarProducto(Producto producto)
         {
             var detalleExistente = _detalles.FirstOrDefault(d => d.idProducto == producto.id);

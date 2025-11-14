@@ -15,7 +15,7 @@ namespace AppTaller.Model
         public int iva {  get; set; }
         public int idProducto { get; set; }  
         public int idPresupuesto { get; set; }
-
+        public Producto Producto { get; set; }
         public PresupuestoDetalle(){
         }
 
