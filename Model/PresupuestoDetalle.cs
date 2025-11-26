@@ -12,8 +12,8 @@ namespace AppTaller.Model
         public int cantidad { get; set; }
         public decimal precioUnitario { get; set; }
         public decimal importe { get; set; }
-        public int iva {  get; set; }
-        public int idProducto { get; set; }  
+        public decimal iva {  get; set; }
+        public int idInventario { get; set; }  
         public int idPresupuesto { get; set; }
         public PresupuestoDetalle(){
         }

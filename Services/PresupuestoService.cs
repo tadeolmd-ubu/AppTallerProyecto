@@ -1,4 +1,5 @@
 ﻿using AppTaller.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,8 +37,14 @@ namespace AppTaller.Services
         public Presupuesto BuscarPresupuesto(int id) {
             return _context.Presupuesto.Find(id);
         }
-        public List<Presupuesto> ObtenerPresupuestos() {
-            return _context.Presupuesto.ToList();
+        public List<Presupuesto> ObtenerPresupuestos()
+        {
+            using (var db = new EF.efAppDbContext())
+            {
+                return db.Presupuesto
+                         .AsNoTracking()   
+                         .ToList();
+            }
         }
         public void EliminarPresupuesto(int id) {
             var presupuesto = _context.Presupuesto.Find(id);
@@ -53,6 +60,11 @@ namespace AppTaller.Services
                                  .FirstOrDefault();
 
             return ultimo + 1;
+        }
+        public bool ExistePresupuesto(int idPresupuesto){
+            if (idPresupuesto <= 0)
+                return false;
+            return _context.Presupuesto.Any(i => i.id == idPresupuesto);
         }
     }
 }

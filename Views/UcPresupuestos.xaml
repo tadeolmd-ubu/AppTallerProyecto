@@ -230,7 +230,7 @@
 
                         <DataGrid.Columns>
                             <!-- ID Producto -->
-                            <DataGridTextColumn Header="ID" Width="30" Binding="{Binding idProducto}" IsReadOnly="True">
+                            <DataGridTextColumn Header="ID" Width="30" Binding="{Binding idInventario}" IsReadOnly="True">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Padding" Value="5,0"/>
@@ -239,13 +239,13 @@
                             </DataGridTextColumn>
 
                             <!-- Nombre -->
-                            <DataGridTextColumn Header="Nombre" Width="150" Binding="{Binding Producto.nombre}" IsReadOnly="True">
+                            <!--<DataGridTextColumn Header="Nombre" Width="150" Binding="{Binding Producto.nombre}" IsReadOnly="True">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Padding" Value="5,0"/>
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
+                            </DataGridTextColumn>-->
 
                             <!-- Cantidad con botones -->
                             <DataGridTemplateColumn Header="Cantidad" Width="150">
