@@ -21,19 +21,18 @@ namespace AppTaller.Logics
             _presupuestoService = new Services.PresupuestoService(_context);
             _presupuestoDetalleService = new Services.PresupuestoDetalleService(_context);
         }
+
+        //guardar los presupuestos
         public void CrearPresupuestoConDetalles(
             Presupuesto presupuesto,
-            List<PresupuestoDetalle> detalles)
-        {
+            List<PresupuestoDetalle> detalles){
             using (var transaction = _context.Database.BeginTransaction())
             {
-                try
-                {
+                try{
                     _presupuestoService.CrearPresupuesto(presupuesto);
                     _context.SaveChanges();
 
-                    foreach (var det in detalles)
-                    {
+                    foreach (var det in detalles){
                         det.idPresupuesto = presupuesto.id;
                         _presupuestoDetalleService.CrearPresupuestoDetalle(det);
                     }
@@ -42,113 +41,21 @@ namespace AppTaller.Logics
 
                     transaction.Commit();
                 }
-                catch
-                {
+                catch{
                     transaction.Rollback();
                     throw;
                 }
             }
         }
 
-        // Plan en pseudocódigo:
-        // 1. Recibir el presupuesto con su id y la lista de detalles nueva.
-        // 2. Abrir una transacción.
-        // 3. Buscar en la BD el presupuesto existente por id; si no existe lanzar excepción.
-        // 4. Actualizar los valores escalares del presupuesto existente con los nuevos valores.
-        //    - Usar Entry(...).CurrentValues.SetValues(presupuesto) para mapear propiedades.
-        // 5. Obtener la lista de detalles actuales asociados al presupuesto.
-        // 6. Comparar detalles actuales con detalles recibidos:
-        //    - Para cada detalle recibido:
-        //        * Si id == 0 -> es nuevo: asignar idPresupuesto y Añadir.
-        //        * Si id != 0 y existe en BD -> actualizar sus valores con SetValues.
-        //        * Si id != 0 y no existe -> asignar idPresupuesto y Añadir.
-        //    - Para cada detalle existente en BD que no esté en la lista recibida -> eliminarlo.
-        // 7. Guardar cambios y confirmar la transacción.
-        // 8. En caso de error, revertir la transacción y propagar la excepción.
-
-        // Implementación: actualiza presupuesto y sus detalles (añadir/actualizar/eliminar)
-        public void ActualizarpresupuestoConDetalle(Presupuesto presupuesto, List<PresupuestoDetalle> detalles)
-        {
-            if (presupuesto == null) throw new ArgumentNullException(nameof(presupuesto));
-            if (detalles == null) detalles = new List<PresupuestoDetalle>();
-
-            using (var transaction = _context.Database.BeginTransaction())
-            {
-                try
-                {
-                    // Obtener presupuesto existente
-                    var existente = _context.Presupuesto.Find(presupuesto.id);
-                    if (existente == null)
-                        throw new InvalidOperationException($"Presupuesto con id {presupuesto.id} no encontrado.");
-
-                    // Actualizar propiedades escalares del presupuesto
-                    _context.Entry(existente).CurrentValues.SetValues(presupuesto);
-
-                    // Obtener detalles actuales desde la BD
-                    var detallesExistentes = ObtenerDetallesPorPresupuesto(presupuesto.id);
-
-                    // Conjunto de ids de detalles recibidos (los que deben permanecer/actualizarse)
-                    var idsRecibidos = new HashSet<int>(detalles.Where(d => d != null && d.id != 0).Select(d => d.id));
-
-                    // Eliminar detalles que existen en BD pero no están en la lista recibida
-                    foreach (var detExist in detallesExistentes)
-                    {
-                        if (!idsRecibidos.Contains(detExist.id))
-                        {
-                            // Remover del contexto
-                            _context.PresupuestoDetalle.Remove(detExist);
-                        }
-                    }
-
-                    // Procesar detalles recibidos: nuevos o a actualizar
-                    foreach (var det in detalles)
-                    {
-                        if (det == null) continue;
-
-                        if (det.id == 0)
-                        {
-                            // Nuevo detalle
-                            det.idPresupuesto = presupuesto.id;
-                            _context.PresupuestoDetalle.Add(det);
-                        }
-                        else
-                        {
-                            // Intentar actualizar existente
-                            var detEnBd = detallesExistentes.FirstOrDefault(d => d.id == det.id);
-                            if (detEnBd != null)
-                            {
-                                // Actualizar propiedades del detalle existente
-                                _context.Entry(detEnBd).CurrentValues.SetValues(det);
-                            }
-                            else
-                            {
-                                // No está en BD (posible inconsistencia): tratar como nuevo
-                                det.idPresupuesto = presupuesto.id;
-                                _context.PresupuestoDetalle.Add(det);
-                            }
-                        }
-                    }
-
-                    // Guardar todos los cambios
-                    _context.SaveChanges();
-                    transaction.Commit();
-                }
-                catch
-                {
-                    transaction.Rollback();
-                    throw;
-                }
-            }
-        }
-        // En PresupuestoDetalleService
-        public List<PresupuestoDetalle> ObtenerDetallesPorPresupuesto(int idPresupuesto)
-        {
+       //jalar los detalles de cada presupuesto
+        public List<PresupuestoDetalle> ObtenerDetallesPorPresupuesto(int idPresupuesto){
             return _context.PresupuestoDetalle
                            .Where(pd => pd.idPresupuesto == idPresupuesto)
                            .ToList();
         }
 
-
+        //Actualizacion de un presupuesto existente
         public void ActualizarPresupuestoConDetalles(Presupuesto presupuesto, List<PresupuestoDetalle> detalles)
         {
             using (var transaction = _context.Database.BeginTransaction()){
@@ -190,12 +97,40 @@ namespace AppTaller.Logics
                             }
                         }
                     }
-
                     _context.SaveChanges();
                     transaction.Commit();
                 }
-                catch
-                {
+                catch{
+                    transaction.Rollback();
+                    throw;
+                }
+            }
+        }
+
+        //Elimina los presupuestos y todos los detalles asociados
+        public void EliminarPresupuestoConDetalles(int idPresupuesto)
+        {
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                try{
+                    var detalles = _context.PresupuestoDetalle
+                                           .Where(d => d.idPresupuesto == idPresupuesto)
+                                           .ToList();
+
+                    if (detalles.Any()){
+                        _context.PresupuestoDetalle.RemoveRange(detalles);
+                        _context.SaveChanges();
+                    }
+                    var presupuesto = _context.Presupuesto.Find(idPresupuesto);
+                    if (presupuesto == null)
+                        throw new InvalidOperationException($"Presupuesto con id {idPresupuesto} no encontrado.");
+
+                    _context.Presupuesto.Remove(presupuesto);
+                    _context.SaveChanges();
+
+                    transaction.Commit();
+                }
+                catch{
                     transaction.Rollback();
                     throw;
                 }

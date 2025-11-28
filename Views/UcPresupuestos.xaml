@@ -398,7 +398,7 @@
 					    Margin="0,0,10,0" 
 					    Click="btnBuscar_Click"/>
 
-            <Button x:Name="btnEliminar" 
+            <Button x:Name="btnEliminarPresupuesto" 
 					    Content="Eliminar" 
 					    Width="100" 
 					    Height="35"
@@ -408,7 +408,7 @@
 					    FontWeight="SemiBold"
 					    BorderThickness="0"
 					    Cursor="Hand"
-					    Click="btnEliminar_Click"/>
+					    Click="btnEliminarPresupuesto_Click"/>
         </StackPanel>
 
         <Button x:Name="btnGuardar"

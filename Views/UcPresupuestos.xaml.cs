@@ -18,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace AppTaller.Views
 {
@@ -116,6 +117,7 @@ namespace AppTaller.Views
                     MessageBox.Show("Presupuesto guardado correctamente.");
                 }
                 txtIdPresupuesto.Text = _presupuestoService.ObtenerSigienteIdPresupuesto().ToString();
+                LimpiarControles();
             }
             catch (Exception ex){
                 MessageBox.Show("ERROR COMPLETO:\n\n" + ex.ToString());
@@ -298,9 +300,9 @@ namespace AppTaller.Views
                 }
                 cmbCliente.ItemsSource = clientes;
                 cmbCliente.SelectedValuePath = "id";
-                cmbCliente.DisplayMemberPath = "id";
+                cmbCliente.DisplayMemberPath = "nombre";
 
-                cmbCliente.SelectedIndex = 0;
+                cmbCliente.SelectedIndex = -1;
             }
             catch (Exception ex){
                 MessageBox.Show("Error al cargar empresas: " + ex.Message);
@@ -312,5 +314,52 @@ namespace AppTaller.Views
         private void dtgDetalles_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
         }
+
+        private void btnEliminarPresupuesto_Click(object sender, RoutedEventArgs e)
+        {
+
+            try{
+                var resultado = MessageBox.Show("¿Está seguro de eliminar este producto?", "Confirmar eliminación", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                int idPresupuesto = int.Parse(txtIdPresupuesto.Text);
+
+                if (resultado == MessageBoxResult.Yes){
+                    _presupuestoLogic.EliminarPresupuestoConDetalles(idPresupuesto);
+
+                    MessageBox.Show("presupuesto Eliminado.");
+                    LimpiarControles();
+                }
+            }
+            catch (Exception ex) {
+                MessageBox.Show("Error al buscar Eliminar el presupuesto: " + ex.Message,
+                       "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void LimpiarControles()
+        {
+            try
+            {
+                // Limpiar lista de detalles y refrescar la vista
+                _detalles.Clear();
+                dtgDetalles.ItemsSource = _detalles;
+                dtgDetalles.Items.Refresh();
+
+                // Limpiar campos del formulario
+                txtNota.Text = string.Empty;
+                txtTotal.Text = "0.00";
+                chkAplicarIVA.IsChecked = false;
+                chkEstatus.IsChecked = false;
+
+                cmbCliente.SelectedIndex = -1;
+
+                // Poner el siguiente id disponible para el presupuesto
+                txtIdPresupuesto.Text = _presupuestoService.ObtenerSigienteIdPresupuesto().ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al limpiar formulario: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
     }
 }
