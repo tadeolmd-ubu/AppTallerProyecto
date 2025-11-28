@@ -151,7 +151,7 @@ namespace AppTaller.Logics
 
         public void ActualizarPresupuestoConDetalles(Presupuesto presupuesto, List<PresupuestoDetalle> detalles)
         {
-            using (var transaction = _context.Database.BeginTransaction())`{
+            using (var transaction = _context.Database.BeginTransaction()){
                 try{
                     var existente = _context.Presupuesto.Find(presupuesto.id);
                     if (existente == null)

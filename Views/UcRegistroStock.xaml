@@ -3,16 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
              x:Class="AppTaller.Views.UcRegistroStock"
-             Width="800" Height="600"
+             Width="1004"
+             Height="661"
              Background="#0A003A">
 
     <UserControl.Resources>
-        <!-- Estilos reutilizados -->
-        <Style TargetType="{x:Type Label}">
+        <!-- Estilos Labels -->
+        <Style TargetType="Label">
             <Setter Property="Foreground" Value="GhostWhite"/>
             <Setter Property="FontFamily" Value="Montserrat"/>
         </Style>
 
+        <!-- Estilos Base de Formulario -->
         <Style TargetType="{x:Type Control}" x:Key="BaseFormStyle">
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="FontWeight" Value="Medium"/>
@@ -23,99 +25,198 @@
             <Setter Property="Height" Value="28"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Background" Value="{x:Null}"/>
-            <Setter Property="Width" Value="250"/>
+            <Setter Property="Width" Value="252"/>
             <Setter Property="Margin" Value="0,0,0,15"/>
         </Style>
 
-        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource BaseFormStyle}"/>
-        <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource BaseFormStyle}">
+        <Style TargetType="TextBox" BasedOn="{StaticResource BaseFormStyle}"/>
+        <Style TargetType="ComboBox" BasedOn="{StaticResource BaseFormStyle}">
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Background" Value="#1B1428"/>
-            <Setter Property="Margin" Value="0"/>
-            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
         </Style>
 
-        <Style TargetType="{x:Type Button}" x:Key="BotonAccion">
-            <Setter Property="Background" Value="#2C2545"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="BorderBrush" Value="#3E3556"/>
-            <Setter Property="FontFamily" Value="Montserrat"/>
-            <Setter Property="FontSize" Value="13"/>
-            <Setter Property="Cursor" Value="Hand"/>
-        </Style>
     </UserControl.Resources>
 
-    <Grid Margin="20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <!-- Título + logo -->
-            <RowDefinition Height="*"/>
-            <!-- Campos -->
-            <RowDefinition Height="Auto"/>
-            <!-- Botones -->
-        </Grid.RowDefinitions>
+    <Grid Background="#0A003A" Margin="0,0,10,0">
 
-        <!-- Título + Logo -->
-        <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,20">
-            <Image Source="/Images/TRACTOR_V2.png" Stretch="Fill" Height="60" Width="60" Margin="0,0,10,0"/>
-            <StackPanel>
-                <Label Content="Registro de Stock" FontSize="28" FontWeight="Bold"/>
-                <Label Content="Completa el formulario para registrar un movimiento de inventario" Foreground="#FF81969C" FontSize="10"/>
-            </StackPanel>
-        </StackPanel>
+        <!-- LOGO -->
+        <Image Source="/Images/TRACTOR_V2.png" 
+               Width="120" 
+               Height="100" 
+               Margin="30,20,0,0" 
+               HorizontalAlignment="Left" 
+               VerticalAlignment="Top"/>
 
-        <!-- Campos -->
-        <Grid Grid.Row="1">
+        <!-- TÍTULO -->
+        <Label Content="Registro de Stock" 
+               FontSize="28" 
+               FontWeight="Bold" 
+               Margin="170,30,0,0" 
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Foreground="White"/>
+
+        <Label Content="Completa el formulario para registrar un movimiento de inventario"
+               Foreground="#FF81969C" 
+               FontSize="10" 
+               Margin="170,65,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"/>
+
+        <!-- CONTENEDOR PRINCIPAL -->
+        <Grid Margin="30,120,30,80">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="300"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="0" Margin="0,0,20,0">
-                <!-- Producto -->
+            <!-- COLUMNA IZQUIERDA -->
+            <StackPanel Grid.Column="0" Orientation="Vertical">
+
+                <Label Content="ID Registro"/>
+                <TextBox x:Name="txtId" 
+                         Width="252" 
+                         IsReadOnly="True"
+                         Background="#1B1428"
+                         Foreground="White"
+                         BorderBrush="DarkGray"
+                         BorderThickness="1"
+                         Height="28"
+                         Margin="0,0,0,15"/>
+
                 <Label Content="Producto"/>
-                <ComboBox x:Name="cmbProducto" />
+                <ComboBox x:Name="cmbProducto" Width="252" Foreground="Black" SelectedIndex="-1"/>
 
-                <!-- Almacén -->
                 <Label Content="Almacén"/>
-                <ComboBox x:Name="cmbAlmacen"/>
-                <Label Content="Id de el registro"/>
-                <TextBox x:Name="txtId"/>
-                <!-- Cantidad -->
+                <ComboBox x:Name="cmbAlmacen" Width="252" Foreground="Black" SelectedIndex="-1"/>
+
                 <Label Content="Cantidad"/>
-                <StackPanel Orientation="Horizontal" Width="251">
-                    <Button Content="-" Width="20" Height="20" Click="BtnRestar_Click" />
-                    <TextBox x:Name="txtCantidad"
-                             Width="60"
-                             TextAlignment="Center"
-                             PreviewTextInput="SoloNumeros"
-                             Text="0"/>
-                    <Button Content="+" Width="20" Height="20" Click="BtnSumar_Click" />
-                </StackPanel>
+                <Border Background="#1B1428" 
+                        BorderBrush="DarkGray" 
+                        BorderThickness="1" 
+                        CornerRadius="3"
+                        Width="252"
+                        Height="28"
+                        Margin="0,0,0,15">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Button Content="-" 
+                                Width="30" 
+                                Height="22"
+                                Background="#8B2C4E" 
+                                Foreground="White"
+                                FontWeight="Bold"
+                                FontSize="16"
+                                BorderThickness="0"
+                                Cursor="Hand"
+                                Margin="5,0,5,0"
+                                Click="BtnRestar_Click"/>
 
-                <!-- Tipo de movimiento -->
+                        <TextBox x:Name="txtCantidad"
+                                 Width="160"
+                                 Height="22"
+                                 Background="#0A003A"
+                                 Foreground="White"
+                                 BorderBrush="DarkGray"
+                                 BorderThickness="1"
+                                 TextAlignment="Center"
+                                 VerticalContentAlignment="Center"
+                                 FontFamily="Montserrat"
+                                 FontWeight="SemiBold"
+                                 PreviewTextInput="SoloNumeros"
+                                 Text="0"
+                                 Margin="0,0,5,0"/>
+
+                        <Button Content="+" 
+                                Width="30" 
+                                Height="22"
+                                Background="#27C2FF" 
+                                Foreground="#0A003A"
+                                FontWeight="Bold"
+                                FontSize="16"
+                                BorderThickness="0"
+                                Cursor="Hand"
+                                Margin="0,0,5,0"
+                                Click="BtnSumar_Click"/>
+                    </StackPanel>
+                </Border>
+
+            </StackPanel>
+
+            <!-- COLUMNA CENTRAL -->
+            <StackPanel Grid.Column="1" Orientation="Vertical" Margin="30,0,0,0">
+
                 <Label Content="Tipo de Movimiento"/>
-                <ComboBox x:Name="cmbTipoMovimiento"/>
+                <ComboBox x:Name="cmbTipoMovimiento" Width="252" Foreground="Black" SelectedIndex="-1"/>
 
-                <Button x:Name="btnProductos" Content="Buscar Productos" Style="{StaticResource BotonAccion}" Width="103" Height="35" Click="btnProductos_Click" Margin="10,10,240,0"/>
-
-
-            </StackPanel>
-
-            <StackPanel Grid.Column="1">
-                <!-- Usuario -->
-
-                <!-- Referencia -->
                 <Label Content="Referencia"/>
-                <ComboBox x:Name="cmbReferencia">
-                </ComboBox>
+                <ComboBox x:Name="cmbReferencia" Width="252" Foreground="Black" SelectedIndex="-1"/>
+
+                <!-- Botón Buscar Productos -->
+                <Border Background="#1B1428" 
+                        BorderBrush="DarkGray" 
+                        BorderThickness="1" 
+                        CornerRadius="5"
+                        Padding="10"
+                        Margin="0,30,0,15"
+                        Width="252"
+                        HorizontalAlignment="Left">
+                    <Button x:Name="btnProductos" 
+                            Content="Buscar Productos" 
+                            Width="230" 
+                            Height="35"
+                            Background="#2C2545" 
+                            Foreground="White"
+                            FontFamily="Montserrat"
+                            FontSize="13"
+                            FontWeight="SemiBold"
+                            BorderThickness="0"
+                            Cursor="Hand"
+                            Click="btnProductos_Click"/>
+                </Border>
+
             </StackPanel>
+
         </Grid>
 
-        <!-- Botones -->
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0" >
-            <Button x:Name="btnRegistros" Content="Buscar Registros" Style="{StaticResource BotonAccion}" Width="100" Height="35" Click="btnRegistros_Click"/>
-            <Button x:Name="btnGuardar" Content="Guardar" Style="{StaticResource BotonAccion}" Width="100" Height="35" Click="btnGuardar_Click"/>
+        <!-- BOTONES INFERIORES -->
+        <StackPanel Orientation="Horizontal" 
+                    Margin="30,0,0,30" 
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom">
+
+            <Button x:Name="btnRegistros" 
+                    Content="Buscar Registros" 
+                    Width="130" 
+                    Height="35"
+                    Background="#2C2545" 
+                    Foreground="White"
+                    FontFamily="Montserrat"
+                    FontWeight="SemiBold"
+                    BorderThickness="0"
+                    Cursor="Hand"
+                    Margin="0,0,10,0" 
+                    Click="btnRegistros_Click"/>
+
         </StackPanel>
+
+        <Button x:Name="btnGuardar"
+                Content="Guardar"
+                Width="130"
+                Height="45"
+                FontSize="16"
+                FontWeight="Bold"
+                Margin="0,0,30,30"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Background="#2C2545"
+                Foreground="White"
+                FontFamily="Montserrat"
+                BorderThickness="0"
+                Cursor="Hand"
+                Click="btnGuardar_Click"/>
+
     </Grid>
 </UserControl>

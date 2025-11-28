@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AppTaller.Views"
              mc:Ignorable="d" 
-             Width="800"
-             Height="600"
+             Width="1004"
+             Height="661"
              Background="#0A003A">
 
     <UserControl.Resources>
@@ -38,91 +38,168 @@
         <Style TargetType="ComboBox" BasedOn="{StaticResource BaseFormStyle}">
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Background" Value="#1B1428"/>
-            <Setter Property="Margin" Value="0"/>
-            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
         </Style>
+
     </UserControl.Resources>
 
-    <Grid Background="#0A003A" HorizontalAlignment="Left" Width="800">
+    <Grid Background="#0A003A" Margin="0,0,10,0">
 
-        <!-- Imagen -->
-        <StackPanel Orientation="Horizontal" Margin="0,0,511,455" Height="160" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="269">
-            <Image Source="/Images/TRACTOR_V2.png" Stretch="Fill" Height="60" Width="60" />
-            <StackPanel Height="95" Width="606"/>
+        <!-- LOGO -->
+        <Image Source="/Images/TRACTOR_V2.png" 
+               Width="120" 
+               Height="100" 
+               Margin="30,20,0,0" 
+               HorizontalAlignment="Left" 
+               VerticalAlignment="Top"/>
+
+        <!-- TÍTULO -->
+        <Label Content="Productos" 
+               FontSize="28" 
+               FontWeight="Bold" 
+               Margin="170,30,0,0" 
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Foreground="White"/>
+
+        <Label Content="Completa el formulario para registrar o editar un producto"
+               Foreground="#FF81969C" 
+               FontSize="10" 
+               Margin="170,65,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"/>
+
+        <!-- CONTENEDOR PRINCIPAL -->
+        <Grid Margin="30,120,30,80">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- COLUMNA IZQUIERDA - DATOS BÁSICOS -->
+            <StackPanel Grid.Column="0" Orientation="Vertical">
+
+                <Label Content="ID del Producto"/>
+                <TextBox x:Name="txtIdProducto" 
+                         Width="252" 
+                         IsReadOnly="True"
+                         Background="#1B1428"
+                         Foreground="White"
+                         BorderBrush="DarkGray"
+                         BorderThickness="1"
+                         Height="28"
+                         Margin="0,0,0,15"/>
+
+                <Label Content="Nombre del Producto"/>
+                <TextBox x:Name="txtNombreProducto" Width="252"/>
+
+                <Label Content="Precio"/>
+                <TextBox x:Name="txtPrecio" Width="252"/>
+
+                <Label Content="Estatus"/>
+                <CheckBox x:Name="chkEstatus" 
+                          Content="Activo" 
+                          Foreground="White"
+                          FontFamily="Montserrat"
+                          FontSize="13"
+                          Margin="0,0,0,15"/>
+
+            </StackPanel>
+
+            <!-- COLUMNA CENTRAL - DETALLES DEL PRODUCTO -->
+            <StackPanel Grid.Column="1" Orientation="Vertical" Margin="30,0,0,0">
+
+                <Label Content="Detalles del Producto" 
+                       FontSize="16" 
+                       FontWeight="SemiBold" 
+                       Margin="0,0,0,10"
+                       Foreground="White"/>
+
+                <Label Content="Marca"/>
+                <ComboBox x:Name="cmbMarca" 
+                          Width="252" 
+                          Foreground="Black" 
+                          SelectedIndex="0"/>
+
+                <Label Content="Tipo de Producto"/>
+                <ComboBox x:Name="cmbTipoProducto" 
+                          Width="252" 
+                          Foreground="Black" 
+                          SelectedIndex="0"/>
+
+                <Label x:Name="lblFechaCreacion" Content="Fecha Creación"/>
+                <TextBox Width="252" 
+                         IsReadOnly="True"
+                         Background="#1B1428"
+                         Foreground="White"
+                         BorderBrush="DarkGray"
+                         BorderThickness="1"
+                         Height="28"
+                         Margin="0,0,0,15"/>
+
+                <Label x:Name="lblFechaActualizacion" Content="Fecha Actualización"/>
+                <TextBox Width="252" 
+                         IsReadOnly="True"
+                         Background="#1B1428"
+                         Foreground="White"
+                         BorderBrush="DarkGray"
+                         BorderThickness="1"
+                         Height="28"
+                         Margin="0,0,0,15"/>
+
+            </StackPanel>
+
+        </Grid>
+
+        <!-- BOTONES INFERIORES -->
+        <StackPanel Orientation="Horizontal" 
+                    Margin="30,0,0,30" 
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom">
+
+            <Button x:Name="btnBuscar" 
+                    Content="Buscar" 
+                    Width="100" 
+                    Height="35"
+                    Background="#2C2545" 
+                    Foreground="White"
+                    FontFamily="Montserrat"
+                    FontWeight="SemiBold"
+                    BorderThickness="0"
+                    Cursor="Hand"
+                    Margin="0,0,10,0" 
+                    Click="btnBuscar_Click"/>
+
+            <Button x:Name="btnEliminar" 
+                    Content="Borrar" 
+                    Width="100" 
+                    Height="35"
+                    Background="#8B2C4E" 
+                    Foreground="White"
+                    FontFamily="Montserrat"
+                    FontWeight="SemiBold"
+                    BorderThickness="0"
+                    Cursor="Hand"
+                    Click="btnEliminar_Click"/>
         </StackPanel>
 
-        <!-- Título -->
-        <Label Content="Productos" FontSize="28" FontWeight="Bold" Padding="0" Foreground="{StaticResource titleColor1}" Margin="80,38,114,479"/>
-        <Label Content="Completa el formulario para registrar o editar un producto" Foreground="#FF81969C" FontSize="10" Padding="0,2,0,0" Margin="80,71,114,465"/>
-
-        <!-- COLUMNA IZQUIERDA -->
-        <Label Content="Id del producto" HorizontalAlignment="Left" Margin="41,134,0,0" VerticalAlignment="Top" FontSize="14"/>
-        <TextBox x:Name="txtIdProducto" HorizontalAlignment="Left" Margin="180,131,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" />
-
-        <Label Content="Nombre del producto" HorizontalAlignment="Left" Margin="41,170,0,0" VerticalAlignment="Top" FontSize="14"/>
-        <TextBox x:Name="txtNombreProducto" HorizontalAlignment="Left" Margin="41,194,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="244"/>
-
-        <Label Content="Precio" HorizontalAlignment="Left" Margin="41,227,0,0" VerticalAlignment="Top" FontSize="14"/>
-        <TextBox x:Name="txtPrecio" HorizontalAlignment="Left" Margin="41,251,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="244"/>
-
-        <Label Content="Estatus" HorizontalAlignment="Left" Margin="41,290,0,0" VerticalAlignment="Top"/>
-        <CheckBox x:Name="chkEstatus" Content="Activo" HorizontalAlignment="Left" Margin="41,319,0,0" VerticalAlignment="Top" Foreground="White"/>
-
-        <!-- BOTONES IZQUIERDA -->
-        <Button x:Name="btnBuscar" 
-                Click="btnBuscar_Click" 
-                Content="Buscar" 
-                HorizontalAlignment="Left" 
-                Margin="41,370,0,0" 
-                VerticalAlignment="Top"
-                Height="30"
-                Width="90"
+        <Button x:Name="btnGuardar"
+                Content="Guardar"
+                Width="130"
+                Height="45"
+                FontSize="16"
+                FontWeight="Bold"
+                Margin="0,0,30,30"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
                 Background="#2C2545"
                 Foreground="White"
-                BorderBrush="#3E3556"
                 FontFamily="Montserrat"
-                FontSize="13"
-                Cursor="Hand"/>
-
-        <Button x:Name="btnEliminar" 
-                Click="btnEliminar_Click" 
-                Content="Borrar" 
-                HorizontalAlignment="Left" 
-                Margin="145,370,0,0" 
-                VerticalAlignment="Top"
-                Height="30"
-                Width="90"
-                Background="#2C2545"
-                Foreground="White"
-                BorderBrush="#3E3556"
-                FontFamily="Montserrat"
-                FontSize="13"
-                Cursor="Hand"/>
-
-        <!-- COLUMNA DERECHA -->
-        <Label Content="Detalles del Producto" HorizontalAlignment="Left" Margin="450,131,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold"/>
-
-        <Label Content="Marca" HorizontalAlignment="Left" Margin="450,170,0,0" VerticalAlignment="Top" FontSize="14"/>
-        <ComboBox x:Name="cmbMarca" HorizontalAlignment="Left" Margin="450,194,0,0" VerticalAlignment="Top" Width="140" SelectedIndex="0"/>
-
-        <Label Content="Tipo de producto" HorizontalAlignment="Left" Margin="620,170,0,0" VerticalAlignment="Top" FontSize="14" />
-        <ComboBox x:Name="cmbTipoProducto" HorizontalAlignment="Left" Margin="620,194,0,0" VerticalAlignment="Top" Width="140" SelectedIndex="0"/>
-
-        <Label x:Name="lblFechaCreacion" Content="Fecha creación" HorizontalAlignment="Left" Margin="450,227,0,0" VerticalAlignment="Top" FontSize="14"/>
-
-        <Label x:Name="lblFechaActualizacion" Content="Fecha actualización" HorizontalAlignment="Left" Margin="620,227,0,0" VerticalAlignment="Top" FontSize="14"/>
-
-        <!-- BOTON GUARDAR -->
-        <Button x:Name="btnGuardar"         
-                Style="{StaticResource controlBoton}"
-                Click="btnGuardar_Click" 
-                Content="Guardar" 
-                Height="35"
-                Width="100"
-                FontSize="14"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Margin="660,370,0,0"/>
+                BorderThickness="0"
+                Cursor="Hand"
+                Click="btnGuardar_Click"/>
 
     </Grid>
 </UserControl>
