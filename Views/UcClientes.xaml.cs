@@ -35,6 +35,8 @@ namespace AppTaller.Views
             _clienteService = new ClienteService(_context);
             _direccionService = new DireccionService(_context);
             _logic = new Logics.ClienteLogic(_context, _direccionService, _clienteService);
+            CargarIdCliente();
+            CargarIdDireccion(); 
         }
        
         private void btnGuardar_Click(object sender, RoutedEventArgs e)
@@ -61,7 +63,7 @@ namespace AppTaller.Views
                     !int.TryParse(txtIdDireccion.Text, out int idDireccion) ||
                     !int.TryParse(txtTelefono.Text, out int telefono))
                 {
-                    MessageBox.Show("Por favor, ingrese valores numéricos válidos para Código Postal y Número de Casa.", "Entrada inválida", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Por favor, ingrese valores numéricos válidos en los lugares donde es necesario.", "Entrada inválida", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
                 Direccion direccion = new Direccion
@@ -87,7 +89,9 @@ namespace AppTaller.Views
                 _logic.GuardarClienteYDireccion(cliente, direccion);
 
                 LimpiarControles();
-                MessageBox.Show("Operacion exitosa.");
+                CargarIdCliente();
+                CargarIdDireccion();
+                MessageBox.Show("Cliente registrado con exito.");
 
            }catch(Exception ex) {
                 Exception inner = ex;
@@ -116,6 +120,14 @@ namespace AppTaller.Views
                 if (int.TryParse(txtIdCliente.Text, out int id)){
                     _clienteService.EliminarCliente(id);
                 }
+                if (int.TryParse(txtIdDireccion.Text, out int idD))
+                {
+                    _direccionService.EliminarDireccion(idD);
+                }
+                MessageBox.Show("Cliente eliminado con exito.");
+                LimpiarControles();
+                CargarIdCliente();
+                CargarIdDireccion();
             }
             catch (Exception ex)
             {
@@ -129,16 +141,14 @@ namespace AppTaller.Views
         {
             try
             {
-                var clientes= _clienteService.ObtenerClientes(); // List<Usuario>
+                var clientes= _clienteService.ObtenerClientes(); 
 
-                string[] columnas = { "id", "nombre", "telefono", "estatus", "idDireccion"};
+                string[] columnas = {"id", "nombre", "telefono", "estatus", "idDireccion"};
 
                 var ventana = new FrmBusqueda("Búsqueda de Clientes", clientes, columnas);
 
-                if (ventana.ShowDialog() == true)
-                {
-                    if (ventana.seleccionado is Cliente clienteSeleccionado)
-                    {
+                if (ventana.ShowDialog() == true){
+                    if (ventana.seleccionado is Cliente clienteSeleccionado){
                         txtIdCliente.Text = clienteSeleccionado.id.ToString();
                         txtNombreCliente.Text = clienteSeleccionado.nombre;
                         txtTelefono.Text = clienteSeleccionado.telefono;
@@ -147,15 +157,26 @@ namespace AppTaller.Views
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al buscar usuarios: " + ex.Message);
+            catch (Exception ex){
+                MessageBox.Show("Error al buscar clientes: " + ex.Message);
             }
         }
 
+
+        private void CargarIdCliente() {
+            txtIdCliente.Text = _clienteService.ObtenerSigienteIdCliente().ToString();
+        }
+        private void CargarIdDireccion(){
+            txtIdDireccion.Text = _direccionService.ObtenerSigienteIdDireccion().ToString();
+        }   
+
         private void btnBuscar_Click_1(object sender, RoutedEventArgs e)
         {
-
+        }
+        private void btnCancelar_Click(object sender, RoutedEventArgs e){
+            LimpiarControles();
+            CargarIdCliente();
+            CargarIdDireccion();
         }
     }
 }

@@ -34,6 +34,7 @@ namespace AppTaller.Views
             _rolService = new RolService(_context);
 
             CargarRoles();
+            LimpiarCampos();
         }
 
 
@@ -81,11 +82,15 @@ namespace AppTaller.Views
             try{
                 var roles = _rolService.ObtenerRoles();
 
+                if (roles == null || roles.Count == 0){
+                    MessageBox.Show("No se encontraron los roles.");
+                    return;
+                }
                 cmbIdRol.ItemsSource = roles;
-                cmbIdRol.SelectedValuePath = "id";     
+                cmbIdRol.SelectedValuePath = "id";
+                cmbIdRol.DisplayMemberPath = "nombre";
 
-                if (roles.Count > 0)
-                    cmbIdRol.SelectedIndex = 0;
+                cmbIdRol.SelectedIndex = -1;
             }
             catch (Exception ex){
                 MessageBox.Show("Error al cargar roles: " + ex.Message);
@@ -94,14 +99,13 @@ namespace AppTaller.Views
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            
             LimpiarCampos();
         }
 
         private void btnBuscar_Click(object sender, RoutedEventArgs e)
         {
             try {
-                var usuarios = _usuarioService.ObtenerUsuarios(); // List<Usuario>
+                var usuarios = _usuarioService.ObtenerUsuarios();
 
                 string[] columnas = { "id", "nombre", "correo", "telefono", "estatus", "idRol" };
 
@@ -140,7 +144,7 @@ namespace AppTaller.Views
             }
         }
         private void LimpiarCampos() {
-            txtId.Text = "";
+            txtId.Text = _usuarioService.ObtenerSigienteIdUsuario().ToString();
             txtNombre.Text = "";
             txtCorreo.Text = "";
             txtTelefono.Text = "";
@@ -148,6 +152,7 @@ namespace AppTaller.Views
             estatus.IsChecked = false;
             cmbIdRol.SelectedIndex = -1;
             txtId.Focus();
+
         }
 
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)

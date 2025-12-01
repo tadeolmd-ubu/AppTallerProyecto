@@ -8,8 +8,8 @@ namespace AppTaller.Model
 {
     internal class catRol
     {
-        public int Id { get; set; }
-        public string Nombre { get; set; }
+        public int id { get; set; }
+        public string nombre { get; set; }
 
         public catRol() { }
     }

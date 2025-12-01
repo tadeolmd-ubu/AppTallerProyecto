@@ -39,5 +39,14 @@ namespace AppTaller.Services
         {
             return _context.Inventario.Any(i => i.idProducto == idProducto && i.idAlmacen == idAlmacen);
         }
+        public int ObtenerSigienteIdInventario()
+        {
+            var ultimo = _context.Inventario
+                                 .OrderByDescending(x => x.id)
+                                 .Select(x => x.id)
+                                 .FirstOrDefault();
+
+            return ultimo + 1;
+        }
     }
 }

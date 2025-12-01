@@ -55,6 +55,14 @@ namespace AppTaller.Services
         public List<Direccion> ObtenerDirecciones(){            
             return _context.Direccion.ToList();            
         }
+        public int ObtenerSigienteIdDireccion()
+        {
+            var ultimo = _context.Direccion
+                                 .OrderByDescending(x => x.id)
+                                 .Select(x => x.id)
+                                 .FirstOrDefault();
 
+            return ultimo + 1;
+        }
     }
 }

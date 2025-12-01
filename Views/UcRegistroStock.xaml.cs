@@ -46,6 +46,7 @@ namespace AppTaller.Views
             CargarAlmacen();
             CargarTipoMovimiento();
             CargarReferencias();
+            LimpiarControles();
         }
 
         private void btnGuardar_Click(object sender, RoutedEventArgs e)
@@ -114,7 +115,7 @@ namespace AppTaller.Views
                                                    idReferencia);
 
                 MessageBox.Show("Movimiento guardado exitosamente ", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
-
+                LimpiarControles();
 
             }
             catch (Exception ex)
@@ -125,8 +126,31 @@ namespace AppTaller.Views
         }                     
         private void btnCancelar_Click(object sender, RoutedEventArgs e)
         {
-            
+            LimpiarControles();
         }
+
+        private void LimpiarControles()
+        {
+            try
+            {
+                txtId.Text = _inventarioService.ObtenerSigienteIdInventario().ToString();
+
+                cmbProducto.SelectedIndex = -1;
+                cmbAlmacen.SelectedIndex = -1;
+                cmbTipoMovimiento.SelectedIndex = -1;
+                cmbReferencia.SelectedIndex = -1;
+
+                txtCantidad.Text = "0";
+
+                cmbProducto.Focus();
+            }
+            catch (Exception ex)
+            {
+                string error = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                MessageBox.Show("Error limpiando controles: " + error, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         private void CargarProducto()
         {
             try
@@ -140,9 +164,9 @@ namespace AppTaller.Views
                 }
                 cmbProducto.ItemsSource = producto;
                 cmbProducto.SelectedValuePath = "id";
-                cmbProducto.DisplayMemberPath = "id";
+                cmbProducto.DisplayMemberPath = "nombre";
 
-                cmbProducto.SelectedIndex = 0;
+                cmbProducto.SelectedIndex = -1;
             }
             catch (Exception ex)
             {
@@ -163,9 +187,9 @@ namespace AppTaller.Views
                 }
                 cmbAlmacen.ItemsSource = almacen;
                 cmbAlmacen.SelectedValuePath = "id";
-                cmbAlmacen.DisplayMemberPath = "id";
+                cmbAlmacen.DisplayMemberPath = "nombre";
 
-                cmbAlmacen.SelectedIndex = 0;
+                cmbAlmacen.SelectedIndex = -1;
             }
             catch (Exception ex)
             {
@@ -186,9 +210,9 @@ namespace AppTaller.Views
                 }
                 cmbTipoMovimiento.ItemsSource = tipoMovimiento;
                 cmbTipoMovimiento.SelectedValuePath = "id";
-                cmbTipoMovimiento.DisplayMemberPath = "id";
+                cmbTipoMovimiento.DisplayMemberPath = "nombre";
 
-                cmbTipoMovimiento.SelectedIndex = 0;
+                cmbTipoMovimiento.SelectedIndex = -1;
             }
             catch (Exception ex)
             {
@@ -209,9 +233,9 @@ namespace AppTaller.Views
                 }
                 cmbReferencia.ItemsSource = referencia;
                 cmbReferencia.SelectedValuePath = "id";
-                cmbReferencia.DisplayMemberPath = "id";
+                cmbReferencia.DisplayMemberPath = "descripcion";
 
-                cmbReferencia.SelectedIndex = 0;
+                cmbReferencia.SelectedIndex = -1;
             }
             catch (Exception ex)
             {
@@ -274,6 +298,7 @@ namespace AppTaller.Views
                         cmbAlmacen.SelectedValue = inventarioSeleccionado.idAlmacen;
                         txtId.Text = inventarioSeleccionado.id.ToString();
                         txtCantidad.Text = inventarioSeleccionado.stockActual.ToString();
+                        
                     }
                 }
             }

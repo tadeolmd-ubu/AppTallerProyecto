@@ -50,7 +50,7 @@
                             Height="35"
                             Margin="15,25,0,40">
 
-                    <Image Source="/Images/bomba.png"/>
+                    <Image Source="/Images/TRACTOR_V2.png"/>
                     <TextBlock Text="Laboratorio Diesel"
                                FontSize="14"
                                FontFamily="montserrat"
@@ -206,12 +206,14 @@
                         <StackPanel Grid.Column="0"
                                     Orientation="Horizontal"
                                     VerticalAlignment="Center">
-                            <fa:IconImage Icon="House"
+                            <fa:IconImage x:Name="iconoPagina"
+                                Icon="House"
                                           Height="20"
                                           Width="20"
                                           Foreground="{StaticResource titleColor1}"
                                           Margin="35,0,10,0"/>
-                            <TextBlock Text="Inicio"
+                            <TextBlock  x:Name="lblTituloPagina"
+                                Text="Inicio"
                                        Foreground="{StaticResource titleColor2}"
                                        FontSize="16"
                                        FontFamily="Montserrat"

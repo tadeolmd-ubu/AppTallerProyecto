@@ -36,13 +36,12 @@ namespace AppTaller.Views
             _tipoProductoService = new TipoProductoService(_context);
             CargarMarcas();
             CargarTipoProducto();
+            ObtenerSiguienteIdProducto();
         }
 
         private void btnGuardar_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                
+            try{    
                 if (string.IsNullOrWhiteSpace(txtIdProducto.Text) ||
                     string.IsNullOrWhiteSpace(txtNombreProducto.Text) ||
                     string.IsNullOrWhiteSpace(txtPrecio.Text) ||
@@ -85,6 +84,7 @@ namespace AppTaller.Views
                 _productoService.CrearOActualizarProducto(producto);
 
                 LimpiarCampos();
+                ObtenerSiguienteIdProducto();
                 MessageBox.Show("Operación exitosa", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex) {
@@ -92,6 +92,17 @@ namespace AppTaller.Views
                                 "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }        
+
+        private void ObtenerSiguienteIdProducto(){
+            try{
+                int siguienteId = _productoService.ObtenerSigienteIdProducto();
+                txtIdProducto.Text = siguienteId.ToString();
+            }
+            catch (Exception ex){
+                MessageBox.Show("Error al obtener el siguiente ID de producto: " + ex.Message,
+                                "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 
         private void LimpiarCampos(){
             txtIdProducto.Text = "";
@@ -110,6 +121,7 @@ namespace AppTaller.Views
 
                     MessageBox.Show("Operación exitosa", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
                     LimpiarCampos();
+                    ObtenerSiguienteIdProducto();
                 }
             }
             catch (Exception ex){
@@ -135,11 +147,9 @@ namespace AppTaller.Views
                         txtNombreProducto.Text = productoSeleccionado.nombre;
                         txtPrecio.Text = productoSeleccionado.precio.ToString();
                         chkEstatus.IsChecked = productoSeleccionado.estatus;
-                        cmbMarca.Text = productoSeleccionado.idMarca.ToString();
-                        cmbTipoProducto.Text = productoSeleccionado.idTipoProducto.ToString();
-                        lblFechaCreacion.Content = productoSeleccionado.fechaCreacion;
-                        lblFechaActualizacion.Content = productoSeleccionado.fechaActualizacion;
-                    }
+                        cmbMarca.SelectedValue = productoSeleccionado.idMarca;
+                        cmbTipoProducto.SelectedValue = productoSeleccionado.idTipoProducto;
+                        }
                 }
             }
             catch (Exception ex){
@@ -157,9 +167,9 @@ namespace AppTaller.Views
                 }
                 cmbMarca.ItemsSource = marcas;
                 cmbMarca.SelectedValuePath = "id";
-                cmbMarca.DisplayMemberPath = "id";
+                cmbMarca.DisplayMemberPath = "nombre";
 
-                cmbMarca.SelectedIndex = 0;
+                cmbMarca.SelectedIndex = -1;
             }
             catch (Exception ex){
                 MessageBox.Show("Error al cargar marcas: " + ex.Message);
@@ -176,14 +186,20 @@ namespace AppTaller.Views
                 }
                 cmbTipoProducto.ItemsSource = tipo;
                 cmbTipoProducto.SelectedValuePath = "id";
-                cmbTipoProducto.DisplayMemberPath = "id";
+                cmbTipoProducto.DisplayMemberPath = "nombre";
 
-                cmbTipoProducto.SelectedIndex = 0;
+                cmbTipoProducto.SelectedIndex = -1;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error al cargar los tipos de productos: " + ex.Message);
             }
+        }
+
+        private void btnCancelar_Click(object sender, RoutedEventArgs e)
+        {
+            LimpiarCampos();
+            ObtenerSiguienteIdProducto();
         }
     }
 }

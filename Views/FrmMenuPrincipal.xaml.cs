@@ -39,6 +39,8 @@ namespace AppTaller.Views
         [DllImport("user32.dll")]
         public static extern IntPtr SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
 
+        
+
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -89,6 +91,8 @@ namespace AppTaller.Views
             // 2. Asignar la instancia al ContentControl en el XAML
             // Esto hace que el UserControl se muestre dentro de tu FrmMenuPrincipal
             contenedorFormularios.Content = _ucInicio;
+            lblTituloPagina.Text = "Inicio";
+            iconoPagina.Icon = FontAwesome.Sharp.IconChar.Home;
         }
 
         private void Usuario_Checked(object sender, RoutedEventArgs e)
@@ -101,7 +105,8 @@ namespace AppTaller.Views
             // 2. Asignar la instancia al ContentControl en el XAML
             // Esto hace que el UserControl se muestre dentro de tu FrmMenuPrincipal
             contenedorFormularios.Content = _ucUsuario;
-
+            lblTituloPagina.Text = "Usuarios";
+            iconoPagina.Icon = FontAwesome.Sharp.IconChar.CircleUser;
         }
          
         private void Clientes_Checked(object sender, RoutedEventArgs e)
@@ -111,6 +116,8 @@ namespace AppTaller.Views
             }
 
             contenedorFormularios.Content = _ucClientes;
+            lblTituloPagina.Text = "Clientes";
+            iconoPagina.Icon = FontAwesome.Sharp.IconChar.Users;
         }
 
         private void Proveedores_Checked(object sender, RoutedEventArgs e)
@@ -120,7 +127,8 @@ namespace AppTaller.Views
             }
 
             contenedorFormularios.Content = _ucProveedores;
-
+            lblTituloPagina.Text = "Proveedores";
+            iconoPagina.Icon = FontAwesome.Sharp.IconChar.UserAlt;
         }
 
         private void Productos_Checked(object sender, RoutedEventArgs e)
@@ -129,6 +137,8 @@ namespace AppTaller.Views
                 _ucProductos = new UcProductos();
             }
             contenedorFormularios.Content = _ucProductos;
+            lblTituloPagina.Text = "Productos";
+            iconoPagina.Icon = FontAwesome.Sharp.IconChar.BoxesStacked;
         }
 
         private void Stock_Checked(object sender, RoutedEventArgs e)
@@ -138,6 +148,8 @@ namespace AppTaller.Views
                 _ucRegistroStock = new UcRegistroStock();
             }
             contenedorFormularios.Content = _ucRegistroStock;
+            lblTituloPagina.Text = "Registro de Stock";
+            iconoPagina.Icon = FontAwesome.Sharp.IconChar.BoxesStacked;
         }
 
         private void Presupuestos_Checked(object sender, RoutedEventArgs e)
@@ -147,6 +159,8 @@ namespace AppTaller.Views
                 _ucPresupuestos = new UcPresupuestos();
             }
             contenedorFormularios.Content = _ucPresupuestos;
+            lblTituloPagina.Text = "Presupuestos";
+            iconoPagina.Icon = FontAwesome.Sharp.IconChar.FileEdit;
         }
     }
 }

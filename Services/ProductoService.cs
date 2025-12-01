@@ -49,5 +49,14 @@ namespace AppTaller.Services
         public List<Producto> ObtenerProductos(){
             return _context.Producto.ToList();
         }
+        public int ObtenerSigienteIdProducto()
+        {
+            var ultimo = _context.Producto
+                                 .OrderByDescending(x => x.id)
+                                 .Select(x => x.id)
+                                 .FirstOrDefault();
+
+            return ultimo + 1;
+        }
     }
 }

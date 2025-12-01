@@ -57,5 +57,15 @@ namespace AppTaller.Services
         public List<Cliente> ObtenerClientes() {
             return _context.Cliente.ToList();
         }
+
+        //"consecutivo" de clientes
+        public int ObtenerSigienteIdCliente(){
+            var ultimo = _context.Cliente
+                                 .OrderByDescending(x => x.id)
+                                 .Select(x => x.id)
+                                 .FirstOrDefault();
+
+            return ultimo + 1;
+        }
     }
 }

@@ -100,9 +100,6 @@
                 <Label Content="Contraseña"/>
                 <PasswordBox x:Name="txtContrasena" Width="252"/>
 
-                <Label Content="Confirmar Contraseña"/>
-                <PasswordBox x:Name="txtContrasena2" Width="252"/>
-
             </StackPanel>
 
             <!-- COLUMNA CENTRAL - DATOS ADICIONALES -->

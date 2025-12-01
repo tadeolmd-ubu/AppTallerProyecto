@@ -129,26 +129,6 @@
                           Foreground="Black" 
                           SelectedIndex="0"/>
 
-                <Label x:Name="lblFechaCreacion" Content="Fecha Creación"/>
-                <TextBox Width="252" 
-                         IsReadOnly="True"
-                         Background="#1B1428"
-                         Foreground="White"
-                         BorderBrush="DarkGray"
-                         BorderThickness="1"
-                         Height="28"
-                         Margin="0,0,0,15"/>
-
-                <Label x:Name="lblFechaActualizacion" Content="Fecha Actualización"/>
-                <TextBox Width="252" 
-                         IsReadOnly="True"
-                         Background="#1B1428"
-                         Foreground="White"
-                         BorderBrush="DarkGray"
-                         BorderThickness="1"
-                         Height="28"
-                         Margin="0,0,0,15"/>
-
             </StackPanel>
 
         </Grid>
@@ -185,6 +165,22 @@
                     Click="btnEliminar_Click"/>
         </StackPanel>
 
+        <Button x:Name="btnCancelar"
+Content="Cancelar"
+Width="130"
+Height="45"
+FontSize="16"
+FontWeight="Bold"
+Margin="0,0,180,30"
+HorizontalAlignment="Right"
+VerticalAlignment="Bottom"
+Background="#2C2545"
+Foreground="White"
+FontFamily="Montserrat"
+BorderThickness="0"
+Cursor="Hand"
+Click="btnCancelar_Click"/>
+        
         <Button x:Name="btnGuardar"
                 Content="Guardar"
                 Width="130"

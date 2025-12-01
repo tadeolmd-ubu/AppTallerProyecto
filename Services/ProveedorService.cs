@@ -47,5 +47,16 @@ namespace AppTaller.Services
         public List<Proveedor> ObtenerProveedores(){
             return _context.Proveedor.ToList();
         }
+
+        public int ObtenerSigienteIdProveedor()
+        {
+            var ultimo = _context.Proveedor
+                                 .OrderByDescending(x => x.id)
+                                 .Select(x => x.id)
+                                 .FirstOrDefault();
+
+            return ultimo + 1;
+        }
+
     }
 }

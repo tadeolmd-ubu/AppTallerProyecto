@@ -34,9 +34,12 @@ namespace AppTaller.Views
             _context = new EF.efAppDbContext();
             _empresaService = new EmpresaService(_context);
             _proveedorService = new ProveedorService(_context);
+            _direccionService = new DireccionService(_context);
             _proveedorLogic = new ProveedorLogic(_context, new DireccionService(_context), new ProveedorService(_context));
 
             CargarEmpresas();
+            CargarSiguienteIdProveedor();
+            CargarSiguienteIdDireccion();
         }
 
         private void btnGuardar_Click_1(object sender, RoutedEventArgs e)
@@ -108,6 +111,26 @@ namespace AppTaller.Views
                 MessageBox.Show("Error detallado:\n" + inner.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void CargarSiguienteIdProveedor()
+        {
+            try{
+                int siguienteId = _proveedorService.ObtenerSigienteIdProveedor();
+                txtIdProveedor.Text = siguienteId.ToString();
+            }
+            catch (Exception ex){
+                MessageBox.Show("Error al obtener el siguiente ID de proveedor: " + ex.Message);
+            }
+        }
+        private void CargarSiguienteIdDireccion(){
+            try{
+                int siguienteIdD = _direccionService.ObtenerSigienteIdDireccion();
+                txtIdDireccion.Text = siguienteIdD.ToString();
+            }
+            catch (Exception ex){
+                MessageBox.Show("Error al obtener el siguiente ID de dirección: " + ex.Message);
+            }
+        }
         private void LimpiarControles()
         {
             // Limpiar campos del proveedor
@@ -123,6 +146,8 @@ namespace AppTaller.Views
             txtCodigoPostal.Clear();
             txtCalle.Clear();
             txtNumeroCasa.Clear();
+            CargarSiguienteIdProveedor();
+            CargarSiguienteIdDireccion();
         }
 
         private void btnBorrar_Click(object sender, RoutedEventArgs e){
@@ -173,7 +198,7 @@ namespace AppTaller.Views
                 }
                 cmbIdEmpresa.ItemsSource = empresas;
                 cmbIdEmpresa.SelectedValuePath = "id";             
-                cmbIdEmpresa.DisplayMemberPath = "id";
+                cmbIdEmpresa.DisplayMemberPath = "nombre";
 
                 cmbIdEmpresa.SelectedIndex = 0;
             }
@@ -185,6 +210,11 @@ namespace AppTaller.Views
         private void cmbIdEmpresa_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
                                                                             
+        }
+
+        private void btnCancelar_Click(object sender, RoutedEventArgs e)
+        {
+            LimpiarControles();
         }
     }
 }

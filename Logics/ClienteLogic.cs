@@ -39,5 +39,6 @@ namespace AppTaller.Logics
                 }
             }
         }
+
     }
 }
