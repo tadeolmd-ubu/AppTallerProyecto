@@ -261,6 +261,8 @@
     <Compile Include="Model\TipoMovimiento.cs" />
     <Compile Include="Model\TipoProducto.cs" />
     <Compile Include="Model\Usuario.cs" />
+    <Compile Include="Model\Venta.cs" />
+    <Compile Include="Model\VentaDetalle.cs" />
     <Compile Include="Services\AlmacenService.cs" />
     <Compile Include="Services\ClienteService.cs" />
     <Compile Include="Services\DireccionService.cs" />
@@ -277,6 +279,8 @@
     <Compile Include="Services\TipoMovimientoService.cs" />
     <Compile Include="Services\TipoProductoService.cs" />
     <Compile Include="Services\UsuarioService.cs" />
+    <Compile Include="Services\VentaDetalleService.cs" />
+    <Compile Include="Services\VentaService.cs" />
     <Compile Include="Views\FrmBusqueda.xaml.cs">
       <DependentUpon>FrmBusqueda.xaml</DependentUpon>
     </Compile>
