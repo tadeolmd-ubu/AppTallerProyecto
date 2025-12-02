@@ -200,7 +200,7 @@ namespace AppTaller.Views
                 cmbIdEmpresa.SelectedValuePath = "id";             
                 cmbIdEmpresa.DisplayMemberPath = "nombre";
 
-                cmbIdEmpresa.SelectedIndex = 0;
+                cmbIdEmpresa.SelectedIndex = -1;
             }
             catch (Exception ex){
                 MessageBox.Show("Error al cargar empresas: " + ex.Message);

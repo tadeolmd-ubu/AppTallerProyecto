@@ -307,6 +307,9 @@
     <Compile Include="Views\UcUsuario.xaml.cs">
       <DependentUpon>UcUsuario.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UcVenta.xaml.cs">
+      <DependentUpon>UcVenta.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -396,6 +399,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UcUsuario.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UcVenta.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
