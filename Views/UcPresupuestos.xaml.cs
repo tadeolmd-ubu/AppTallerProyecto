@@ -347,7 +347,7 @@ namespace AppTaller.Views
                 // Limpiar campos del formulario
                 txtNota.Text = string.Empty;
                 txtTotal.Text = "0.00";
-                chkAplicarIVA.IsChecked = false;
+                chkAplicarIVA.IsChecked     = false;
                 chkEstatus.IsChecked = false;
 
                 cmbCliente.SelectedIndex = -1;

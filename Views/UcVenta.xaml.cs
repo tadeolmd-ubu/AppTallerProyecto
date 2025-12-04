@@ -28,42 +28,46 @@ namespace AppTaller.Views
         private readonly InventarioService _inventarioService;
         private readonly ProductoService _productoService;
         private readonly VentaService _ventaService;
-        private readonly ObservableCollection<PresupuestoDetalle> _detalles;
+        private readonly ClienteService _clienteService;
+        private readonly ObservableCollection<VentaDetalle> _detalles;
         public UcVenta()
         {
             EF.efAppDbContext context = new EF.efAppDbContext();
             _inventarioService = new InventarioService(context);
             _productoService = new ProductoService(context);
             _ventaService = new VentaService(context);
+            _clienteService = new ClienteService(context);
             InitializeComponent();
-            _detalles = new ObservableCollection<PresupuestoDetalle>();
+            _detalles = new ObservableCollection<VentaDetalle>();
             dtgDetalles.ItemsSource = _detalles;
+            txtIdVenta.Text = _ventaService.ObtenerSigienteIdVenta().ToString();
+            txtFolio.Text = _ventaService.GenerarFolio().ToString();
+            CargarClientes();
         }
 
         private void btnGuardar_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                var presupuesto = new Presupuesto
-                {
-                    id = int.Parse(txtIdPresupuesto.Text),
-                    total = Convert.ToDecimal(txtTotal.Text),
-                    estatus = chkEstatus.IsChecked ?? false,
-                    nota = txtNota.Text,
+                var venta = new Venta{
+                    id = int.Parse(txtIdVenta.Text),
+                    total = decimal.Parse(txtTotal.Text),
+                    estatus = chkEstatus.IsChecked == true,
+                    folio = int.Parse(txtFolio.Text),
+                    idUsuario = 1001,
                     idCliente = (int)(cmbCliente.SelectedValue ?? 0),
-                    idUsuario = 1001
                 };
-                var existe = _presupuestoService.BuscarPresupuesto(presupuesto.id);
+                var existe = _ventaService.BuscarVenta(venta.id);
 
-                var logic = new PresupuestoLogic(new EF.efAppDbContext());
+                var logic = new VentaLogic(new EF.efAppDbContext());
 
                 if (existe != null)
                 {
-                    var detalles = new List<PresupuestoDetalle>();
+                    var detalles = new List<VentaDetalle>();
 
                     foreach (var item in _detalles)
                     {
-                        detalles.Add(new PresupuestoDetalle
+                        detalles.Add(new VentaDetalle
                         {
                             id = item.id,
                             cantidad = item.cantidad,
@@ -71,12 +75,9 @@ namespace AppTaller.Views
                             importe = item.importe,
                             iva = item.iva,
                             idInventario = item.idInventario,
-                            idPresupuesto = presupuesto.id
+                            idVenta = venta.id
                         });
                     }
-
-                    logic.ActualizarPresupuestoConDetalles(presupuesto, detalles);
-
                     MessageBox.Show("Presupuesto actualizado correctamente.");
                 }
 
@@ -91,11 +92,11 @@ namespace AppTaller.Views
                                         .FirstOrDefault() + 1;
                     }
 
-                    var detalles = new List<PresupuestoDetalle>();
+                    var detalles = new List<VentaDetalle>();
 
                     foreach (var item in _detalles)
                     {
-                        detalles.Add(new PresupuestoDetalle
+                        detalles.Add(new VentaDetalle
                         {
                             id = nextId,
                             cantidad = item.cantidad,
@@ -103,12 +104,12 @@ namespace AppTaller.Views
                             importe = item.importe,
                             iva = item.iva,
                             idInventario = item.idInventario,
-                            idPresupuesto = presupuesto.id
+                            idVenta = venta.id
                         });
                         nextId++;
                     }
-                    logic.CrearPresupuestoConDetalles(presupuesto, detalles);
 
+                    logic.CrearVenta(venta, detalles);
                     MessageBox.Show("Presupuesto guardado correctamente.");
                 }
                 txtIdVenta.Text = _ventaService.ObtenerSigienteIdVenta().ToString();
@@ -164,7 +165,7 @@ namespace AppTaller.Views
         private void btnEliminar_Click(object sender, RoutedEventArgs e)
         {
             var boton = sender as Button;
-            var detalle = boton.DataContext as PresupuestoDetalle;
+            var detalle = boton.DataContext as VentaDetalle;
 
             if (detalle == null) return;
 
@@ -205,7 +206,7 @@ namespace AppTaller.Views
                 //precio
                 var precio = producto.precio;
 
-                var nuevoDetalle = new PresupuestoDetalle
+                var nuevoDetalle = new VentaDetalle
                 {
                     idInventario = inventario.id,
                     cantidad = 1,
@@ -266,6 +267,28 @@ namespace AppTaller.Views
         private void btnEliminarVenta_Click(object sender, RoutedEventArgs e)
         {
         }
+        private void CargarClientes()
+        {
+            try
+            {
+                var clientes = _clienteService.ObtenerClientes();
+
+                if (clientes == null || clientes.Count == 0)
+                {
+                    MessageBox.Show("No se encontraron empresas.");
+                    return;
+                }
+                cmbCliente.ItemsSource = clientes;
+                cmbCliente.SelectedValuePath = "id";
+                cmbCliente.DisplayMemberPath = "nombre";
+
+                cmbCliente.SelectedIndex = -1;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar empresas: " + ex.Message);
+            }
+        }
         private void LimpiarControles()
         {
             txtIdVenta.Text = string.Empty;
@@ -275,6 +298,8 @@ namespace AppTaller.Views
             cmbCliente.SelectedIndex = -1;
             _detalles.Clear();
             dtgDetalles.Items.Refresh();
+            txtIdVenta.Text = _ventaService.ObtenerSigienteIdVenta().ToString();
+            txtFolio.Text = _ventaService.GenerarFolio().ToString();
         }
     }
 }

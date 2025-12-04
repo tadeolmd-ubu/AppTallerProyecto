@@ -11,39 +11,18 @@ namespace AppTaller.Logics
 {
     internal class VentaLogic
     {
-        /*
-         Pseudocódigo detallado (plan):
-         1. Método: CrearVenta(Venta venta, IEnumerable<VentaDetalle> detalles)
-            - Validar argumentos (venta != null, detalles != null y al menos 1).
-         2. Abrir una transacción de la base de datos para asegurar atomicidad.
-         3. Recorrer cada detalle propuesto:
-            - Buscar el producto en Inventario por detalle.idInventario.
-            - Si no existe -> lanzar excepción indicando producto no encontrado.
-            - Si stockActual < detalle.cantidad -> lanzar excepción "Stock insuficiente" indicando producto.
-         4. Insertar la entidad 'venta' en la BD y hacer SaveChanges() para obtener su id.
-         5. Para cada detalle:
-            - Asignar detalle.idVenta = venta.id.
-            - Añadir el detalle al contexto (_context.VentaDetalle.Add(detalle)).
-            - Reducir producto.stockActual -= detalle.cantidad.
-         6. Guardar cambios para persistir detalles y actualizar stock.
-         7. Recalcular el importe de cada detalle usando _ventaDetalleService.RecalcularImporte(detalle.id).
-         8. Guardar cambios finales y confirmar la transacción.
-         9. En caso de error hacer rollback y re-lanzar la excepción.
-         10. Devolver la entidad venta creada (con su id).
-        */
-
         private readonly EF.efAppDbContext _context;
         private readonly VentaService _ventaService;
         private readonly VentaDetalleService _ventaDetalleService;
         private readonly InventarioService _inventarioService;
-        public VentaLogic(){
+        public VentaLogic(EF.efAppDbContext efAppDbContext)
+        {
             _context = new EF.efAppDbContext();
             _ventaService = new VentaService(_context);
             _ventaDetalleService = new VentaDetalleService(_context);
             _inventarioService = new InventarioService(_context);
         }
 
-        // Crear una venta y descontar stock según los detalles seleccionados
         public Venta CrearVenta(Venta venta, IEnumerable<VentaDetalle> detalles)
         {
             if (venta == null)

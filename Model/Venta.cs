@@ -12,15 +12,16 @@ namespace AppTaller.Model
     {
         public int id { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime fecha { get; set; }
+
         public decimal total { get; set; }
         public bool estatus { get; set; }
-        public int idEmpleado { get; set; }
+        public int idUsuario { get; set; }
         public int idCliente { get; set; }
         public int folio { get; set; }
 
-        public Venta() {
-        }
+        public Venta() { }
+
     }
 }

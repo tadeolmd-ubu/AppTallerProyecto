@@ -18,8 +18,8 @@ namespace AppTaller.Services
         public void CrearVenta(Venta venta) { 
         _context.Venta.Add(venta);
         }
-        public void BuscarVenta(int id) {
-        _context.Venta.Find(id);
+        public Venta BuscarVenta(int id) {
+        return _context.Venta.Find(id);
         }
 
         public List <Venta> ObtenerVentas(){
