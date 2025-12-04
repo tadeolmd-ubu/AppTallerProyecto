@@ -48,5 +48,13 @@ namespace AppTaller.Services
 
             return ultimo + 1;
         }
+
+        public bool ValidarStock(int idProducto, int cantidad)
+        {
+            var producto = _context.Inventario.Find(idProducto);
+            if (producto == null) return false;
+
+            return producto.stockActual >= cantidad;
+        }
     }
 }

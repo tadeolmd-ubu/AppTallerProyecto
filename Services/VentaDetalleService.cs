@@ -39,27 +39,6 @@ namespace AppTaller.Services
                 .ToList();
         }
 
-        public void ActualizarCantidad(int idDetalle, int nuevaCantidad)
-        {
-            var detalle = _context.VentaDetalle.Find(idDetalle);
-            if (detalle == null)
-                throw new Exception("Detalle no encontrado");
-
-            var diferencia = nuevaCantidad - detalle.cantidad;
-
-            var producto = _context.Inventario.Find(detalle.idInventario);
-
-            if (producto.stockActual < diferencia)
-                throw new Exception("Stock insuficiente");
-
-            producto.stockActual -= diferencia;
-
-            detalle.cantidad = nuevaCantidad;
-            RecalcularImporte(idDetalle);
-
-            _context.SaveChanges();
-        }
-
         public void RecalcularImporte(int idDetalle)
         {
             var detalle = _context.VentaDetalle.Find(idDetalle);

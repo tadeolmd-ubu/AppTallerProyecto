@@ -30,6 +30,7 @@ namespace AppTaller.Views
         private UcProductos _ucProductos;
         private UcRegistroStock _ucRegistroStock;
         private UcPresupuestos _ucPresupuestos;
+        private UcVenta _ucVenta;
         public FrmMenuPrincipal()
         {
             InitializeComponent();
@@ -161,6 +162,17 @@ namespace AppTaller.Views
             contenedorFormularios.Content = _ucPresupuestos;
             lblTituloPagina.Text = "Presupuestos";
             iconoPagina.Icon = FontAwesome.Sharp.IconChar.FileEdit;
+        }
+
+        private void Venta_Checked(object sender, RoutedEventArgs e)
+        {
+            if (_ucVenta == null)
+            {
+                _ucVenta = new UcVenta();
+            }
+            contenedorFormularios.Content = _ucVenta;
+            lblTituloPagina.Text = "Ventas";
+            iconoPagina.Icon = FontAwesome.Sharp.IconChar.ShoppingCart;
         }
     }
 }

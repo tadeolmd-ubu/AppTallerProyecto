@@ -26,13 +26,6 @@ namespace AppTaller.Services
             return _context.Venta.ToList();
         }
 
-
-
-
-
-
-
-
         public int GenerarFolio(){
             var ultimo = _context.Venta
                                  .OrderByDescending(x => x.folio)

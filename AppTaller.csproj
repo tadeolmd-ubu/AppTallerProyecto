@@ -243,6 +243,7 @@
     <Compile Include="Logics\PresupuestoLogic.cs" />
     <Compile Include="Logics\ProveedorLogic.cs" />
     <Compile Include="Logics\StockLogic.cs" />
+    <Compile Include="Logics\VentaLogic.cs" />
     <Compile Include="Model\catAlmacen.cs" />
     <Compile Include="Model\catEmpresa.cs" />
     <Compile Include="Model\catMarca.cs" />

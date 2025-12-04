@@ -188,27 +188,28 @@
                                 FontSize="12"
                                 FontWeight="SemiBold"
                                 BorderThickness="0"
-                                Cursor="Hand"/>
+                                Cursor="Hand" Click="btnBuscarProducto_Click"/>
                     </StackPanel>
                 </Border>
 
                 <!-- DataGrid de Detalles -->
                 <Border BorderBrush="DarkGray" BorderThickness="1" Height="250" Margin="0,0,0,15">
                     <DataGrid x:Name="dtgDetalles"
-                              Background="#1B1428"
-                              Foreground="White"
-                              BorderThickness="0"
-                              AutoGenerateColumns="False"
-                              CanUserAddRows="False"
-                              CanUserDeleteRows="False"
-                              CanUserResizeRows="False"
-                              CanUserReorderColumns="False"
-                              HeadersVisibility="Column"
-                              GridLinesVisibility="None"
-                              SelectionMode="Single"
-                              SelectionUnit="FullRow"
-                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                              IsSynchronizedWithCurrentItem="False">
+  Background="#1B1428"
+  Foreground="White"
+  BorderThickness="0"
+  AutoGenerateColumns="False"
+  CanUserAddRows="False"
+  CanUserDeleteRows="False"
+  CanUserResizeRows="False"
+  CanUserReorderColumns="False"
+  HeadersVisibility="Column"
+  GridLinesVisibility="None"
+  SelectionMode="Single"
+  SelectionUnit="FullRow"
+  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+  SelectionChanged="dtgDetalles_SelectionChanged"
+  IsSynchronizedWithCurrentItem="False">
 
                         <!-- Estilo de las columnas del header -->
                         <DataGrid.ColumnHeaderStyle>
@@ -254,8 +255,8 @@
                         </DataGrid.CellStyle>
 
                         <DataGrid.Columns>
-                            <!-- ID -->
-                            <DataGridTextColumn Header="ID" Width="30" Binding="{Binding id}" IsReadOnly="True">
+                            <!-- ID Producto -->
+                            <DataGridTextColumn Header="ID" Width="30" Binding="{Binding idInventario}" IsReadOnly="True">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Padding" Value="5,0"/>
@@ -263,75 +264,85 @@
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
 
-                            <!-- ID Producto -->
-                            <DataGridTextColumn Header="ID Prod." Width="70" Binding="{Binding idProducto}" IsReadOnly="True">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="Padding" Value="5,0"/>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
+                            <!-- Nombre -->
+                            <!--<DataGridTextColumn Header="Nombre" Width="150" Binding="{Binding Producto.nombre}" IsReadOnly="True">
+                <DataGridTextColumn.ElementStyle>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Padding" Value="5,0"/>
+                    </Style>
+                </DataGridTextColumn.ElementStyle>
+            </DataGridTextColumn>-->
 
                             <!-- Cantidad con botones -->
                             <DataGridTemplateColumn Header="Cantidad" Width="150">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                            <Button x:Name="btnDisminuir"
-                                                    Content="-" 
-                                                    Width="30" 
-                                                    Height="25"
-                                                    Background="#8B2C4E" 
-                                                    Foreground="White"
-                                                    FontWeight="Bold"
-                                                    FontSize="16"
-                                                    BorderThickness="0"
-                                                    Cursor="Hand"
-                                                    Tag="{Binding}"
-                                                    Margin="0,0,5,0"/>
+                                            <Button Content="-" 
+                        Width="30" 
+                        Height="25"
+                        Background="#8B2C4E" 
+                        Foreground="White"
+                        FontWeight="Bold"
+                        FontSize="16"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Tag="{Binding}"
+                        Margin="0,0,5,0"
+                        Click="btnDisminuir_Click"/>
 
                                             <TextBlock Text="{Binding cantidad}" 
-                                                       Width="40"
-                                                       Height="25"
-                                                       Background="#0A003A"
-                                                       Foreground="White"
-                                                       TextAlignment="Center"
-                                                       VerticalAlignment="Center"
-                                                       Padding="0,3,0,0"
-                                                       FontWeight="SemiBold"
-                                                       Margin="0,0,5,0"/>
+                           Width="40"
+                           Height="25"
+                           Background="#0A003A"
+                           Foreground="White"
+                           TextAlignment="Center"
+                           VerticalAlignment="Center"
+                           Padding="0,3,0,0"
+                           FontWeight="SemiBold"
+                           Margin="0,0,5,0"/>
 
-                                            <Button x:Name="btnAumentar"
-                                                    Content="+" 
-                                                    Width="30" 
-                                                    Height="25"
-                                                    Background="#27C2FF" 
-                                                    Foreground="#0A003A"
-                                                    FontWeight="Bold"
-                                                    FontSize="16"
-                                                    BorderThickness="0"
-                                                    Cursor="Hand"
-                                                    Tag="{Binding}"
-                                                    Margin="0,0,5,0"/>
+                                            <Button Content="+" 
+                        Width="30" 
+                        Height="25"
+                        Background="#27C2FF" 
+                        Foreground="#0A003A"
+                        FontWeight="Bold"
+                        FontSize="16"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Tag="{Binding}"
+                        Margin="0,0,5,0"
+                        Click="btnAumentar_Click"/>
 
-                                            <Button x:Name="btnEliminarDetalle"
-                                                    Content="X" 
-                                                    Width="30" 
-                                                    Height="25"
-                                                    Background="#8B2C4E" 
-                                                    Foreground="White"
-                                                    FontWeight="Bold"
-                                                    FontSize="14"
-                                                    BorderThickness="0"
-                                                    Cursor="Hand"
-                                                    Tag="{Binding}"/>
+                                            <Button Content="X" 
+                        Width="30" 
+                        Height="25"
+                        Background="#8B2C4E" 
+                        Foreground="White"
+                        FontWeight="Bold"
+                        FontSize="14"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Tag="{Binding}"
+                        Click="btnEliminar_Click"/>
                                         </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
 
+                            <!-- Precio Unitario -->
+                            <DataGridTextColumn Header="Precio Unit." Width="90" Binding="{Binding precioUnitario, StringFormat={}{0:C}}" IsReadOnly="True">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="TextAlignment" Value="Right"/>
+                                        <Setter Property="Padding" Value="5,0"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
                             <!-- Importe -->
-                            <DataGridTextColumn Header="Importe" Width="90" Binding="{Binding importe, StringFormat={}{0:C}}" IsReadOnly="True">
+                            <DataGridTextColumn Header="Importe" Width="100" Binding="{Binding importe, StringFormat={}{0:C}}" IsReadOnly="True">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="TextAlignment" Value="Right"/>
@@ -353,7 +364,13 @@
                         </DataGrid.Columns>
                     </DataGrid>
                 </Border>
-
+                <CheckBox x:Name="chkAplicarIVA" 
+					      Content="Aplicar IVA (16%)" 
+					      Foreground="White"
+					      FontFamily="Montserrat"
+					      FontSize="13"
+					      Margin="0,0,0,10"
+					      HorizontalAlignment="Right"/>
                 <!-- SECCIÓN TOTAL -->
                 <StackPanel Orientation="Vertical">
 
@@ -401,7 +418,7 @@
                     FontWeight="SemiBold"
                     BorderThickness="0"
                     Cursor="Hand"
-                    Margin="0,0,10,0"/>
+                    Margin="0,0,10,0" Click="btnBuscar_Click"/>
 
             <Button x:Name="btnEliminarVenta" 
                     Content="Eliminar" 
@@ -412,7 +429,7 @@
                     FontFamily="Montserrat"
                     FontWeight="SemiBold"
                     BorderThickness="0"
-                    Cursor="Hand"/>
+                    Cursor="Hand" Click="btnEliminarVenta_Click"/>
         </StackPanel>
 
         <Button x:Name="btnGuardar"
@@ -428,7 +445,7 @@
                 Foreground="White"
                 FontFamily="Montserrat"
                 BorderThickness="0"
-                Cursor="Hand"/>
+                Cursor="Hand" Click="btnGuardar_Click"/>
 
     </Grid>
 </UserControl>
