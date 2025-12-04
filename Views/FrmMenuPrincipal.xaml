@@ -137,7 +137,7 @@ Tag="{StaticResource color1}"
 Checked="Venta_Checked">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="ShoppingCart" Style="{StaticResource menuBotonIcono}"/>
-                        <TextBlock Text="Presupuestos" Style="{StaticResource menuBotonTexto}"/>
+                        <TextBlock Style="{StaticResource menuBotonTexto}" Text="Venta"/>
                     </StackPanel>
                 </RadioButton>
 

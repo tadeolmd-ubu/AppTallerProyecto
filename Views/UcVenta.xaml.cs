@@ -29,6 +29,8 @@ namespace AppTaller.Views
         private readonly ProductoService _productoService;
         private readonly VentaService _ventaService;
         private readonly ClienteService _clienteService;
+        private readonly PresupuestoService _presupuestoService;
+        private readonly PresupuestoLogic _presupuestoLogic;
         private readonly ObservableCollection<VentaDetalle> _detalles;
         public UcVenta()
         {
@@ -37,83 +39,133 @@ namespace AppTaller.Views
             _productoService = new ProductoService(context);
             _ventaService = new VentaService(context);
             _clienteService = new ClienteService(context);
+            _presupuestoService = new PresupuestoService(context);
+            _presupuestoLogic = new PresupuestoLogic(context);
+
             InitializeComponent();
             _detalles = new ObservableCollection<VentaDetalle>();
             dtgDetalles.ItemsSource = _detalles;
+
             txtIdVenta.Text = _ventaService.ObtenerSigienteIdVenta().ToString();
             txtFolio.Text = _ventaService.GenerarFolio().ToString();
+
             CargarClientes();
+
+            chkAplicarIVA.Checked += (s, e) => RecalcularTotales();
+            chkAplicarIVA.Unchecked += (s, e) => RecalcularTotales();
         }
 
         private void btnGuardar_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                var venta = new Venta{
-                    id = int.Parse(txtIdVenta.Text),
-                    total = decimal.Parse(txtTotal.Text),
-                    estatus = chkEstatus.IsChecked == true,
-                    folio = int.Parse(txtFolio.Text),
-                    idUsuario = 1001,
-                    idCliente = (int)(cmbCliente.SelectedValue ?? 0),
-                };
-                var existe = _ventaService.BuscarVenta(venta.id);
+                // Validaciones básicas de campos requeridos
+                if (string.IsNullOrWhiteSpace(txtIdVenta.Text))
+                {
+                    MessageBox.Show("El campo 'Id Venta' es obligatorio.", "Validación", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                if (!int.TryParse(txtIdVenta.Text.Trim(), out int idVenta))
+                {
+                    MessageBox.Show("El campo 'Id Venta' debe ser un número válido.", "Validación", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
 
+                if (string.IsNullOrWhiteSpace(txtFolio.Text))
+                {
+                    MessageBox.Show("El campo 'Folio' es obligatorio.", "Validación", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                if (!int.TryParse(txtFolio.Text.Trim(), out int folio))
+                {
+                    MessageBox.Show("El campo 'Folio' debe ser un número válido.", "Validación", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                if (cmbCliente.SelectedValue == null || !int.TryParse(cmbCliente.SelectedValue.ToString(), out int idCliente) || idCliente == 0)
+                {
+                    MessageBox.Show("Seleccione un cliente válido.", "Validación", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(txtTotal.Text))
+                {
+                    MessageBox.Show("El total no puede estar vacío. Asegúrese de tener productos en la venta.", "Validación", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                if (!decimal.TryParse(txtTotal.Text.Trim(), out decimal total))
+                {
+                    MessageBox.Show("El campo 'Total' debe ser un número válido.", "Validación", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                if (_detalles == null || _detalles.Count == 0)
+                {
+                    MessageBox.Show("Agregue al menos un producto a la venta.", "Validación", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                // Validar contenido de cada detalle
+                foreach (var d in _detalles)
+                {
+                    if (d.cantidad <= 0)
+                    {
+                        MessageBox.Show("Cada producto debe tener una cantidad mayor a cero.", "Validación", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                    if (d.precioUnitario < 0)
+                    {
+                        MessageBox.Show("El precio unitario no puede ser negativo.", "Validación", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                }
+
+                // Construir objeto venta seguro
+                var venta = new Venta
+                {
+                    id = idVenta,
+                    total = total,
+                    estatus = chkEstatus.IsChecked == true,
+                    folio = folio,
+                    idUsuario = 1001,
+                    idCliente = idCliente,
+                };
+
+                // Lógica para crear la venta con detalles (obtener siguiente id para VentaDetalle)
                 var logic = new VentaLogic(new EF.efAppDbContext());
 
-                if (existe != null)
+                int nextId;
+                using (var tempCtx = new EF.efAppDbContext())
                 {
-                    var detalles = new List<VentaDetalle>();
-
-                    foreach (var item in _detalles)
-                    {
-                        detalles.Add(new VentaDetalle
-                        {
-                            id = item.id,
-                            cantidad = item.cantidad,
-                            precioUnitario = item.precioUnitario,
-                            importe = item.importe,
-                            iva = item.iva,
-                            idInventario = item.idInventario,
-                            idVenta = venta.id
-                        });
-                    }
-                    MessageBox.Show("Presupuesto actualizado correctamente.");
+                    nextId = tempCtx.VentaDetalle
+                                    .OrderByDescending(x => x.id)
+                                    .Select(x => x.id)
+                                    .FirstOrDefault() + 1;
                 }
 
-                else
-                {//hace que el presupuestoDetalle tenga el id que sigue en la bd
-                    int nextId;
-                    using (var tempCtx = new EF.efAppDbContext())
+                var detalles = new List<VentaDetalle>();
+                foreach (var item in _detalles)
+                {
+                    detalles.Add(new VentaDetalle
                     {
-                        nextId = tempCtx.PresupuestoDetalle
-                                        .OrderByDescending(x => x.id)
-                                        .Select(x => x.id)
-                                        .FirstOrDefault() + 1;
-                    }
-
-                    var detalles = new List<VentaDetalle>();
-
-                    foreach (var item in _detalles)
-                    {
-                        detalles.Add(new VentaDetalle
-                        {
-                            id = nextId,
-                            cantidad = item.cantidad,
-                            precioUnitario = item.precioUnitario,
-                            importe = item.importe,
-                            iva = item.iva,
-                            idInventario = item.idInventario,
-                            idVenta = venta.id
-                        });
-                        nextId++;
-                    }
-
-                    logic.CrearVenta(venta, detalles);
-                    MessageBox.Show("Presupuesto guardado correctamente.");
+                        id = nextId,
+                        cantidad = item.cantidad,
+                        precioUnitario = item.precioUnitario,
+                        importe = item.importe,
+                        iva = item.iva,
+                        idInventario = item.idInventario,
+                        idVenta = venta.id
+                    });
+                    nextId++;
                 }
-                txtIdVenta.Text = _ventaService.ObtenerSigienteIdVenta().ToString();
+
+                logic.CrearVenta(venta, detalles);
+                MessageBox.Show("Venta guardada correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                // Limpiar controles y actualizar id/folio siguientes
                 LimpiarControles();
+                txtIdVenta.Text = _ventaService.ObtenerSigienteIdVenta().ToString();
+                txtFolio.Text = _ventaService.GenerarFolio().ToString();
             }
             catch (Exception ex)
             {
@@ -123,16 +175,70 @@ namespace AppTaller.Views
 
         private void btnBuscar_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                var presupuestos = _presupuestoService.ObtenerPresupuestos();
+                string[] columnas = { "id", "total", "estatus", "nota", "idCliente", "idUsuario", "fechaCreacion", "fechaModificacion" };
 
+                var ventana = new FrmBusqueda("Búsqueda de Presupuestos", presupuestos, columnas);
+
+                if (ventana.ShowDialog() == true)
+                {
+                    if (ventana.seleccionado is Presupuesto presupuestoSeleccionado)
+                    {
+                        CargarDetallesPresupuesto(presupuestoSeleccionado.id);
+                        cmbCliente.SelectedValue = presupuestoSeleccionado.idCliente;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al buscar Presupuesto: " + ex.Message,
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
+        private void CargarDetallesPresupuesto(int idPresupuesto)
+        {
+            try
+            {
+                var detallesBD = _presupuestoLogic.ObtenerDetallesPorPresupuesto(idPresupuesto);
 
+                _detalles.Clear();
+
+                foreach (var d in detallesBD)
+                {
+                    // Mapear PresupuestoDetalle -> VentaDetalle
+                    var nuevoDetalle = new VentaDetalle
+                    {
+                        // Asumimos que PresupuestoDetalle tiene estas propiedades.
+                        idInventario = d.idInventario,
+                        cantidad = d.cantidad,
+                        precioUnitario = d.precioUnitario,
+                        importe = d.importe,
+                        // Recalcular IVA si está marcada la casilla, si no usar el IVA del presupuesto (si existe)
+                        iva = (int)((chkAplicarIVA.IsChecked == true) ? d.importe * 0.16m : (d.iva))
+                    };
+
+                    _detalles.Add(nuevoDetalle);
+                }
+
+                dtgDetalles.ItemsSource = _detalles;
+                dtgDetalles.Items.Refresh();
+
+                RecalcularTotales();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar detalles del presupuesto: " + ex.Message);
+            }
+        }
 
         private void btnBuscarProducto_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                var inventarios = _inventarioService.ObtenerInventarios();
+                var inventarios = _inventarioService.ObtenerInventarios(); 
                 string[] columnas = { "id", "idProducto", "idAlmacen", "stockActual" };
                 var ventana = new FrmBusqueda("Búsqueda de Inventarios", inventarios, columnas);
 
@@ -237,7 +343,7 @@ namespace AppTaller.Views
         private void btnAumentar_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            var detalle = button.Tag as PresupuestoDetalle;
+            var detalle = button.Tag as VentaDetalle;
 
             if (detalle != null)
             {
@@ -252,7 +358,7 @@ namespace AppTaller.Views
         private void btnDisminuir_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            var detalle = button.Tag as PresupuestoDetalle;
+            var detalle = button.Tag as VentaDetalle;
 
             if (detalle != null && detalle.cantidad > 1)
             {
