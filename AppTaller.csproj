@@ -259,6 +259,7 @@
     <Compile Include="Model\Producto.cs" />
     <Compile Include="Model\Proveedor.cs" />
     <Compile Include="Model\ReferenciaMovimiento.cs" />
+    <Compile Include="Model\Session.cs" />
     <Compile Include="Model\TipoMovimiento.cs" />
     <Compile Include="Model\TipoProducto.cs" />
     <Compile Include="Model\Usuario.cs" />

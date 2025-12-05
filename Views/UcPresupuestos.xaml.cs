@@ -47,13 +47,22 @@ namespace AppTaller.Views
             InitializeComponent();
 
             CargarClientes();
-            txtIdPresupuesto.Text = _presupuestoService.ObtenerSigienteIdPresupuesto().ToString();
+
             _detalles = new ObservableCollection<PresupuestoDetalle>();
             dtgDetalles.ItemsSource = _detalles;
 
+            txtIdPresupuesto.Text = _presupuestoService.ObtenerSigienteIdPresupuesto().ToString();
+
+
+            cmbCliente.DropDownOpened += (s, e) => CargarClientes();
+
             chkAplicarIVA.Checked += (s, e) => RecalcularTotales();
             chkAplicarIVA.Unchecked += (s, e) => RecalcularTotales();
+
+
         }
+        int idUsuario = Session.UsuarioActual.id;
+
         private void btnGuardar_Click(object sender, RoutedEventArgs e)
         {
             try{
@@ -63,7 +72,7 @@ namespace AppTaller.Views
                     estatus = chkEstatus.IsChecked ?? false,
                     nota = txtNota.Text,
                     idCliente = (int)(cmbCliente.SelectedValue ?? 0),
-                    idUsuario = 1001
+                    idUsuario = idUsuario
                 };
                 var existe = _presupuestoService.BuscarPresupuesto(presupuesto.id);
 
@@ -292,6 +301,9 @@ namespace AppTaller.Views
         private void CargarClientes()
         {
             try{
+                cmbCliente.ItemsSource = null;
+                cmbCliente.ItemsSource = _clienteService.ObtenerClientes();
+                
                 var clientes = _clienteService.ObtenerClientes();
 
                 if (clientes == null || clientes.Count == 0){

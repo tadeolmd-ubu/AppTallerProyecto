@@ -1,5 +1,6 @@
 ﻿using AppTaller.Model;
 using AppTaller.Views;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,7 +56,9 @@ namespace AppTaller.Services
                      }
         //Busqueda general
         public List<Cliente> ObtenerClientes() {
-            return _context.Cliente.ToList();
+            return _context.Cliente
+                .AsNoTracking()
+                .ToList();
         }
 
         //"consecutivo" de clientes

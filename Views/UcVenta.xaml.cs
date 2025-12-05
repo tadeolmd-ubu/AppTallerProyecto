@@ -1,6 +1,7 @@
 ﻿using AppTaller.Logics;
 using AppTaller.Model;
 using AppTaller.Services;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -49,11 +50,17 @@ namespace AppTaller.Views
             txtIdVenta.Text = _ventaService.ObtenerSigienteIdVenta().ToString();
             txtFolio.Text = _ventaService.GenerarFolio().ToString();
 
+            // Cargar clientes inicialmente
             CargarClientes();
+
+            // Refrescar clientes cada vez que se abre el combo
+            cmbCliente.DropDownOpened += (s, e) => CargarClientes();
 
             chkAplicarIVA.Checked += (s, e) => RecalcularTotales();
             chkAplicarIVA.Unchecked += (s, e) => RecalcularTotales();
         }
+
+        int idUsuario = Session.UsuarioActual.id;
 
         private void btnGuardar_Click(object sender, RoutedEventArgs e)
         {
@@ -127,7 +134,7 @@ namespace AppTaller.Views
                     total = total,
                     estatus = chkEstatus.IsChecked == true,
                     folio = folio,
-                    idUsuario = 1001,
+                    idUsuario = idUsuario,
                     idCliente = idCliente,
                 };
 
@@ -373,27 +380,23 @@ namespace AppTaller.Views
         private void btnEliminarVenta_Click(object sender, RoutedEventArgs e)
         {
         }
-        private void CargarClientes()
-        {
+        private void CargarClientes() {
             try
             {
-                var clientes = _clienteService.ObtenerClientes();
-
-                if (clientes == null || clientes.Count == 0)
-                {
-                    MessageBox.Show("No se encontraron empresas.");
-                    return;
+                cmbCliente.ItemsSource = null; 
+                cmbCliente.ItemsSource = _clienteService.ObtenerClientes(); 
+                var clientes = _clienteService.ObtenerClientes(); 
+                if (clientes == null || clientes.Count == 0) {
+                    MessageBox.Show("No se encontraron Clientes."); 
+                    return; 
                 }
-                cmbCliente.ItemsSource = clientes;
-                cmbCliente.SelectedValuePath = "id";
-                cmbCliente.DisplayMemberPath = "nombre";
-
-                cmbCliente.SelectedIndex = -1;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al cargar empresas: " + ex.Message);
-            }
+                cmbCliente.ItemsSource = clientes; 
+                cmbCliente.SelectedValuePath = "id"; 
+                cmbCliente.DisplayMemberPath = "nombre"; 
+                cmbCliente.SelectedIndex = -1; 
+            } catch (Exception ex) { 
+                MessageBox.Show("Error al cargar clientes: " + ex.Message); 
+            } 
         }
         private void LimpiarControles()
         {

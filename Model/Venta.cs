@@ -14,14 +14,14 @@ namespace AppTaller.Model
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime fecha { get; set; }
-
         public decimal total { get; set; }
         public bool estatus { get; set; }
         public int idUsuario { get; set; }
         public int idCliente { get; set; }
         public int folio { get; set; }
 
-        public Venta() { }
+        public Venta() { 
+        }
 
     }
 }
