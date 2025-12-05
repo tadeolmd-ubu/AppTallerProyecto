@@ -17,12 +17,10 @@ namespace AppTaller.Services
             _context = context;
         }
 
-        //Crear usuarios
         public void CrearCliente(Cliente cliente) {
             _context.Cliente.Add(cliente);
         }
 
-        //modificar los usuarios
         public void ModificarCliente(Cliente cliente) {
             var existente = _context.Cliente.Find(cliente.id);
             if (existente == null)
@@ -30,7 +28,6 @@ namespace AppTaller.Services
 
             _context.Entry(existente).CurrentValues.SetValues(cliente);
         }
-        //el metodo es pa que un solo boton de guardar haga las dos cosas
         public void CrearOActualizarCliente(Cliente cliente) {
                 var existe = _context.Cliente.Find(cliente.id);
                 if (existe == null) {
@@ -41,7 +38,6 @@ namespace AppTaller.Services
                 }            
         }
 
-        //Eliminar
         public void EliminarCliente(int id) {
             var cliente = _context.Cliente.Find(id);
             if (cliente == null) 
@@ -50,18 +46,15 @@ namespace AppTaller.Services
             _context.SaveChanges();
             
         }
-        //Busqueda individual
         public Cliente BuscarClienteIndividual(int id) {  
              return _context.Cliente.Find(id);
                      }
-        //Busqueda general
         public List<Cliente> ObtenerClientes() {
             return _context.Cliente
                 .AsNoTracking()
                 .ToList();
         }
 
-        //"consecutivo" de clientes
         public int ObtenerSigienteIdCliente(){
             var ultimo = _context.Cliente
                                  .OrderByDescending(x => x.id)

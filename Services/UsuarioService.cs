@@ -14,7 +14,6 @@ namespace AppTaller.Services
         public UsuarioService(EF.efAppDbContext context) {
             _context = context;
         }
-        // CREATE
         public void CrearUsuario(Usuario usuario) {            
                 _context.Usuario.Add(usuario);
                 _context.SaveChanges();            
@@ -37,15 +36,12 @@ namespace AppTaller.Services
             }
             _context.SaveChanges();
         }
-        // busca (todos)
         public List<Usuario> ObtenerUsuarios() {
             return _context.Usuario.ToList();            
         }
-        // busca (por id)
         public Usuario ObtenerPorId(int id) {            
                 return _context.Usuario.Find(id);            
         }
-        // borra
         public void EliminarUsuario(int id) {            
                 var usuario = _context.Usuario.Find(id);
             if (usuario == null)
@@ -53,8 +49,7 @@ namespace AppTaller.Services
            _context.Usuario.Remove(usuario);
            _context.SaveChanges();                            
         }
-        public int ObtenerSigienteIdUsuario()
-        {
+        public int ObtenerSigienteIdUsuario(){
             var ultimo = _context.Usuario
                                  .OrderByDescending(x => x.id)
                                  .Select(x => x.id)

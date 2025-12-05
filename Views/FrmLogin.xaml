@@ -234,24 +234,11 @@
                         <StackPanel Grid.Column="2" 
                                     Orientation="Horizontal"
                                     HorizontalAlignment="Center"
-                                    VerticalAlignment="Center">
-                            <Image Source="/Images/icon_mostrar.png"
-                                   Width="20"
-                                   Height="20"
-                                   Margin="0,0,0,0"
-                                   Opacity="0.6"
-                                   Cursor="Hand"/>
-                        </StackPanel>
+                                    VerticalAlignment="Center"/>
                     </Grid>
                 </Border>
 
                 <!-- Texto de registro -->
-                <TextBlock Text="¿Aún no tienes una cuenta? ¡Regístrate!"
-                           Foreground="#FF81969C"
-                           FontSize="11"
-                           FontFamily="Montserrat"
-                           TextAlignment="Center"
-                           Margin="0,0,0,30"/>
 
                 <!-- Botón Login -->
                 <Button x:Name="btnLogin"

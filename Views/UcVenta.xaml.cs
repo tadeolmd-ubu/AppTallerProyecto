@@ -50,10 +50,8 @@ namespace AppTaller.Views
             txtIdVenta.Text = _ventaService.ObtenerSigienteIdVenta().ToString();
             txtFolio.Text = _ventaService.GenerarFolio().ToString();
 
-            // Cargar clientes inicialmente
             CargarClientes();
 
-            // Refrescar clientes cada vez que se abre el combo
             cmbCliente.DropDownOpened += (s, e) => CargarClientes();
 
             chkAplicarIVA.Checked += (s, e) => RecalcularTotales();
@@ -127,7 +125,6 @@ namespace AppTaller.Views
                     }
                 }
 
-                // Construir objeto venta seguro
                 var venta = new Venta
                 {
                     id = idVenta,
@@ -138,7 +135,6 @@ namespace AppTaller.Views
                     idCliente = idCliente,
                 };
 
-                // Lógica para crear la venta con detalles (obtener siguiente id para VentaDetalle)
                 var logic = new VentaLogic(new EF.efAppDbContext());
 
                 int nextId;
@@ -169,7 +165,6 @@ namespace AppTaller.Views
                 logic.CrearVenta(venta, detalles);
                 MessageBox.Show("Venta guardada correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                // Limpiar controles y actualizar id/folio siguientes
                 LimpiarControles();
                 txtIdVenta.Text = _ventaService.ObtenerSigienteIdVenta().ToString();
                 txtFolio.Text = _ventaService.GenerarFolio().ToString();
@@ -215,15 +210,12 @@ namespace AppTaller.Views
 
                 foreach (var d in detallesBD)
                 {
-                    // Mapear PresupuestoDetalle -> VentaDetalle
                     var nuevoDetalle = new VentaDetalle
                     {
-                        // Asumimos que PresupuestoDetalle tiene estas propiedades.
                         idInventario = d.idInventario,
                         cantidad = d.cantidad,
                         precioUnitario = d.precioUnitario,
                         importe = d.importe,
-                        // Recalcular IVA si está marcada la casilla, si no usar el IVA del presupuesto (si existe)
                         iva = (int)((chkAplicarIVA.IsChecked == true) ? d.importe * 0.16m : (d.iva))
                     };
 
@@ -294,7 +286,6 @@ namespace AppTaller.Views
 
         private void AgregarProducto(Inventario inventario)
         {
-            // Buscar el producto relacionado al inventario
             var producto = _productoService.BuscarProductoIndividual(inventario.idProducto);
             if (producto == null)
             {
@@ -302,12 +293,10 @@ namespace AppTaller.Views
                 return;
             }
 
-            // verifica si ya existe un detalle con este inventario
             var detalleExistente = _detalles.FirstOrDefault(d => d.idInventario == inventario.id);
 
             if (detalleExistente != null)
             {
-                // Solo aumentar cantidad e importe
                 detalleExistente.cantidad++;
                 detalleExistente.importe = detalleExistente.cantidad * detalleExistente.precioUnitario;
                 detalleExistente.iva = (int)((chkAplicarIVA.IsChecked == true)

@@ -46,7 +46,6 @@ namespace AppTaller.Views
         {
             try
             {
-                // Validación de campos obligatorios
                 if (string.IsNullOrWhiteSpace(txtIdProveedor.Text) ||
                     string.IsNullOrWhiteSpace(txtIdDireccion.Text) ||
                     string.IsNullOrWhiteSpace(txtNombre.Text) ||
@@ -62,7 +61,6 @@ namespace AppTaller.Views
                     return;
                 }
 
-                // Validación de campos numéricos
                 if (!int.TryParse(txtIdProveedor.Text, out int idProveedor) ||
                     !int.TryParse(txtIdDireccion.Text, out int idDireccion) ||
                     !int.TryParse(txtTelefono.Text, out int telefono) ||
@@ -73,7 +71,6 @@ namespace AppTaller.Views
                     return;
                 }
 
-                // Crear objeto Dirección
                 Direccion direccion = new Direccion
                 {
                     id = idDireccion,
@@ -84,7 +81,6 @@ namespace AppTaller.Views
                     numeroCasa = numeroCasa.ToString(),
                 };
 
-                // Crear objeto Proveedor
                 Proveedor proveedor = new Proveedor
                 {
                     id = idProveedor,
@@ -95,7 +91,6 @@ namespace AppTaller.Views
                     idDireccion = idDireccion,
                 };
 
-                // Guardar proveedor y dirección
                 _proveedorLogic.GuardarProveedorYDireccion(proveedor, direccion);
 
                 LimpiarControles();
@@ -133,14 +128,12 @@ namespace AppTaller.Views
         }
         private void LimpiarControles()
         {
-            // Limpiar campos del proveedor
             txtIdProveedor.Clear();
             txtNombre.Clear();
             txtTelefono.Clear();
             chkEstatus.IsChecked = false;
             cmbIdEmpresa.SelectedIndex = -1;
 
-            // Limpiar campos de dirección
             txtCiudad.Clear();
             txtColonia.Clear();
             txtCodigoPostal.Clear();
