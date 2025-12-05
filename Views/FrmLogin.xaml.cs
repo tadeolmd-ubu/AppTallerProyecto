@@ -20,8 +20,12 @@ namespace AppTaller.Views
     /// </summary>
     public partial class FrmLogin : Window
     {
+       
+        private readonly EF.efAppDbContext _context;
+
         public FrmLogin()
         {
+            _context = new EF.efAppDbContext();
             InitializeComponent();
         }
 
@@ -43,50 +47,36 @@ namespace AppTaller.Views
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
 
-           
 
-            //lo que va a ingresar el usuario
+
             int.TryParse(txtUsuario.Text, out int id);
-
             string password = txtContrasena.Password;
-          
 
-                //se crea una instania de login para poder usar el metodo de validar el usuario
-                Login login = new Login();
-                //se valida si existe
-                if (login.ValidarUsuario(id, password))
-                {
-                 
-                    //en caso de existi, muestra el menu y oculta el login
-                    FrmMenuPrincipal mp = new FrmMenuPrincipal();
-                   mp.Show();
+            Login login = new Login();
 
+            if (login.ValidarUsuario(id, password))
+            {
+                var usuario = _context.Usuario.FirstOrDefault(u => u.id == id);
 
-                
-                
+                Session.UsuarioActual = usuario;
 
-                    this.Hide();
-                }
-                else
-                {
-                    //sino pos dice que es incorrecto algo y se le resta uno al limite de intentos
-                    x--;
-                    MessageBox.Show($"Usuario o contraseña incorrectos, le quedan {x} intentos.");
-                    
-                }
-           
+                FrmMenuPrincipal mp = new FrmMenuPrincipal();
+                mp.Show();
+                this.Hide();
+            }
+            else
+            {
+                x--;
+                MessageBox.Show($"Usuario o contraseña incorrectos, le quedan {x} intentos.");
+            }
 
-            if (x == 0) { 
+            if (x == 0)
+            {
                 txtContrasena.IsEnabled = false;
                 txtUsuario.IsEnabled = false;
                 btnLogin.IsEnabled = false;
-                MessageBox.Show("Limite de intentos alcanzados.");
+                MessageBox.Show("Límite de intentos alcanzados.");
             }
-
-            //FrmMenuPrincipal menu = new FrmMenuPrincipal();
-            //menu.Show();
-
-            //this.Hide();
         }
 
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)

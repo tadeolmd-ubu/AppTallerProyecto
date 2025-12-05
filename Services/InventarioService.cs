@@ -32,8 +32,11 @@ namespace AppTaller.Services
         public Inventario BuscarInventario(int id) {
         return _context.Inventario.Find(id);
         }
-        public List<Inventario> ObtenerInventarios(){
-            return _context.Inventario.ToList();
+        public List<Inventario> ObtenerInventarios()
+        {
+            return _context.Inventario
+                .AsNoTracking() 
+                .ToList();
         }
         public bool ExisteInventarioProductoAlmacen(int idProducto, int idAlmacen)
         {
@@ -47,6 +50,14 @@ namespace AppTaller.Services
                                  .FirstOrDefault();
 
             return ultimo + 1;
+        }
+
+        public bool ValidarStock(int idProducto, int cantidad)
+        {
+            var producto = _context.Inventario.Find(idProducto);
+            if (producto == null) return false;
+
+            return producto.stockActual >= cantidad;
         }
     }
 }

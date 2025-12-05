@@ -243,6 +243,7 @@
     <Compile Include="Logics\PresupuestoLogic.cs" />
     <Compile Include="Logics\ProveedorLogic.cs" />
     <Compile Include="Logics\StockLogic.cs" />
+    <Compile Include="Logics\VentaLogic.cs" />
     <Compile Include="Model\catAlmacen.cs" />
     <Compile Include="Model\catEmpresa.cs" />
     <Compile Include="Model\catMarca.cs" />
@@ -258,9 +259,12 @@
     <Compile Include="Model\Producto.cs" />
     <Compile Include="Model\Proveedor.cs" />
     <Compile Include="Model\ReferenciaMovimiento.cs" />
+    <Compile Include="Model\Session.cs" />
     <Compile Include="Model\TipoMovimiento.cs" />
     <Compile Include="Model\TipoProducto.cs" />
     <Compile Include="Model\Usuario.cs" />
+    <Compile Include="Model\Venta.cs" />
+    <Compile Include="Model\VentaDetalle.cs" />
     <Compile Include="Services\AlmacenService.cs" />
     <Compile Include="Services\ClienteService.cs" />
     <Compile Include="Services\DireccionService.cs" />
@@ -277,6 +281,8 @@
     <Compile Include="Services\TipoMovimientoService.cs" />
     <Compile Include="Services\TipoProductoService.cs" />
     <Compile Include="Services\UsuarioService.cs" />
+    <Compile Include="Services\VentaDetalleService.cs" />
+    <Compile Include="Services\VentaService.cs" />
     <Compile Include="Views\FrmBusqueda.xaml.cs">
       <DependentUpon>FrmBusqueda.xaml</DependentUpon>
     </Compile>
@@ -306,6 +312,9 @@
     </Compile>
     <Compile Include="Views\UcUsuario.xaml.cs">
       <DependentUpon>UcUsuario.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UcVenta.xaml.cs">
+      <DependentUpon>UcVenta.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -396,6 +405,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UcUsuario.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UcVenta.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
