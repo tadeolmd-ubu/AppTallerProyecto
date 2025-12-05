@@ -16,9 +16,6 @@ namespace AppTaller.Services
         public DireccionService(EF.efAppDbContext context) {
             _context = context;
         }
-
-        //insertar direcciones
-
         public void GuardarDireccion(Direccion direccion) {
             _context.Direccion.Add(direccion);
         }

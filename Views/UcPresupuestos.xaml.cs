@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -65,25 +66,62 @@ namespace AppTaller.Views
 
         private void btnGuardar_Click(object sender, RoutedEventArgs e)
         {
-            try{
-                var presupuesto = new Presupuesto{
-                    id = int.Parse(txtIdPresupuesto.Text),
-                    total = Convert.ToDecimal(txtTotal.Text),
+            try
+            {
+                if (_detalles == null || _detalles.Count == 0)
+                {
+                    MessageBox.Show("No puede guardar un presupuesto sin productos.", "Validación", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                if (cmbCliente.SelectedValue == null || !(cmbCliente.SelectedValue is int) || (int)cmbCliente.SelectedValue <= 0)
+                {
+                    MessageBox.Show("Debe seleccionar un cliente válido antes de guardar.", "Validación", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                decimal totalParsed;
+                if (!decimal.TryParse(txtTotal.Text, NumberStyles.Number, CultureInfo.CurrentCulture, out totalParsed) || totalParsed < 0m)
+                {
+                    MessageBox.Show("El total no es válido. Verifique el valor.", "Validación", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                int idPresupuesto;
+                if (!int.TryParse(txtIdPresupuesto.Text, out idPresupuesto) || idPresupuesto <= 0)
+                {
+                    idPresupuesto = _presupuestoService.ObtenerSigienteIdPresupuesto();
+                }
+
+                var presupuesto = new Presupuesto
+                {
+                    id = idPresupuesto,
+                    total = totalParsed,
                     estatus = chkEstatus.IsChecked ?? false,
                     nota = txtNota.Text,
-                    idCliente = (int)(cmbCliente.SelectedValue ?? 0),
+                    idCliente = (int)cmbCliente.SelectedValue,
                     idUsuario = idUsuario
                 };
+
                 var existe = _presupuestoService.BuscarPresupuesto(presupuesto.id);
 
                 var logic = new PresupuestoLogic(new EF.efAppDbContext());
-              
-                if (existe != null){
+
+                if (existe != null)
+                {
                     var detalles = new List<PresupuestoDetalle>();
 
-                    foreach (var item in _detalles){
-                        detalles.Add(new PresupuestoDetalle{
-                            id = item.id,  
+                    foreach (var item in _detalles)
+                    {
+                        if (item.cantidad <= 0)
+                        {
+                            MessageBox.Show("Uno de los productos tiene cantidad inválida.", "Validación", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            return;
+                        }
+
+                        detalles.Add(new PresupuestoDetalle
+                        {
+                            id = item.id,
                             cantidad = item.cantidad,
                             precioUnitario = item.precioUnitario,
                             importe = item.importe,
@@ -97,10 +135,11 @@ namespace AppTaller.Views
 
                     MessageBox.Show("Presupuesto actualizado correctamente.");
                 }
-              
-                else{//hace que el presupuestoDetalle tenga el id que sigue en la bd
+                else
+                {
                     int nextId;
-                    using (var tempCtx = new EF.efAppDbContext()){
+                    using (var tempCtx = new EF.efAppDbContext())
+                    {
                         nextId = tempCtx.PresupuestoDetalle
                                         .OrderByDescending(x => x.id)
                                         .Select(x => x.id)
@@ -109,9 +148,17 @@ namespace AppTaller.Views
 
                     var detalles = new List<PresupuestoDetalle>();
 
-                    foreach (var item in _detalles){
-                        detalles.Add(new PresupuestoDetalle{
-                            id = nextId,  
+                    foreach (var item in _detalles)
+                    {
+                        if (item.cantidad <= 0)
+                        {
+                            MessageBox.Show("Uno de los productos tiene cantidad inválida.", "Validación", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            return;
+                        }
+
+                        detalles.Add(new PresupuestoDetalle
+                        {
+                            id = nextId,
                             cantidad = item.cantidad,
                             precioUnitario = item.precioUnitario,
                             importe = item.importe,
@@ -121,17 +168,19 @@ namespace AppTaller.Views
                         });
                         nextId++;
                     }
+
                     logic.CrearPresupuestoConDetalles(presupuesto, detalles);
 
                     MessageBox.Show("Presupuesto guardado correctamente.");
                 }
+
                 txtIdPresupuesto.Text = _presupuestoService.ObtenerSigienteIdPresupuesto().ToString();
                 LimpiarControles();
             }
-            catch (Exception ex){
-                MessageBox.Show("ERROR COMPLETO:\n\n" + ex.ToString());
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ocurrió un error al guardar el presupuesto:\n\n" + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
         }
         private void btnBuscar_Click(object sender, RoutedEventArgs e)
         {
@@ -349,14 +398,11 @@ namespace AppTaller.Views
         }
         private void LimpiarControles()
         {
-            try
-            {
-                // Limpiar lista de detalles y refrescar la vista
+            try{
                 _detalles.Clear();
                 dtgDetalles.ItemsSource = _detalles;
                 dtgDetalles.Items.Refresh();
 
-                // Limpiar campos del formulario
                 txtNota.Text = string.Empty;
                 txtTotal.Text = "0.00";
                 chkAplicarIVA.IsChecked     = false;
@@ -364,11 +410,9 @@ namespace AppTaller.Views
 
                 cmbCliente.SelectedIndex = -1;
 
-                // Poner el siguiente id disponible para el presupuesto
                 txtIdPresupuesto.Text = _presupuestoService.ObtenerSigienteIdPresupuesto().ToString();
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex){
                 MessageBox.Show("Error al limpiar formulario: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }

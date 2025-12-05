@@ -239,13 +239,9 @@ Checked="Venta_Checked">
                                     VerticalAlignment="Center"
                                     Margin="0,0,10,0">
                             <Button Style="{StaticResource iconBoton}"
-                                    Tag="{StaticResource color1}">
+                                    Tag="{StaticResource color1}"/>
 
-                                <fa:IconImage Icon="AngleDown" Style="{StaticResource iconBotonIcono}"/>
-
-                            </Button>
-
-                            <TextBlock Text="Pruebas"
+                            <TextBlock Text="Laboratorio DIesel De Guasave"
                                        Foreground="{StaticResource titleColor3}"
                                        FontSize="12"
                                        VerticalAlignment="Center"/>
@@ -262,23 +258,11 @@ Checked="Venta_Checked">
                             </Ellipse>
 
                             <Button Style="{StaticResource iconBoton}"
-                                    Tag="{StaticResource color3}">
-
-                                <fa:IconImage Icon="Clock" Style="{StaticResource iconBotonIcono}"/>
-
-                            </Button>
+                                    Tag="{StaticResource color3}"/>
                             <Button Style="{StaticResource iconBoton}"
-                                    Tag="{StaticResource color4}">
-
-                                <fa:IconImage Icon="Envelope" Style="{StaticResource iconBotonIcono}"/>
-
-                            </Button>
+                                    Tag="{StaticResource color4}"/>
                             <Button Style="{StaticResource iconBoton}"
-                                    Tag="{StaticResource color5 }">
-
-                                <fa:IconImage Icon="Bell" Style="{StaticResource iconBotonIcono}"/>
-
-                            </Button>
+                                    Tag="{StaticResource color5 }"/>
 
 
                         </StackPanel>

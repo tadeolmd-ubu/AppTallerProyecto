@@ -64,5 +64,10 @@ namespace AppTaller.Views
         {
             this.Close();
         }
+
+        private void dataGridBusqueda_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
