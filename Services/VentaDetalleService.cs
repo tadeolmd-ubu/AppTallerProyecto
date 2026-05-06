@@ -13,6 +13,7 @@ namespace AppTaller.Services
         public VentaDetalleService(EF.efAppDbContext context){
             _context = context;
         }
+        readonly int x = 6767;
 
         public void CrearVentaDetalle(VentaDetalle ventaDetalle) {
             _context.VentaDetalle.Add(ventaDetalle);
