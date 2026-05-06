@@ -16,5 +16,6 @@ namespace AppTaller.Services
         public List<catAlmacen> ObtenerAlmacenes() {
             return _context.catAlmacen.ToList();
         }
+        int x = "Este es el error"
     }
 }
