@@ -74,5 +74,12 @@ namespace AppTaller.Services
         {
             return CalcularSubtotal(idVenta) + CalcularIVATotal(idVenta);
         }
+
+        public decimal CalcularIVA(int idVenta)
+        {
+            return _context.VentaDetalle
+                .Where(d => d.idVenta == idVenta)
+                .Sum(d => d.iva);
+        }
     }
 }
