@@ -1,7 +1,6 @@
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.IO.Compression;
 using System.Net.Http;
 using System.Reflection;
 using System.Text.Json;
@@ -71,22 +70,15 @@ namespace AppTaller.Services
                     var zipBytes = await Client.GetByteArrayAsync(downloadUrl);
                     File.WriteAllBytes(zipPath, zipBytes);
 
-                    using (var archive = ZipFile.OpenRead(zipPath))
+                    var psi = new ProcessStartInfo
                     {
-                        foreach (var entry in archive.Entries)
-                        {
-                            var dest = Path.GetFullPath(Path.Combine(tempDir, entry.FullName));
-                            if (!dest.StartsWith(tempDir, StringComparison.OrdinalIgnoreCase))
-                                return;
-                            if (entry.Name == "")
-                            {
-                                Directory.CreateDirectory(dest);
-                                continue;
-                            }
-                            Directory.CreateDirectory(Path.GetDirectoryName(dest));
-                            entry.ExtractToFile(dest, true);
-                        }
-                    }
+                        FileName = "powershell.exe",
+                        Arguments = $"-NoProfile -Command \"Expand-Archive -Path '{zipPath}' -DestinationPath '{tempDir}' -Force\"",
+                        UseShellExecute = false,
+                        CreateNoWindow = true
+                    };
+                    using (var p = Process.Start(psi))
+                        p?.WaitForExit();
 
                     var batPath = Path.Combine(AppFolder, "update.bat");
                     var batContent = $@"@echo off
