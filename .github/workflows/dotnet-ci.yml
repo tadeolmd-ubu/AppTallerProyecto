@@ -10,13 +10,13 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4.2.1
 
     - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v2
+      uses: microsoft/setup-msbuild@6fb02220983dee41ce7ae257b6f4d8f9bf5ed4ce # v2
 
     - name: Setup NuGet
-      uses: NuGet/setup-nuget@v2
+      uses: NuGet/setup-nuget@d105a947828025cd7a980103c35ba2bfae586d0f # v2
 
     - name: Restore NuGet packages
       run: nuget restore AppTaller.sln

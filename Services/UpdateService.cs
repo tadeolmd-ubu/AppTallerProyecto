@@ -71,7 +71,22 @@ namespace AppTaller.Services
                     var zipBytes = await Client.GetByteArrayAsync(downloadUrl);
                     File.WriteAllBytes(zipPath, zipBytes);
 
-                    ZipFile.ExtractToDirectory(zipPath, tempDir);
+                    using (var archive = ZipFile.OpenRead(zipPath))
+                    {
+                        foreach (var entry in archive.Entries)
+                        {
+                            var dest = Path.GetFullPath(Path.Combine(tempDir, entry.FullName));
+                            if (!dest.StartsWith(tempDir, StringComparison.OrdinalIgnoreCase))
+                                return;
+                            if (entry.Name == "")
+                            {
+                                Directory.CreateDirectory(dest);
+                                continue;
+                            }
+                            Directory.CreateDirectory(Path.GetDirectoryName(dest));
+                            entry.ExtractToFile(dest, true);
+                        }
+                    }
 
                     var batPath = Path.Combine(AppFolder, "update.bat");
                     var batContent = $@"@echo off
