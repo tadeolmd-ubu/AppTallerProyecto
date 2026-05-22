@@ -13,19 +13,24 @@ jobs:
       - name: Clonar repositorio
         uses: actions/checkout@v4
 
-      - name: Instalar .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.0.x'
+      - name: Configurar MSBuild
+        uses: microsoft/setup-msbuild@v2
 
-      - name: Restaurar dependencias
-        run: dotnet restore
+      - name: Configurar NuGet
+        uses: NuGet/setup-nuget@v2
+
+      - name: Restaurar paquetes NuGet
+        run: nuget restore AppTaller.csproj
 
       - name: Compilar proyecto
-        run: dotnet build --configuration Release
+        run: msbuild AppTaller.csproj /p:Configuration=Release
 
-      - name: Publicar aplicación
-        run: dotnet publish -c Release -o publish
+      - name: Crear carpeta publish
+        run: mkdir publish
+
+      - name: Copiar archivos
+        run: |
+          xcopy /E /I AppTaller\bin\Release publish
 
       - name: Crear version.txt
         run: echo %date% %time% > publish/version.txt
