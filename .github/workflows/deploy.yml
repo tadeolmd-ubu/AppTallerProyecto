@@ -22,7 +22,7 @@ jobs:
         uses: NuGet/setup-nuget@v2
 
       - name: Restore NuGet packages
-        run: nuget restore AppTaller.csproj
+        run: nuget restore AppTaller.sln
 
       - name: Update version
         shell: pwsh
