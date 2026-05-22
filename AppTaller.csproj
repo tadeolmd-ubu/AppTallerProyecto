@@ -221,6 +221,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
@@ -282,6 +283,7 @@
     <Compile Include="Services\TipoProductoService.cs" />
     <Compile Include="Services\UsuarioService.cs" />
     <Compile Include="Services\VentaDetalleService.cs" />
+    <Compile Include="Services\UpdateService.cs" />
     <Compile Include="Services\VentaService.cs" />
     <Compile Include="Views\FrmBusqueda.xaml.cs">
       <DependentUpon>FrmBusqueda.xaml</DependentUpon>

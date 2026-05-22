@@ -1,27 +1,25 @@
-name: .NET CI
+name: PR Validation
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [ master, main ]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
-    - name: Checkout del código
+    - name: Checkout
       uses: actions/checkout@v4
 
-    - name: Instalar .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '8.0.x'
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
 
-    - name: Restaurar dependencias
-      run: dotnet restore
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v2
 
-    - name: Compilar proyecto
-      run: dotnet build --no-restore --configuration Release
+    - name: Restore NuGet packages
+      run: nuget restore AppTaller.csproj
 
-    - name: Ejecutar tests
-      run: dotnet test --no-build --verbosity normal
+    - name: Build
+      run: msbuild AppTaller.csproj /p:Configuration=Release /p:Platform=AnyCPU

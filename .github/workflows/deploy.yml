@@ -1,43 +1,75 @@
-name: Build and Release WinForms
+name: Build and Release
 
 on:
   push:
     branches:
       - master
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: windows-latest
 
     steps:
-      - name: Clonar repositorio
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Configurar MSBuild
+      - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
 
-      - name: Configurar NuGet
+      - name: Setup NuGet
         uses: NuGet/setup-nuget@v2
 
-      - name: Restaurar paquetes NuGet
+      - name: Restore NuGet packages
         run: nuget restore AppTaller.csproj
 
-      - name: Compilar proyecto
-        run: msbuild AppTaller.csproj /p:Configuration=Release
-
-      - name: Crear carpeta publish
-        run: mkdir publish
-
-      - name: Copiar archivos
+      - name: Update version
+        shell: pwsh
         run: |
-          xcopy /E /I AppTaller\bin\Release publish
+          $version = "1.0.$env:GITHUB_RUN_NUMBER"
+          $path = "Properties\AssemblyInfo.cs"
+          $content = Get-Content $path -Raw
+          $content = $content -replace 'AssemblyVersion\(".*?"\)', "AssemblyVersion(""$version"")"
+          $content = $content -replace 'AssemblyFileVersion\(".*?"\)', "AssemblyFileVersion(""$version"")"
+          Set-Content $path $content
+          Write-Host "Version set to $version"
 
-      - name: Crear version.txt
-        run: echo %date% %time% > publish/version.txt
-        shell: cmd
+      - name: Build
+        run: msbuild AppTaller.csproj /p:Configuration=Release /p:Platform=AnyCPU
 
-      - name: Subir artifact
-        uses: actions/upload-artifact@v4
+      - name: Create publish folder
+        run: |
+          mkdir publish
+          xcopy /E /I AppTaller\bin\Release publish\
+
+      - name: Set version output
+        id: version
+        shell: pwsh
+        run: echo "version=1.0.$env:GITHUB_RUN_NUMBER" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+
+      - name: Create ZIP
+        shell: pwsh
+        run: Compress-Archive -Path publish\* -DestinationPath AppTaller-${{ steps.version.outputs.version }}.zip
+
+      - name: Generate release notes
+        shell: pwsh
+        run: |
+          $notes = @"
+          ## AppTaller v${{ steps.version.outputs.version }}
+          **Fecha:** $(Get-Date -Format 'yyyy-MM-dd HH:mm')
+          **Commit:** $env:GITHUB_SHA
+          **Build:** $env:GITHUB_RUN_NUMBER
+          "@
+          Set-Content RELEASE_NOTES.md $notes
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
         with:
-          name: WinFormsBuild
-          path: publish
+          tag_name: v${{ steps.version.outputs.version }}
+          name: AppTaller v${{ steps.version.outputs.version }}
+          body_path: RELEASE_NOTES.md
+          files: |
+            AppTaller-${{ steps.version.outputs.version }}.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
