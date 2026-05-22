@@ -1,9 +1,9 @@
-name: Build and Deploy WinForms
+name: Build and Release WinForms
 
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build:
@@ -27,8 +27,12 @@ jobs:
       - name: Publicar aplicación
         run: dotnet publish -c Release -o publish
 
-      - name: Subir archivos compilados
+      - name: Crear version.txt
+        run: echo %date% %time% > publish/version.txt
+        shell: cmd
+
+      - name: Subir artifact
         uses: actions/upload-artifact@v4
         with:
-          name: app-publicada
+          name: WinFormsBuild
           path: publish
