@@ -25,71 +25,73 @@ namespace AppTaller.Services
                 var url = $"https://api.github.com/repos/{Owner}/{Repo}/releases/latest";
                 var response = await Client.GetStringAsync(url);
 
-                using var doc = JsonDocument.Parse(response);
-                var tag = doc.RootElement.GetProperty("tag_name").GetString();
-
-                if (string.IsNullOrEmpty(tag) || !tag.StartsWith("v"))
-                    return;
-
-                var latestVersion = new Version(tag.TrimStart('v'));
-                var currentVersion = Assembly.GetExecutingAssembly().GetName().Version;
-
-                if (currentVersion >= latestVersion)
-                    return;
-
-                var assets = doc.RootElement.GetProperty("assets");
-                string downloadUrl = null;
-                foreach (var asset in assets.EnumerateArray())
+                using (var doc = JsonDocument.Parse(response))
                 {
-                    var name = asset.GetProperty("name").GetString();
-                    if (name != null && name.EndsWith(".zip"))
+                    var tag = doc.RootElement.GetProperty("tag_name").GetString();
+
+                    if (string.IsNullOrEmpty(tag) || !tag.StartsWith("v"))
+                        return;
+
+                    var latestVersion = new Version(tag.TrimStart('v'));
+                    var currentVersion = Assembly.GetExecutingAssembly().GetName().Version;
+
+                    if (currentVersion >= latestVersion)
+                        return;
+
+                    var assets = doc.RootElement.GetProperty("assets");
+                    string downloadUrl = null;
+                    foreach (var asset in assets.EnumerateArray())
                     {
-                        downloadUrl = asset.GetProperty("browser_download_url").GetString();
-                        break;
+                        var name = asset.GetProperty("name").GetString();
+                        if (name != null && name.EndsWith(".zip"))
+                        {
+                            downloadUrl = asset.GetProperty("browser_download_url").GetString();
+                            break;
+                        }
                     }
-                }
 
-                if (downloadUrl == null)
-                    return;
+                    if (downloadUrl == null)
+                        return;
 
-                var result = MessageBox.Show(
-                    $"Nueva versión disponible: {tag}\nversión actual: {currentVersion}\n\n¿Descargar e instalar ahora?",
-                    "Actualización disponible",
-                    MessageBoxButton.YesNo,
-                    MessageBoxImage.Information);
+                    var result = MessageBox.Show(
+                        $"Nueva versión disponible: {tag}\nversión actual: {currentVersion}\n\n¿Descargar e instalar ahora?",
+                        "Actualización disponible",
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Information);
 
-                if (result != MessageBoxResult.Yes)
-                    return;
+                    if (result != MessageBoxResult.Yes)
+                        return;
 
-                var tempDir = Path.Combine(Path.GetTempPath(), "AppTallerUpdate");
-                if (Directory.Exists(tempDir))
-                    Directory.Delete(tempDir, true);
-                Directory.CreateDirectory(tempDir);
+                    var tempDir = Path.Combine(Path.GetTempPath(), "AppTallerUpdate");
+                    if (Directory.Exists(tempDir))
+                        Directory.Delete(tempDir, true);
+                    Directory.CreateDirectory(tempDir);
 
-                var zipPath = Path.Combine(tempDir, "update.zip");
-                var zipBytes = await Client.GetByteArrayAsync(downloadUrl);
-                await File.WriteAllBytesAsync(zipPath, zipBytes);
+                    var zipPath = Path.Combine(tempDir, "update.zip");
+                    var zipBytes = await Client.GetByteArrayAsync(downloadUrl);
+                    File.WriteAllBytes(zipPath, zipBytes);
 
-                ZipFile.ExtractToDirectory(zipPath, tempDir);
+                    ZipFile.ExtractToDirectory(zipPath, tempDir);
 
-                var batPath = Path.Combine(AppFolder, "update.bat");
-                var batContent = $@"@echo off
+                    var batPath = Path.Combine(AppFolder, "update.bat");
+                    var batContent = $@"@echo off
 timeout /t 3 /nobreak >nul
 xcopy /E /Y ""{tempDir}\*"" ""{AppFolder}""
 start """" ""{AppFolder}AppTaller.exe""
 rmdir /S /Q ""{tempDir}""
 del ""%~f0""
-";
-                File.WriteAllText(batPath, batContent);
+                ";
+                    File.WriteAllText(batPath, batContent);
 
-                Process.Start(new ProcessStartInfo
-                {
-                    FileName = batPath,
-                    UseShellExecute = true,
-                    WindowStyle = ProcessWindowStyle.Hidden
-                });
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = batPath,
+                        UseShellExecute = true,
+                        WindowStyle = ProcessWindowStyle.Hidden
+                    });
 
-                Application.Current.Shutdown();
+                    Application.Current.Shutdown();
+                }
             }
             catch
             {
