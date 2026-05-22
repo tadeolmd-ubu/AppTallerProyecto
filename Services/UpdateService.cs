@@ -70,9 +70,12 @@ namespace AppTaller.Services
                     var zipBytes = await Client.GetByteArrayAsync(downloadUrl);
                     File.WriteAllBytes(zipPath, zipBytes);
 
+                    var psPath = Path.Combine(
+                        Environment.GetFolderPath(Environment.SpecialFolder.System),
+                        "WindowsPowerShell", "v1.0", "powershell.exe");
                     var psi = new ProcessStartInfo
                     {
-                        FileName = "powershell.exe",
+                        FileName = psPath,
                         Arguments = $"-NoProfile -Command \"Expand-Archive -Path '{zipPath}' -DestinationPath '{tempDir}' -Force\"",
                         UseShellExecute = false,
                         CreateNoWindow = true
