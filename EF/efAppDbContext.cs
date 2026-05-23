@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AppTaller.Model;
-using AppTaller.Services;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -32,10 +27,10 @@ namespace AppTaller.EF
         public DbSet<PresupuestoDetalle> PresupuestoDetalle { get; set; }
         public DbSet<Venta> Venta { get; set; }
         public DbSet<VentaDetalle> VentaDetalle { get; set; }
-        //Cadena de conexion
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=E4;Initial Catalog=dbTaller;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
+            var connString = ConfigurationManager.ConnectionStrings["DbTaller"].ConnectionString;
+            optionsBuilder.UseSqlServer(connString);
         }
         //igual aca que en el DbSet
         protected override void OnModelCreating(ModelBuilder modelBuilder)
