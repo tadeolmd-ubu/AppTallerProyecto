@@ -83,29 +83,24 @@ namespace AppTaller.Services
                     }))
                         p?.WaitForExit();
 
-                    var scriptPath = Path.Combine(tempDir, "update.ps1");
-                    File.WriteAllText(scriptPath,
-                        "$retry = 10\n" +
-                        "do {\n" +
-                        "    $retry--\n" +
-                        "    try {\n" +
-                        $"        Get-ChildItem '{tempDir}\\*' -Exclude update.ps1 | Copy-Item -Destination '{AppFolder}' -Recurse -Force -ErrorAction Stop\n" +
-                        "        break\n" +
-                        "    } catch {\n" +
-                        "        Start-Sleep 2\n" +
-                        "    }\n" +
-                        "} while ($retry -gt 0)\n" +
-                        $"Start-Process '{AppFolder}AppTaller.exe'\n" +
-                        $"Remove-Item '{tempDir}' -Recurse -Force\n");
+                    var batPath = Path.Combine(AppFolder, "update.bat");
+                    var batContent = "@echo off\r\n" +
+                        "robocopy \"" + tempDir + "\" \"" + AppFolder.TrimEnd('\\') + "\" /E /IS /R:10 /W:3 >nul\r\n" +
+                        "if errorlevel 8 exit /b\r\n" +
+                        "start \"\" \"" + AppFolder + "AppTaller.exe\"\r\n" +
+                        "rmdir /S /Q \"" + tempDir + "\"\r\n" +
+                        "del \"%~f0\"\r\n";
+                    File.WriteAllText(batPath, batContent);
 
-                    Process.Start(new ProcessStartInfo
+                    var psi = new ProcessStartInfo
                     {
-                        FileName = psPath,
-                        Arguments = $"-NoProfile -ExecutionPolicy Bypass -File \"{scriptPath}\"",
-                        UseShellExecute = false,
+                        FileName = batPath,
+                        UseShellExecute = true,
+                        WindowStyle = ProcessWindowStyle.Hidden,
                         CreateNoWindow = true
-                    });
+                    };
 
+                    Process.Start(psi);
                     Application.Current.Shutdown();
                 }
             }
