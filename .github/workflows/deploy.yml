@@ -41,7 +41,7 @@ jobs:
       - name: Create publish folder
         run: |
           mkdir publish
-          xcopy /E /I bin\Release publish\
+          xcopy /E /I "bin\Release\*" publish\
 
       - name: Set version output
         id: version
