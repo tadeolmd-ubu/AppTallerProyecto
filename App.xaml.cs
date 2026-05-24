@@ -1,14 +1,19 @@
 ﻿using AppTaller.EF;
 using AppTaller.Services;
 using System;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace AppTaller
 {
     public partial class App : Application
     {
-        protected override async void OnStartup(StartupEventArgs e)
+        protected override void OnStartup(StartupEventArgs e)
         {
+            DispatcherUnhandledException += OnDispatcherUnhandledException;
+            AppDomain.CurrentDomain.UnhandledException += OnAppDomainUnhandledException;
+
             base.OnStartup(e);
 
             try
@@ -23,6 +28,11 @@ namespace AppTaller
                 return;
             }
 
+            _ = CheckForUpdatesAsync();
+        }
+
+        private async Task CheckForUpdatesAsync()
+        {
             try
             {
                 await UpdateService.CheckForUpdatesAsync();
@@ -30,6 +40,18 @@ namespace AppTaller
             catch
             {
             }
+        }
+
+        private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            MessageBox.Show($"Error inesperado:\n{e.Exception.GetType().Name}\n{e.Exception.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            e.Handled = true;
+        }
+
+        private void OnAppDomainUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            var ex = e.ExceptionObject as Exception;
+            MessageBox.Show($"Error crítico:\n{ex?.GetType().Name}\n{ex?.Message}", "Error crítico", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }

@@ -46,36 +46,46 @@ namespace AppTaller.Views
         int x = 3;
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-
-
-
-            int.TryParse(txtUsuario.Text, out int id);
-            string password = txtContrasena.Password;
-
-            Login login = new Login();
-
-            if (login.ValidarUsuario(id, password))
+            try
             {
-                var usuario = _context.Usuario.FirstOrDefault(u => u.id == id);
+                int.TryParse(txtUsuario.Text, out int id);
+                string password = txtContrasena.Password;
 
-                Session.UsuarioActual = usuario;
+                Login login = new Login();
 
-                FrmMenuPrincipal mp = new FrmMenuPrincipal();
-                mp.Show();
-                this.Hide();
+                if (login.ValidarUsuario(id, password))
+                {
+                    var usuario = _context.Usuario.FirstOrDefault(u => u.id == id);
+
+                    if (usuario == null)
+                    {
+                        MessageBox.Show("Error: usuario encontrado en BD pero no en el contexto.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    Session.UsuarioActual = usuario;
+
+                    FrmMenuPrincipal mp = new FrmMenuPrincipal();
+                    mp.Show();
+                    this.Hide();
+                }
+                else
+                {
+                    x--;
+                    MessageBox.Show($"Usuario o contraseña incorrectos, le quedan {x} intentos.");
+                }
+
+                if (x == 0)
+                {
+                    txtContrasena.IsEnabled = false;
+                    txtUsuario.IsEnabled = false;
+                    btnLogin.IsEnabled = false;
+                    MessageBox.Show("Límite de intentos alcanzados.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                x--;
-                MessageBox.Show($"Usuario o contraseña incorrectos, le quedan {x} intentos.");
-            }
-
-            if (x == 0)
-            {
-                txtContrasena.IsEnabled = false;
-                txtUsuario.IsEnabled = false;
-                btnLogin.IsEnabled = false;
-                MessageBox.Show("Límite de intentos alcanzados.");
+                MessageBox.Show($"Error al iniciar sesión:\n{ex.GetType().Name}\n{ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

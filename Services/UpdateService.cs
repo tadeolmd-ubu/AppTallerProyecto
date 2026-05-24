@@ -87,6 +87,7 @@ namespace AppTaller.Services
                     var batContent = "@echo off\r\n" +
                         "robocopy \"" + tempDir + "\" \"" + AppFolder.TrimEnd('\\') + "\" /E /IS /R:10 /W:3 >nul\r\n" +
                         "if errorlevel 8 exit /b\r\n" +
+                        "timeout /t 2 /nobreak >nul\r\n" +
                         "start \"\" \"" + AppFolder + "AppTaller.exe\"\r\n" +
                         "rmdir /S /Q \"" + tempDir + "\"\r\n" +
                         "del \"%~f0\"\r\n";
