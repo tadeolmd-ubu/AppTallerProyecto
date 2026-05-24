@@ -46,7 +46,7 @@ CREATE TABLE TipoProducto(
 CREATE TABLE catEmpresa(
     id INT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
-    rfc CHAR(13) NOT NULL UNIQUE,
+    rfc VARCHAR(13) NOT NULL UNIQUE,
     regimen VARCHAR(100) NOT NULL,
     idDireccion INT NULL,
     FOREIGN KEY(idDireccion) REFERENCES Direccion(id)
