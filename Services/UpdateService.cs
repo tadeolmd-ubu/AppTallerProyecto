@@ -83,24 +83,35 @@ namespace AppTaller.Services
                     }))
                         p?.WaitForExit();
 
-                    var batPath = Path.Combine(AppFolder, "update.bat");
-                    var batContent = "@echo off\r\n" +
-                        "robocopy \"" + tempDir + "\" \"" + AppFolder.TrimEnd('\\') + "\" /E /IS /R:10 /W:3 >nul\r\n" +
-                        "if errorlevel 8 exit /b\r\n" +
-                        "timeout /t 2 /nobreak >nul\r\n" +
-                        "start \"\" \"" + AppFolder + "AppTaller.exe\"\r\n" +
-                        "rmdir /S /Q \"" + tempDir + "\"\r\n" +
-                        "del \"%~f0\"\r\n";
-                    File.WriteAllText(batPath, batContent);
+                    var extractedExe = Path.Combine(tempDir, "AppTaller.exe");
+                    if (!File.Exists(extractedExe))
+                    {
+                        MessageBox.Show("Error al extraer la actualización.\nDescargue manualmente desde GitHub Releases.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    var scriptPath = Path.Combine(tempDir, "update.ps1");
+                    var scriptContent = $@"
+Start-Sleep -Seconds 2
+$src = ""{tempDir}""
+$dst = ""{AppFolder.TrimEnd('\\')}""
+$exe = ""{AppFolder}AppTaller.exe""
+$r = & robocopy ""$src"" ""$dst"" /E /IS /R:20 /W:5
+if ($LASTEXITCODE -lt 8) {{
+    Start-Process ""$exe"" -WindowStyle Normal
+    Start-Sleep -Seconds 3
+    Remove-Item ""$src"" -Recurse -Force -ErrorAction SilentlyContinue
+}}
+";
+                    File.WriteAllText(scriptPath, scriptContent);
 
                     var psi = new ProcessStartInfo
                     {
-                        FileName = batPath,
-                        UseShellExecute = true,
-                        WindowStyle = ProcessWindowStyle.Hidden,
+                        FileName = psPath,
+                        Arguments = $"-NoProfile -ExecutionPolicy Bypass -File \"{scriptPath}\"",
+                        UseShellExecute = false,
                         CreateNoWindow = true
                     };
-
                     Process.Start(psi);
                     Application.Current.Shutdown();
                 }
