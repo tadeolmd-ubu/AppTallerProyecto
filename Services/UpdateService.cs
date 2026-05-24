@@ -73,31 +73,37 @@ namespace AppTaller.Services
                     var psPath = Path.Combine(
                         Environment.GetFolderPath(Environment.SpecialFolder.System),
                         "WindowsPowerShell", "v1.0", "powershell.exe");
-                    var psi = new ProcessStartInfo
+
+                    using (var p = Process.Start(new ProcessStartInfo
                     {
                         FileName = psPath,
                         Arguments = $"-NoProfile -Command \"Expand-Archive -Path '{zipPath}' -DestinationPath '{tempDir}' -Force\"",
                         UseShellExecute = false,
                         CreateNoWindow = true
-                    };
-                    using (var p = Process.Start(psi))
+                    }))
                         p?.WaitForExit();
 
-                    var batPath = Path.Combine(AppFolder, "update.bat");
-                    var batContent = $@"@echo off
-timeout /t 3 /nobreak >nul
-xcopy /E /Y ""{tempDir}\*"" ""{AppFolder}""
-start """" ""{AppFolder}AppTaller.exe""
-rmdir /S /Q ""{tempDir}""
-del ""%~f0""
-                ";
-                    File.WriteAllText(batPath, batContent);
+                    var scriptPath = Path.Combine(tempDir, "update.ps1");
+                    File.WriteAllText(scriptPath,
+                        "$retry = 10\n" +
+                        "do {\n" +
+                        "    $retry--\n" +
+                        "    try {\n" +
+                        $"        Get-ChildItem '{tempDir}\\*' -Exclude update.ps1 | Copy-Item -Destination '{AppFolder}' -Recurse -Force -ErrorAction Stop\n" +
+                        "        break\n" +
+                        "    } catch {\n" +
+                        "        Start-Sleep 2\n" +
+                        "    }\n" +
+                        "} while ($retry -gt 0)\n" +
+                        $"Start-Process '{AppFolder}AppTaller.exe'\n" +
+                        $"Remove-Item '{tempDir}' -Recurse -Force\n");
 
                     Process.Start(new ProcessStartInfo
                     {
-                        FileName = batPath,
-                        UseShellExecute = true,
-                        WindowStyle = ProcessWindowStyle.Hidden
+                        FileName = psPath,
+                        Arguments = $"-NoProfile -ExecutionPolicy Bypass -File \"{scriptPath}\"",
+                        UseShellExecute = false,
+                        CreateNoWindow = true
                     });
 
                     Application.Current.Shutdown();
