@@ -265,6 +265,9 @@
     <Compile Include="Model\Usuario.cs" />
     <Compile Include="Model\Venta.cs" />
     <Compile Include="Model\VentaDetalle.cs" />
+    <Compile Include="Model\vw_ProductosBajoStock.cs" />
+    <Compile Include="Model\vw_ProductosMasVendidos.cs" />
+    <Compile Include="Model\vw_ResumenVentasPorDia.cs" />
     <Compile Include="Services\AlmacenService.cs" />
     <Compile Include="Services\ClienteService.cs" />
     <Compile Include="Services\DireccionService.cs" />
