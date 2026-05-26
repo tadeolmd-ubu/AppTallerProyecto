@@ -1,7 +1,6 @@
 ﻿using AppTaller.Logics;
 using AppTaller.Model;
 using AppTaller.Services;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,7 +24,6 @@ namespace AppTaller.Views
     /// </summary>
     public partial class UcVenta : UserControl
     {
-        private readonly EF.efAppDbContext _context;
         private readonly InventarioService _inventarioService;
         private readonly ProductoService _productoService;
         private readonly VentaService _ventaService;
