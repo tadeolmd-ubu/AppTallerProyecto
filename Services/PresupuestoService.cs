@@ -54,12 +54,7 @@ namespace AppTaller.Services
             _context.SaveChanges();
         }
         public int ObtenerSigienteIdPresupuesto(){
-            var ultimo = _context.Presupuesto
-                                 .OrderByDescending(x => x.id)
-                                 .Select(x => x.id)
-                                 .FirstOrDefault();
-
-            return ultimo + 1;
+            return _context.SiguienteId("Presupuesto");
         }
         public bool ExistePresupuesto(int idPresupuesto){
             if (idPresupuesto <= 0)

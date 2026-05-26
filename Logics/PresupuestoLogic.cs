@@ -78,10 +78,7 @@ namespace AppTaller.Logics
                     }
                     int nextId = 0;
                     if (detalles.Any(d => d.id == 0)){
-                        nextId = _context.PresupuestoDetalle
-                                         .OrderByDescending(x => x.id)
-                                         .Select(x => x.id)
-                                         .FirstOrDefault() + 1;
+                        nextId = _context.SiguienteId("PresupuestoDetalle");
                     }
                     foreach (var det in detalles){
                         if (det.id == 0){

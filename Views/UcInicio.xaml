@@ -5,8 +5,175 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AppTaller.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="#060531">
-            
+             d:DesignHeight="650" d:DesignWidth="1100"
+             Loaded="UserControl_Loaded">
+    <Grid Background="#060531" Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="lblBienvenida"
+                   Grid.Row="0"
+                   Text="Bienvenido, Tadeo"
+                   Foreground="#D5CFF5"
+                   FontSize="22"
+                   FontFamily="Montserrat"
+                   FontWeight="SemiBold"
+                   Margin="10,10,0,20"/>
+
+        <WrapPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,20">
+            <Border Background="#200F53" CornerRadius="12" Width="220" Height="110" Margin="10">
+                <Border.BorderBrush>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#E285DE" Offset="0"/>
+                        <GradientStop Color="#784DFD" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.BorderBrush>
+                <Border BorderThickness="1" CornerRadius="12" Background="#200F53" Margin="0">
+                    <StackPanel VerticalAlignment="Center" Margin="15,0">
+                        <TextBlock x:Name="lblProductos" Text="—" Foreground="#E285DE" FontSize="28" FontWeight="Bold" FontFamily="Montserrat"/>
+                        <TextBlock Text="Productos activos" Foreground="#9497CD" FontSize="13" FontFamily="Montserrat" Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Border>
+            </Border>
+
+            <Border Background="#200F53" CornerRadius="12" Width="220" Height="110" Margin="10">
+                <Border BorderThickness="1" CornerRadius="12" Background="#200F53">
+                    <StackPanel VerticalAlignment="Center" Margin="15,0">
+                        <TextBlock x:Name="lblClientes" Text="—" Foreground="#4ADAEC" FontSize="28" FontWeight="Bold" FontFamily="Montserrat"/>
+                        <TextBlock Text="Clientes activos" Foreground="#9497CD" FontSize="13" FontFamily="Montserrat" Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Border>
+            </Border>
+
+            <Border Background="#200F53" CornerRadius="12" Width="220" Height="110" Margin="10">
+                <Border BorderThickness="1" CornerRadius="12" Background="#200F53">
+                    <StackPanel VerticalAlignment="Center" Margin="15,0">
+                        <TextBlock x:Name="lblVentasHoy" Text="—" Foreground="#FFC047" FontSize="28" FontWeight="Bold" FontFamily="Montserrat"/>
+                        <TextBlock Text="Ventas hoy" Foreground="#9497CD" FontSize="13" FontFamily="Montserrat" Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Border>
+            </Border>
+
+            <Border Background="#200F53" CornerRadius="12" Width="220" Height="110" Margin="10">
+                <Border BorderThickness="1" CornerRadius="12" Background="#200F53">
+                    <StackPanel VerticalAlignment="Center" Margin="15,0">
+                        <TextBlock x:Name="lblTotalVentas" Text="$0.00" Foreground="#07F3C0" FontSize="22" FontWeight="Bold" FontFamily="Montserrat"/>
+                        <TextBlock Text="Total ventas hoy" Foreground="#9497CD" FontSize="13" FontFamily="Montserrat" Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Border>
+            </Border>
+
+            <Border Background="#200F53" CornerRadius="12" Width="220" Height="110" Margin="10">
+                <Border BorderThickness="1" CornerRadius="12" Background="#200F53">
+                    <StackPanel VerticalAlignment="Center" Margin="15,0">
+                        <TextBlock x:Name="lblPresupuestos" Text="—" Foreground="#FB539B" FontSize="28" FontWeight="Bold" FontFamily="Montserrat"/>
+                        <TextBlock Text="Presupuestos activos" Foreground="#9497CD" FontSize="13" FontFamily="Montserrat" Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Border>
+            </Border>
+
+            <Border Background="#200F53" CornerRadius="12" Width="220" Height="110" Margin="10">
+                <Border BorderThickness="1" CornerRadius="12" Background="#200F53">
+                    <StackPanel VerticalAlignment="Center" Margin="15,0">
+                        <TextBlock x:Name="lblBajoStock" Text="—" Foreground="#FBA1AA" FontSize="28" FontWeight="Bold" FontFamily="Montserrat"/>
+                        <TextBlock Text="Productos bajo stock" Foreground="#9497CD" FontSize="13" FontFamily="Montserrat" Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Border>
+            </Border>
+
+            <Border Background="#200F53" CornerRadius="12" Width="220" Height="110" Margin="10">
+                <Border BorderThickness="1" CornerRadius="12" Background="#200F53">
+                    <StackPanel VerticalAlignment="Center" Margin="15,0">
+                        <TextBlock x:Name="lblUsuarios" Text="—" Foreground="#78A3FC" FontSize="28" FontWeight="Bold" FontFamily="Montserrat"/>
+                        <TextBlock Text="Usuarios activos" Foreground="#9497CD" FontSize="13" FontFamily="Montserrat" Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Border>
+            </Border>
+
+            <Border Background="#200F53" CornerRadius="12" Width="220" Height="110" Margin="10">
+                <Border BorderThickness="1" CornerRadius="12" Background="#200F53">
+                    <StackPanel VerticalAlignment="Center" Margin="15,0">
+                        <TextBlock x:Name="lblProveedores" Text="—" Foreground="#7E82FC" FontSize="28" FontWeight="Bold" FontFamily="Montserrat"/>
+                        <TextBlock Text="Proveedores activos" Foreground="#9497CD" FontSize="13" FontFamily="Montserrat" Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Border>
+            </Border>
+        </WrapPanel>
+
+        <Grid Grid.Row="2" Margin="10,0,10,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" Background="#200F53" CornerRadius="12" Margin="0,0,10,10">
+                <Grid Margin="15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Productos más vendidos" Foreground="#D5CFF5" FontSize="15" FontFamily="Montserrat" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                    <DataGrid x:Name="dgProductosTop" Grid.Row="1"
+                              Background="Transparent" 
+                              BorderThickness="0"
+                              Foreground="#BCBEE0"
+                              FontFamily="Montserrat"
+                              FontSize="12"
+                              HeadersVisibility="Column"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              RowBackground="#1B1428"
+                              AlternatingRowBackground="#24105F"
+                              RowHeight="30">
+                        <DataGrid.Resources>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#2B1372"/>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#2B1372"/>
+                        </DataGrid.Resources>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Producto" Binding="{Binding producto}" Width="*"/>
+                            <DataGridTextColumn Header="Vendidos" Binding="{Binding totalVendido}" Width="80"/>
+                            <DataGridTextColumn Header="Veces" Binding="{Binding vecesVendido}" Width="60"/>
+                            <DataGridTextColumn Header="Ingreso" Binding="{Binding ingresoGenerado, StringFormat={}{0:C}}" Width="100"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </Border>
+
+            <Border Grid.Column="1" Background="#200F53" CornerRadius="12" Margin="10,0,0,10">
+                <Grid Margin="15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Ventas por día" Foreground="#D5CFF5" FontSize="15" FontFamily="Montserrat" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                    <DataGrid x:Name="dgVentasDiarias" Grid.Row="1"
+                              Background="Transparent"
+                              BorderThickness="0"
+                              Foreground="#BCBEE0"
+                              FontFamily="Montserrat"
+                              FontSize="12"
+                              HeadersVisibility="Column"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              RowBackground="#1B1428"
+                              AlternatingRowBackground="#24105F"
+                              RowHeight="30">
+                        <DataGrid.Resources>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#2B1372"/>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#2B1372"/>
+                        </DataGrid.Resources>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Fecha" Binding="{Binding fecha, StringFormat={}{0:dd/MM/yyyy}}" Width="100"/>
+                            <DataGridTextColumn Header="Ventas" Binding="{Binding cantidadVentas}" Width="70"/>
+                            <DataGridTextColumn Header="Total" Binding="{Binding totalVentas, StringFormat={}{0:C}}" Width="100"/>
+                            <DataGridTextColumn Header="Promedio" Binding="{Binding promedioPorVenta, StringFormat={}{0:C}}" Width="90"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </Border>
+        </Grid>
     </Grid>
 </UserControl>

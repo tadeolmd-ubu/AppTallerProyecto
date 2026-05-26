@@ -1,6 +1,7 @@
 ﻿using AppTaller.Model;
 using System;
 using System.Configuration;
+using System.Data;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,6 +29,12 @@ namespace AppTaller.EF
         public DbSet<PresupuestoDetalle> PresupuestoDetalle { get; set; }
         public DbSet<Venta> Venta { get; set; }
         public DbSet<VentaDetalle> VentaDetalle { get; set; }
+
+        // Vistas (keyless)
+        public DbSet<vw_ProductosBajoStock> ProductosBajoStock { get; set; }
+        public DbSet<vw_ResumenVentasPorDia> ResumenVentasPorDia { get; set; }
+        public DbSet<vw_ProductosMasVendidos> ProductosMasVendidos { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var connString = ConfigurationManager.ConnectionStrings["DbTaller"].ConnectionString;
@@ -54,7 +61,32 @@ namespace AppTaller.EF
             modelBuilder.Entity<PresupuestoDetalle>().ToTable("PresupuestoDetalle");
             modelBuilder.Entity<Venta>().ToTable("Venta");
             modelBuilder.Entity<VentaDetalle>().ToTable("VentaDetalle");
+
+            // Vistas (keyless)
+            modelBuilder.Entity<vw_ProductosBajoStock>()
+                .ToView("vw_ProductosBajoStock").HasNoKey();
+            modelBuilder.Entity<vw_ResumenVentasPorDia>()
+                .ToView("vw_ResumenVentasPorDia").HasNoKey();
+            modelBuilder.Entity<vw_ProductosMasVendidos>()
+                .ToView("vw_ProductosMasVendidos").HasNoKey();
         }
 
+        public int SiguienteId(string nombreTabla)
+        {
+            using (var cmd = Database.GetDbConnection().CreateCommand())
+            {
+                cmd.CommandText = "SELECT dbo.fn_SiguienteId(@tabla)";
+                cmd.CommandType = CommandType.Text;
+                var param = cmd.CreateParameter();
+                param.ParameterName = "@tabla";
+                param.Value = nombreTabla;
+                cmd.Parameters.Add(param);
+
+                if (cmd.Connection.State != ConnectionState.Open)
+                    cmd.Connection.Open();
+
+                return Convert.ToInt32(cmd.ExecuteScalar());
+            }
+        }
     }
 }

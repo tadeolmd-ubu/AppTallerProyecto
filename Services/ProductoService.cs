@@ -51,12 +51,7 @@ namespace AppTaller.Services
         }
         public int ObtenerSigienteIdProducto()
         {
-            var ultimo = _context.Producto
-                                 .OrderByDescending(x => x.id)
-                                 .Select(x => x.id)
-                                 .FirstOrDefault();
-
-            return ultimo + 1;
+            return _context.SiguienteId("Producto");
         }
     }
 }

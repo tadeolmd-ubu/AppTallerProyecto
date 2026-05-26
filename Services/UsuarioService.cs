@@ -50,12 +50,7 @@ namespace AppTaller.Services
            _context.SaveChanges();                            
         }
         public int ObtenerSigienteIdUsuario(){
-            var ultimo = _context.Usuario
-                                 .OrderByDescending(x => x.id)
-                                 .Select(x => x.id)
-                                 .FirstOrDefault();
-
-            return ultimo + 1;
+            return _context.SiguienteId("Usuario");
         }
     }
 }

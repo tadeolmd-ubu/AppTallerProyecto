@@ -20,12 +20,8 @@ namespace AppTaller.Views
     /// </summary>
     public partial class FrmLogin : Window
     {
-       
-        private readonly EF.efAppDbContext _context;
-
         public FrmLogin()
         {
-            _context = new EF.efAppDbContext();
             InitializeComponent();
         }
 
@@ -52,17 +48,10 @@ namespace AppTaller.Views
                 string password = txtContrasena.Password;
 
                 Login login = new Login();
+                var usuario = login.ValidarUsuario(id, password);
 
-                if (login.ValidarUsuario(id, password))
+                if (usuario != null)
                 {
-                    var usuario = _context.Usuario.FirstOrDefault(u => u.id == id);
-
-                    if (usuario == null)
-                    {
-                        MessageBox.Show("Error: usuario encontrado en BD pero no en el contexto.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        return;
-                    }
-
                     Session.UsuarioActual = usuario;
 
                     FrmMenuPrincipal mp = new FrmMenuPrincipal();

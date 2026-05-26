@@ -50,12 +50,7 @@ namespace AppTaller.Services
 
         public int ObtenerSigienteIdProveedor()
         {
-            var ultimo = _context.Proveedor
-                                 .OrderByDescending(x => x.id)
-                                 .Select(x => x.id)
-                                 .FirstOrDefault();
-
-            return ultimo + 1;
+            return _context.SiguienteId("Proveedor");
         }
 
     }

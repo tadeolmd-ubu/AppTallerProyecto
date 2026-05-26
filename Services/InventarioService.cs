@@ -44,12 +44,7 @@ namespace AppTaller.Services
         }
         public int ObtenerSigienteIdInventario()
         {
-            var ultimo = _context.Inventario
-                                 .OrderByDescending(x => x.id)
-                                 .Select(x => x.id)
-                                 .FirstOrDefault();
-
-            return ultimo + 1;
+            return _context.SiguienteId("Inventario");
         }
 
         public bool ValidarStock(int idProducto, int cantidad)

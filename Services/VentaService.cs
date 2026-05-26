@@ -27,20 +27,21 @@ namespace AppTaller.Services
         }
 
         public int GenerarFolio(){
-            var ultimo = _context.Venta
-                                 .OrderByDescending(x => x.folio)
-                                 .Select(x => x.folio)
-                                 .FirstOrDefault();
-
-            return ultimo + 1;
+            using (var cmd = _context.Database.GetDbConnection().CreateCommand())
+            {
+                cmd.CommandText = "EXEC sp_ObtenerSiguienteFolio";
+                if (cmd.Connection.State != System.Data.ConnectionState.Open)
+                    cmd.Connection.Open();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                        return Convert.ToInt32(reader["siguienteFolio"]);
+                }
+            }
+            return 1;
         }
         public int ObtenerSigienteIdVenta(){
-            var ultimo = _context.Venta
-                                 .OrderByDescending(x => x.id)
-                                 .Select(x => x.id)
-                                 .FirstOrDefault();
-
-            return ultimo + 1;
+            return _context.SiguienteId("Venta");
         }
 
     }

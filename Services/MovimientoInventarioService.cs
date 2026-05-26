@@ -18,9 +18,7 @@ namespace AppTaller.Services
         _context.MovimientoInventario.Add(movimientoInventario);
         }
         public int ObtenerSiguienteId(){
-            return _context.MovimientoInventario.Any()
-                ? _context.MovimientoInventario.Max(m => m.id) + 1
-                : 1;
+            return _context.SiguienteId("MovimientoInventario");
         }
 
     }
