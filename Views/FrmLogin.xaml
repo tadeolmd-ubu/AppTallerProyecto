@@ -35,7 +35,7 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="Login pero de la v1.0.27"
+                <TextBlock x:Name="txtVersion"
                            Foreground="White"
                            FontSize="14"
                            FontWeight="SemiBold"

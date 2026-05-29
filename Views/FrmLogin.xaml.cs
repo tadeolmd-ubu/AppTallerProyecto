@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,6 +24,8 @@ namespace AppTaller.Views
         public FrmLogin()
         {
             InitializeComponent();
+            var version = Assembly.GetExecutingAssembly().GetName().Version;
+            txtVersion.Text = $"Login v{version.Major}.{version.Minor}.{version.Build}";
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e) {
