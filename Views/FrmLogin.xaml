@@ -142,7 +142,7 @@
                            TextAlignment="Center"
                            Margin="0,0,0,5"/>
 
-                <TextBlock Text="Diesel de Guasave"
+                <TextBlock Text="Diesel de Guasave Sinaloa"
                            Foreground="#FF81969C"
                            FontSize="16"
                            FontWeight="Medium"
