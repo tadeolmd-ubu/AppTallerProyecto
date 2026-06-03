@@ -24,12 +24,10 @@ namespace AppTaller.Logics
             using (var transaction = _context.Database.BeginTransaction()){
                 try{
                     _direccionService.CrearOActualizarDireccion(direccion);
-                    _context.SaveChanges();
 
                     proveedor.idDireccion = direccion.id;
                     _proveedorService.CrearOModificarProveedor(proveedor);
 
-                    _context.SaveChanges();
                     transaction.Commit();
                 }
                 catch (Exception){
@@ -41,4 +39,3 @@ namespace AppTaller.Logics
     }
 
 }
-

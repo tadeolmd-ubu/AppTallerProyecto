@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace AppTaller.Services
 {
@@ -14,40 +15,34 @@ namespace AppTaller.Services
             _context = context;
         }
         public void CrearPresupuestoDetalle(PresupuestoDetalle presupuestoDetalle){
-            _context.PresupuestoDetalle.Add(presupuestoDetalle);   
+            if (presupuestoDetalle.id == 0)
+                presupuestoDetalle.id = _context.SiguienteId("PresupuestoDetalle");
+            _context.Database.ExecuteSqlRaw(
+                "EXEC sp_PresupuestoDetalle @opcion = 1, @id = {0}, @cantidad = {1}, @precioUnitario = {2}, @importe = {3}, @iva = {4}, @idInventario = {5}, @idPresupuesto = {6}",
+                presupuestoDetalle.id, presupuestoDetalle.cantidad, presupuestoDetalle.precioUnitario,
+                presupuestoDetalle.importe, presupuestoDetalle.iva, presupuestoDetalle.idInventario, presupuestoDetalle.idPresupuesto);
         }
         public void ModificarPresupuestoDetalle(PresupuestoDetalle presupuestoDetalle){
-
-            var existe = _context.PresupuestoDetalle.Find(presupuestoDetalle.id);
-
-            if (existe == null)
-                return;
-            _context.Entry(existe).CurrentValues.SetValues(presupuestoDetalle);
-            
-
+            _context.Database.ExecuteSqlRaw(
+                "EXEC sp_PresupuestoDetalle @opcion = 2, @id = {0}, @cantidad = {1}, @precioUnitario = {2}, @importe = {3}, @iva = {4}, @idInventario = {5}, @idPresupuesto = {6}",
+                presupuestoDetalle.id, presupuestoDetalle.cantidad, presupuestoDetalle.precioUnitario,
+                presupuestoDetalle.importe, presupuestoDetalle.iva, presupuestoDetalle.idInventario, presupuestoDetalle.idPresupuesto);
         }
         public void CrearOModificarPresupuestoDetalle(PresupuestoDetalle presupuestoDetalle){
             var existe = _context.PresupuestoDetalle.Find(presupuestoDetalle.id);
-            if (existe == null){
+            if (existe == null)
                 CrearPresupuestoDetalle(presupuestoDetalle);
-            }
-            else{
+            else
                 ModificarPresupuestoDetalle(presupuestoDetalle);
-            }
         }
         public PresupuestoDetalle BuscarPresupuestoDetalle(int id){
-            return _context.PresupuestoDetalle.Find(id);
+            return _context.PresupuestoDetalle.FromSqlRaw("EXEC sp_PresupuestoDetalle @opcion = 5, @id = {0}", id).AsEnumerable().FirstOrDefault();
         }
         public List<PresupuestoDetalle> ObtenerPresupuestosDetalle(){
-            return _context.PresupuestoDetalle.ToList();
+            return _context.PresupuestoDetalle.FromSqlRaw("EXEC sp_PresupuestoDetalle @opcion = 4").ToList();
         }
         public void EliminarPresupuestoDetalle(int id){
-
-            var presupuestoDetalle = _context.PresupuestoDetalle.Find(id);
-            if (presupuestoDetalle == null)
-                return;
-            _context.PresupuestoDetalle.Remove(presupuestoDetalle);
-            _context.SaveChanges();
+            _context.Database.ExecuteSqlRaw("EXEC sp_PresupuestoDetalle @opcion = 3, @id = {0}", id);
         }
 
         public int ObtenerSigienteIdPresupuestoDetalle()

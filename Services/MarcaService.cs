@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace AppTaller.Services
 {
@@ -14,7 +15,7 @@ namespace AppTaller.Services
             _context = context;
         }
         public List<Model.catMarca> ObtenerTodasLasMarcas(){
-            return _context.catMarcas.ToList();
+            return _context.catMarcas.FromSqlRaw("EXEC sp_catMarca @opcion = 4").ToList();
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace AppTaller.Services
 {
@@ -14,7 +15,12 @@ namespace AppTaller.Services
             _context = context;
         }
         public void CrearVentaDetalle(VentaDetalle ventaDetalle) {
-            _context.VentaDetalle.Add(ventaDetalle);
+            if (ventaDetalle.id == 0)
+                ventaDetalle.id = _context.SiguienteId("VentaDetalle");
+            _context.Database.ExecuteSqlRaw(
+                "EXEC sp_VentaDetalle @opcion = 1, @id = {0}, @cantidad = {1}, @importe = {2}, @iva = {3}, @idInventario = {4}, @idVenta = {5}, @precioUnitario = {6}",
+                ventaDetalle.id, ventaDetalle.cantidad, ventaDetalle.importe, ventaDetalle.iva,
+                ventaDetalle.idInventario, ventaDetalle.idVenta, ventaDetalle.precioUnitario);
         }
         public void EliminarDetallesPorVenta(int idVenta)
         {
@@ -25,16 +31,15 @@ namespace AppTaller.Services
             foreach (var d in detalles)
             {
                 var producto = _context.Inventario.Find(d.idInventario);
-                producto.stockActual += d.cantidad;
+                if (producto != null)
+                    producto.stockActual += d.cantidad;
+                _context.Database.ExecuteSqlRaw("EXEC sp_VentaDetalle @opcion = 3, @id = {0}", d.id);
             }
-
-            _context.VentaDetalle.RemoveRange(detalles);
-            _context.SaveChanges();
         }
         public List<VentaDetalle> ObtenerDetallesPorVenta(int idVenta)
         {
             return _context.VentaDetalle
-                .Where(d => d.idVenta == idVenta)
+                .FromSqlRaw("EXEC sp_VentaDetalle @opcion = 4, @idVenta = {0}", idVenta)
                 .ToList();
         }
 

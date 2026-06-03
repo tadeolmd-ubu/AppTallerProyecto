@@ -18,41 +18,34 @@ namespace AppTaller.Services
         }
 
         public void CrearCliente(Cliente cliente) {
-            _context.Cliente.Add(cliente);
+            if (cliente.id == 0)
+                cliente.id = _context.SiguienteId("Cliente");
+            _context.Database.ExecuteSqlRaw(
+                "EXEC sp_Cliente @opcion = 1, @id = {0}, @nombre = {1}, @telefono = {2}, @estatus = {3}, @idDireccion = {4}",
+                cliente.id, cliente.nombre, cliente.telefono, cliente.estatus, cliente.idDireccion);
         }
 
         public void ModificarCliente(Cliente cliente) {
-            var existente = _context.Cliente.Find(cliente.id);
-            if (existente == null)
-                return;
-
-            _context.Entry(existente).CurrentValues.SetValues(cliente);
+            _context.Database.ExecuteSqlRaw(
+                "EXEC sp_Cliente @opcion = 2, @id = {0}, @nombre = {1}, @telefono = {2}, @estatus = {3}, @idDireccion = {4}",
+                cliente.id, cliente.nombre, cliente.telefono, cliente.estatus, cliente.idDireccion);
         }
         public void CrearOActualizarCliente(Cliente cliente) {
-                var existe = _context.Cliente.Find(cliente.id);
-                if (existe == null) {
-                    CrearCliente(cliente);
-                }
-                else {
-                    ModificarCliente(cliente);
-                }            
+            var existe = _context.Cliente.Find(cliente.id);
+            if (existe == null)
+                CrearCliente(cliente);
+            else
+                ModificarCliente(cliente);
         }
 
         public void EliminarCliente(int id) {
-            var cliente = _context.Cliente.Find(id);
-            if (cliente == null) 
-                return;
-            _context.Cliente.Remove(cliente);
-            _context.SaveChanges();
-            
+            _context.Database.ExecuteSqlRaw("EXEC sp_Cliente @opcion = 3, @id = {0}", id);
         }
-        public Cliente BuscarClienteIndividual(int id) {  
-             return _context.Cliente.Find(id);
-                     }
+        public Cliente BuscarClienteIndividual(int id) {
+            return _context.Cliente.FromSqlRaw("EXEC sp_Cliente @opcion = 5, @id = {0}", id).AsEnumerable().FirstOrDefault();
+        }
         public List<Cliente> ObtenerClientes() {
-            return _context.Cliente
-                .AsNoTracking()
-                .ToList();
+            return _context.Cliente.FromSqlRaw("EXEC sp_Cliente @opcion = 4").ToList();
         }
 
         public int ObtenerSigienteIdCliente(){

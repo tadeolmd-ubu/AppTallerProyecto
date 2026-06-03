@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace AppTaller.Services
 {
@@ -16,7 +17,7 @@ namespace AppTaller.Services
         }
 
         public List<TipoMovimiento> ObtenerTiposMovimientos() {
-        return _context.TipoMovimiento.ToList();
+        return _context.TipoMovimiento.FromSqlRaw("EXEC sp_TipoMovimiento @opcion = 4").ToList();
         }
     }
 }

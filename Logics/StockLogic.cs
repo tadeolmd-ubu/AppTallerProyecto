@@ -54,8 +54,6 @@ namespace AppTaller.Logics
             }
 
             RegistrarMovimientoInventario( inventario.id, idTipoMovimiento, idReferenciaMovimiento, nuevoValor);
-
-            _context.SaveChanges();
         }
 
         private void RegistrarEntrada(

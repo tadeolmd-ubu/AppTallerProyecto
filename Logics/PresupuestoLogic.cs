@@ -30,14 +30,11 @@ namespace AppTaller.Logics
             {
                 try{
                     _presupuestoService.CrearPresupuesto(presupuesto);
-                    _context.SaveChanges();
 
                     foreach (var det in detalles){
                         det.idPresupuesto = presupuesto.id;
                         _presupuestoDetalleService.CrearPresupuestoDetalle(det);
                     }
-
-                    _context.SaveChanges();
 
                     transaction.Commit();
                 }
@@ -64,7 +61,10 @@ namespace AppTaller.Logics
                     if (existente == null)
                         throw new InvalidOperationException($"Presupuesto con id {presupuesto.id} no encontrado.");
 
-                    _context.Entry(existente).CurrentValues.SetValues(presupuesto);
+                    _context.Database.ExecuteSqlRaw(
+                        "EXEC sp_Presupuesto @opcion = 2, @id = {0}, @total = {1}, @estatus = {2}, @nota = {3}, @idCliente = {4}, @idUsuario = {5}",
+                        presupuesto.id, presupuesto.total, presupuesto.estatus, presupuesto.nota ?? (object)DBNull.Value,
+                        presupuesto.idCliente, presupuesto.idUsuario);
 
                     var detallesExistentes = ObtenerDetallesPorPresupuesto(presupuesto.id);
 
@@ -73,7 +73,7 @@ namespace AppTaller.Logics
                     );
                     foreach (var detExist in detallesExistentes){
                         if (!idsRecibidos.Contains(detExist.id)){
-                            _context.PresupuestoDetalle.Remove(detExist);
+                            _context.Database.ExecuteSqlRaw("EXEC sp_PresupuestoDetalle @opcion = 3, @id = {0}", detExist.id);
                         }
                     }
                     int nextId = 0;
@@ -84,17 +84,17 @@ namespace AppTaller.Logics
                         if (det.id == 0){
                             det.id = nextId++;
                             det.idPresupuesto = presupuesto.id;
-                            _context.PresupuestoDetalle.Add(det);
+                            _presupuestoDetalleService.CrearPresupuestoDetalle(det);
                         }
                         else{
                             var detEnBd = detallesExistentes.FirstOrDefault(x => x.id == det.id);
-
                             if (detEnBd != null){
-                                _context.Entry(detEnBd).CurrentValues.SetValues(det);
+                                _context.Database.ExecuteSqlRaw(
+                                    "EXEC sp_PresupuestoDetalle @opcion = 2, @id = {0}, @cantidad = {1}, @precioUnitario = {2}, @importe = {3}, @iva = {4}, @idInventario = {5}, @idPresupuesto = {6}",
+                                    det.id, det.cantidad, det.precioUnitario, det.importe, det.iva, det.idInventario, det.idPresupuesto);
                             }
                         }
                     }
-                    _context.SaveChanges();
                     transaction.Commit();
                 }
                 catch{
@@ -110,20 +110,11 @@ namespace AppTaller.Logics
             using (var transaction = _context.Database.BeginTransaction())
             {
                 try{
-                    var detalles = _context.PresupuestoDetalle
-                                           .Where(d => d.idPresupuesto == idPresupuesto)
-                                           .ToList();
-
-                    if (detalles.Any()){
-                        _context.PresupuestoDetalle.RemoveRange(detalles);
-                        _context.SaveChanges();
-                    }
                     var presupuesto = _context.Presupuesto.Find(idPresupuesto);
                     if (presupuesto == null)
                         throw new InvalidOperationException($"Presupuesto con id {idPresupuesto} no encontrado.");
 
-                    _context.Presupuesto.Remove(presupuesto);
-                    _context.SaveChanges();
+                    _context.Database.ExecuteSqlRaw("EXEC sp_Presupuesto @opcion = 3, @id = {0}", idPresupuesto);
 
                     transaction.Commit();
                 }

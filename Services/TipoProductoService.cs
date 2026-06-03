@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace AppTaller.Services
 {
@@ -17,7 +18,7 @@ namespace AppTaller.Services
 
         public List<TipoProducto> ObtenerTiposProducto() {
         
-            return _context.TipoProducto.ToList();
+            return _context.TipoProducto.FromSqlRaw("EXEC sp_TipoProducto @opcion = 4").ToList();
         }
 
 

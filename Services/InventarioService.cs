@@ -17,25 +17,26 @@ namespace AppTaller.Services
         }
 
         public void CrearInventario(Inventario inventario) {
-            _context.Inventario.Add(inventario);
-            _context.SaveChanges();
+            if (inventario.id == 0)
+                inventario.id = _context.SiguienteId("Inventario");
+            _context.Database.ExecuteSqlRaw(
+                "EXEC sp_Inventario @opcion = 1, @id = {0}, @idProducto = {1}, @idAlmacen = {2}, @stockActual = {3}",
+                inventario.id, inventario.idProducto, inventario.idAlmacen, inventario.stockActual);
         }
 
         public void ModificarInventario(Inventario inventario){
-            var existente = _context.Inventario.Find(inventario.id);
-            if (existente == null)
-                return;
-            _context.Entry(existente).CurrentValues.SetValues(inventario);
-            _context.SaveChanges();
+            _context.Database.ExecuteSqlRaw(
+                "EXEC sp_Inventario @opcion = 2, @id = {0}, @idProducto = {1}, @idAlmacen = {2}, @stockActual = {3}",
+                inventario.id, inventario.idProducto, inventario.idAlmacen, inventario.stockActual);
         }
 
         public Inventario BuscarInventario(int id) {
-        return _context.Inventario.Find(id);
+            return _context.Inventario.FromSqlRaw("EXEC sp_Inventario @opcion = 5, @id = {0}", id).AsEnumerable().FirstOrDefault();
         }
         public List<Inventario> ObtenerInventarios()
         {
             return _context.Inventario
-                .AsNoTracking() 
+                .FromSqlRaw("EXEC sp_Inventario @opcion = 4")
                 .ToList();
         }
         public bool ExisteInventarioProductoAlmacen(int idProducto, int idAlmacen)

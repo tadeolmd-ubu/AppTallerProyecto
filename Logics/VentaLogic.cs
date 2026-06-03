@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace AppTaller.Logics
 {
@@ -38,14 +39,13 @@ namespace AppTaller.Logics
                                     throw new Exception($"Stock insuficiente para el producto con id {det.idInventario}");
                             }
 
-                            _context.Venta.Add(venta);
-                            _context.SaveChanges();
+                            _ventaService.CrearVenta(venta);
 
                             foreach (var det in detalles){
                                 det.idVenta = venta.id;
 
                                 var producto = _context.Inventario.Find(det.idInventario);
-                                
+
                                 if (producto == null)
                                     throw new Exception($"Producto con id {det.idInventario} no encontrado");
 
@@ -54,16 +54,17 @@ namespace AppTaller.Logics
 
                                 producto.stockActual -= det.cantidad;
 
-                                _context.VentaDetalle.Add(det);
-                            }
+                                _context.Database.ExecuteSqlRaw(
+                                    "EXEC sp_Inventario @opcion = 2, @id = {0}, @idProducto = {1}, @idAlmacen = {2}, @stockActual = {3}",
+                                    producto.id, producto.idProducto, producto.idAlmacen, producto.stockActual);
 
-                            _context.SaveChanges();
+                                _ventaDetalleService.CrearVentaDetalle(det);
+                            }
 
                             foreach (var det in detalles){
                                 _ventaDetalleService.RecalcularImporte(det.id);
                             }
 
-                            _context.SaveChanges();
                             transaction.Commit();
                             return venta;
                         }

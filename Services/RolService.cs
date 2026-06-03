@@ -20,7 +20,7 @@ namespace AppTaller.Services
         }
 
         public List<catRol> ObtenerRoles(){
-                return _context.catRol.ToList();
+                return _context.catRol.FromSqlRaw("EXEC sp_catRol @opcion = 4").ToList();
             
         }
     }

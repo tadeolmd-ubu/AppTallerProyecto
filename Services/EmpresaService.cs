@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace AppTaller.Services
 {
@@ -16,37 +17,32 @@ namespace AppTaller.Services
             _context = context;
         }
         public void CrearEmpresa(catEmpresa empresa) {
-            _context.catEmpresa.Add(empresa);
+            if (empresa.id == 0)
+                empresa.id = _context.SiguienteId("catEmpresa");
+            _context.Database.ExecuteSqlRaw(
+                "EXEC sp_catEmpresa @opcion = 1, @id = {0}, @nombre = {1}, @rfc = {2}, @regimen = {3}, @idDireccion = {4}",
+                empresa.id, empresa.nombre, empresa.rfc, empresa.regimen, empresa.idDireccion);
         }
         public void ModificarEmpresa(catEmpresa empresa){
-            var existente = _context.catEmpresa.Find(empresa.id);
-            if (existente == null)
-                return;
-            _context.Entry(existente).CurrentValues.SetValues(empresa);
+            _context.Database.ExecuteSqlRaw(
+                "EXEC sp_catEmpresa @opcion = 2, @id = {0}, @nombre = {1}, @rfc = {2}, @regimen = {3}, @idDireccion = {4}",
+                empresa.id, empresa.nombre, empresa.rfc, empresa.regimen, empresa.idDireccion);
         }
         public void CrearOActualizarDireccion(catEmpresa empresa) {
             var existe = _context.catEmpresa.Find(empresa.id);
             if (existe == null)
-            {
                 CrearEmpresa(empresa);
-            }
             else
-            {
                 ModificarEmpresa(empresa);
-            }
         }
         public void EliminarEmpresa(int id){
-            var empresa = _context.catEmpresa.Find(id);
-            if (empresa == null)
-                return;
-            _context.catEmpresa.Remove(empresa);
-            _context.SaveChanges();
+            _context.Database.ExecuteSqlRaw("EXEC sp_catEmpresa @opcion = 3, @id = {0}", id);
         }
         public catEmpresa BuscarEmpresaIndividual(int id){
-            return _context.catEmpresa.Find(id);
+            return _context.catEmpresa.FromSqlRaw("EXEC sp_catEmpresa @opcion = 5, @id = {0}", id).AsEnumerable().FirstOrDefault();
         }
         public List<catEmpresa> ObtenerEmpresas(){
-            return _context.catEmpresa.ToList();
+            return _context.catEmpresa.FromSqlRaw("EXEC sp_catEmpresa @opcion = 4").ToList();
         }
     }
 }

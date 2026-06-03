@@ -15,43 +15,37 @@ namespace AppTaller.Services
             _context = context;
         }
         public void CrearPresupuesto(Presupuesto presupuesto) {
-            _context.Presupuesto.Add(presupuesto);
+            if (presupuesto.id == 0)
+                presupuesto.id = _context.SiguienteId("Presupuesto");
+            _context.Database.ExecuteSqlRaw(
+                "EXEC sp_Presupuesto @opcion = 1, @id = {0}, @total = {1}, @estatus = {2}, @nota = {3}, @idCliente = {4}, @idUsuario = {5}",
+                presupuesto.id, presupuesto.total, presupuesto.estatus, presupuesto.nota ?? (object)DBNull.Value,
+                presupuesto.idCliente, presupuesto.idUsuario);
         }
         public void ModificarPresupuesto(Presupuesto presupuesto) {
-        
-            var existe = _context.Presupuesto.Find(presupuesto.id);
-
-            if (existe == null)
-                return;
-            _context.Entry(existe).CurrentValues.SetValues(presupuesto);
+            _context.Database.ExecuteSqlRaw(
+                "EXEC sp_Presupuesto @opcion = 2, @id = {0}, @total = {1}, @estatus = {2}, @nota = {3}, @idCliente = {4}, @idUsuario = {5}",
+                presupuesto.id, presupuesto.total, presupuesto.estatus, presupuesto.nota ?? (object)DBNull.Value,
+                presupuesto.idCliente, presupuesto.idUsuario);
         }
         public void CrearOModificarPresupuesto(Presupuesto presupuesto){
             var existe = _context.Presupuesto.Find(presupuesto.id);
-            if (existe == null){
+            if (existe == null)
                 CrearPresupuesto(presupuesto);
-            }
-            else{
+            else
                 ModificarPresupuesto(presupuesto);
-            }
         }
         public Presupuesto BuscarPresupuesto(int id) {
-            return _context.Presupuesto.Find(id);
+            return _context.Presupuesto.FromSqlRaw("EXEC sp_Presupuesto @opcion = 5, @id = {0}", id).AsEnumerable().FirstOrDefault();
         }
         public List<Presupuesto> ObtenerPresupuestos()
         {
-            using (var db = new EF.efAppDbContext())
-            {
-                return db.Presupuesto
-                         .AsNoTracking()   
-                         .ToList();
-            }
+            return _context.Presupuesto
+                     .FromSqlRaw("EXEC sp_Presupuesto @opcion = 4")
+                     .ToList();
         }
         public void EliminarPresupuesto(int id) {
-            var presupuesto = _context.Presupuesto.Find(id);
-            if (presupuesto == null)
-                return;
-            _context.Presupuesto.Remove(presupuesto);
-            _context.SaveChanges();
+            _context.Database.ExecuteSqlRaw("EXEC sp_Presupuesto @opcion = 3, @id = {0}", id);
         }
         public int ObtenerSigienteIdPresupuesto(){
             return _context.SiguienteId("Presupuesto");

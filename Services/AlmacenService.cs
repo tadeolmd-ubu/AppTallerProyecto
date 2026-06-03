@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace AppTaller.Services
 {
@@ -14,7 +15,7 @@ namespace AppTaller.Services
         _context = context; 
         }
         public List<catAlmacen> ObtenerAlmacenes() {
-            return _context.catAlmacen.ToList();
+            return _context.catAlmacen.FromSqlRaw("EXEC sp_catAlmacen @opcion = 4").ToList();
         }
     }
 }
