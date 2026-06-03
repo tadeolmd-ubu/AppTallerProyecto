@@ -50,9 +50,12 @@ namespace AppTaller.Views
                     MessageBox.Show("Por favor, complete todos los campos obligatorios.", "Campos incompletos", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
-                if (!int.TryParse(txtId.Text, out int id) ||
-                    !int.TryParse(cmbIdRol.Text, out int idRol)) {
-                    MessageBox.Show("Por favor, ingrese valores numéricos válidos para el ID del usuario.", "Entrada inválida", MessageBoxButton.OK, MessageBoxImage.Warning);
+                if (!int.TryParse(txtId.Text, out int id)) {
+                    MessageBox.Show("Por favor, ingrese un valor numérico válido para el ID del usuario.", "Entrada inválida", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                if (cmbIdRol.SelectedValue == null || !int.TryParse(cmbIdRol.SelectedValue.ToString(), out int idRol)) {
+                    MessageBox.Show("Por favor, seleccione un rol válido.", "Entrada inválida", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
 

@@ -110,8 +110,8 @@
 
                 <Label Content="ID del Rol"/>
                 <ComboBox x:Name="cmbIdRol" 
-                          DisplayMemberPath="Id" 
-                          SelectedValuePath="Id" 
+                          DisplayMemberPath="nombre" 
+                          SelectedValuePath="id" 
                           Foreground="Black" 
                           Width="252" 
                           SelectedIndex="-1"/>

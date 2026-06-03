@@ -836,7 +836,7 @@ BEGIN
     ELSE IF @opcion = 3
         DELETE FROM Usuario WHERE id = @id;
     ELSE IF @opcion = 4
-        SELECT id, nombre, correo, telefono, estatus, idRol FROM Usuario ORDER BY nombre;
+        SELECT id, nombre, contrasena, correo, telefono, estatus, idRol FROM Usuario ORDER BY nombre;
     ELSE IF @opcion = 5
         SELECT id, nombre, contrasena, correo, telefono, estatus, idRol
         FROM Usuario WHERE id = @id;

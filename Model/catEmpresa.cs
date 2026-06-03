@@ -13,7 +13,7 @@ namespace AppTaller.Model
         public string nombre { get; set; }
         public string rfc { get; set; }
         public string regimen { get; set; }
-        public int idDireccion { get; set; }
+        public int? idDireccion { get; set; }
 
         public catEmpresa()
         {

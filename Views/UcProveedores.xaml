@@ -93,8 +93,8 @@
 
                 <Label Content="ID Empresa"/>
                 <ComboBox x:Name="cmbIdEmpresa" 
-                          DisplayMemberPath="id" 
-                          SelectedValuePath="Id" 
+                          DisplayMemberPath="nombre" 
+                          SelectedValuePath="id" 
                           Foreground="Black" 
                           Width="252" 
                           SelectedIndex="-1"/>

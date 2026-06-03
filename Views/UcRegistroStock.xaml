@@ -88,10 +88,12 @@
                          Margin="0,0,0,15"/>
 
                 <Label Content="Producto"/>
-                <ComboBox x:Name="cmbProducto" Width="252" Foreground="Black" SelectedIndex="-1"/>
+                <ComboBox x:Name="cmbProducto" Width="252" Foreground="Black" SelectedIndex="-1"
+                          DisplayMemberPath="nombre" SelectedValuePath="id"/>
 
                 <Label Content="Almacén"/>
-                <ComboBox x:Name="cmbAlmacen" Width="252" Foreground="Black" SelectedIndex="-1"/>
+                <ComboBox x:Name="cmbAlmacen" Width="252" Foreground="Black" SelectedIndex="-1"
+                          DisplayMemberPath="nombre" SelectedValuePath="id"/>
 
                 <Label Content="Cantidad"/>
                 <Border Background="#1B1428" 
@@ -149,10 +151,12 @@
             <StackPanel Grid.Column="1" Orientation="Vertical" Margin="30,0,0,0">
 
                 <Label Content="Tipo de Movimiento"/>
-                <ComboBox x:Name="cmbTipoMovimiento" Width="252" Foreground="Black" SelectedIndex="-1"/>
+                <ComboBox x:Name="cmbTipoMovimiento" Width="252" Foreground="Black" SelectedIndex="-1"
+                          DisplayMemberPath="nombre" SelectedValuePath="id"/>
 
                 <Label Content="Referencia"/>
-                <ComboBox x:Name="cmbReferencia" Width="252" Foreground="Black" SelectedIndex="-1"/>
+                <ComboBox x:Name="cmbReferencia" Width="252" Foreground="Black" SelectedIndex="-1"
+                          DisplayMemberPath="descripcion" SelectedValuePath="id"/>
 
                 <!-- Botón Buscar Productos -->
                 <Border Background="#1B1428" 
